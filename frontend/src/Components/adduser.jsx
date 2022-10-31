@@ -82,6 +82,3 @@ function Adduser(props) {
 
 
 export default Adduser
-
-
-

@@ -2,6 +2,7 @@ const { User, Role, Exam, Course, Note } = require('../models/db');
 const bcrypt = require("bcrypt");
 const _ = require('lodash')
 const multer = require('multer');
+const {ObjectId} = require('mongodb');
 
 //POST /api/add-user
 module.exports.addUser = async (req, res) => {
@@ -63,7 +64,9 @@ module.exports.getSearchCourses = async (req, res) => {
 
 // GET url : api/course/:id
 module.exports.getCourse = async (req,res) => {
-    const id = req.params.id;
+    console.log(req.params.id);
+    const id = ObjectId(req.params.id);
+    console.log(id);
     await Course.findById(id).then(
         course => {
             if(course)

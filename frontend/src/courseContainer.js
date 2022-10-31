@@ -5,6 +5,12 @@ const apiUrl = 'http://localhost:3000/api/';
 
 let courseService = {}
 
+courseService.getCourse = async(id) => {
+    console.log(id);
+    const {data} = await http.get(apiUrl + 'course/' + id);
+    return data.course;
+}
+
 courseService.getAllCourses = async() => {
     const {data} = await http.get(apiUrl + 'all-courses');
     return data.courses;

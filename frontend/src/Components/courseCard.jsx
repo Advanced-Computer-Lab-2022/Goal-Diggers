@@ -13,7 +13,7 @@ const CourseCard = ({course, priceRate, currency}) => {
                     {/* To be conditionally rendered */} 
                     {course.price == 0 && <p className="text-success"> Free </p> }
                     {course.price > 0 && <p>Price : {Math.round((course.price * priceRate) * 100) / 100} {currency ? currency : "USD" }</p> }
-                    <Link href={`course/${course._id}`} style={{borderRadius : '25px'}} className="btn btn-primary">view <i class="fa fa-eye" aria-hidden="true"></i></Link>
+                    <a href={`course/${course._id}`} style={{borderRadius : '25px'}} className="btn btn-primary">view <i class="fa fa-eye" aria-hidden="true"></i></a>
                 </div>
             </div>
     );
