@@ -2,19 +2,19 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const mongoose = require('mongoose');
 const cors = require('cors');
+require('dotenv').config();
 
 //Database connection 
-const uri = 'mongodb://localhost:27017/acl'
- mongoose.connect(uri, {useNewUrlParser : true, useUnifiedTopology : true})
-    .then(result => {
-        console.log('Successfully connected')
-    })
-    .catch(error => {
-        console.log("error"); 
-        console.log(error)
-    });
+const mongoose = require('mongoose');
+const MongoURI  = process.env.DB_URL;
+mongoose.connect(MongoURI)
+.then(()=>{
+  console.log("MongoDB is now connected!")
+// Starting server
+})
+.catch(err => console.log(err));
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');

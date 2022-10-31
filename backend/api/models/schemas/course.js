@@ -1,15 +1,32 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const videoSchema = new Schema({
+    title : String,
+    url : String,
+    order : Number,
+}, {timestamps : true});
+
+const sectionSchema = new Schema({
+    totalHours : Number,
+    title : String,
+    summary : String,
+    quizsId : [Object],
+    videos : [{videoSchema}],
+}, {timestamps : true});
+
+
 const courseSchema = new Schema({
         image : String,
-        createdBy : Object,
+        createdById : Object,
+        createdByName : String,
         courseId : Object,
         totalHours : Number,
         price : Number,
         rate : Number,
         discount : Object,
         subtitle : Object,
+        subject : String,
         summary : String, 
         title : String,
         overviewVideo : [{videoSchema}],
@@ -17,19 +34,5 @@ const courseSchema = new Schema({
         sections : [{sectionSchema}]
 }, {timestamps : true});
 
-const sectionSchema = new Schema({
-        totalHours : Number,
-        overviewVideo : [{videoSchema}],
-        title : String,
-        summary : String,
-        quizsId : [Object],
-        videos : [{videoSchema}],
-}, {timestamps : true});
-
-const videoSchema = new Schema({
-        title : String,
-        url : String,
-        order : Number,
-}, {timestamps : true});
 
 module.exports = courseSchema;
