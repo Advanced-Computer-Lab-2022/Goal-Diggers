@@ -26,4 +26,14 @@ courseService.getInstructorCourses = async() => {
     return data.courses;
 }
 
+courseService.addUser = async(user) => {
+    const {data} = await http.post(apiUrl + 'add-user', user);
+    return data;
+}
+
+courseService.addCourse = async(course) => {
+    const {data} = await http.post(apiUrl + 'add-course', course);
+    return data;
+}
+
 export default courseService;

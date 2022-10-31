@@ -1,6 +1,7 @@
 const { User, Role, Exam, Course, Note } = require('../models/db');
 const bcrypt = require("bcrypt");
 const _ = require('lodash')
+const multer = require('multer');
 
 //POST /api/add-user
 module.exports.addUser = async (req, res) => {
@@ -8,15 +9,27 @@ module.exports.addUser = async (req, res) => {
     await Role.findOne({username : new_user.username}).then(
         async user => {
             if(user)
-                return res.status(400).json({error : "Username Already exist"});
+                return res.status(200).json({error : "Username Already exist"});
             else {
                 new_user.password = await bcrypt.hash(new_user.password, 10);
                 await Role.create(new_user).then(
-                    user =>  {return res.status(200).json({user});}
+                    user =>  {
+                        console.log(user);
+                        return res.status(200).json({user});
+                    }
                 )
             }
         }
     )
+}
+
+
+//POST /api/add-course
+module.exports.addCourse = async (req, res) => {
+    const course = req.body;
+    await Course.create(course).then(
+        cour => {return res.status(200).json({cour});} 
+    );
 }
 
 

@@ -26,6 +26,8 @@ const NavBar = ({handleCountry}) => {
           >
             <Nav.Link style={{fontWeight : 'bolder'}} href="/">Home</Nav.Link>
             <Nav.Link style={{fontWeight : 'bolder'}} href="/instructor-courses">My Courses</Nav.Link>
+            <Nav.Link style={{fontWeight : 'bolder'}} href="/adduser">Add usre</Nav.Link>
+            <Nav.Link style={{fontWeight : 'bolder'}} href="/create-course">Add Course</Nav.Link>
           </Nav>
           <Form className="d-flex mx-5 pr-5" action="/search" method="GET">
             <Form.Control
