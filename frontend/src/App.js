@@ -9,6 +9,7 @@ import InstructorCourses from './Components/instructorCourses';
 import Adduser from './Components/adduser';
 import Createcourse from './Components/createcourse';
 import CourseOverview from './Components/courseOverview';
+import Register from './Components/register';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         <Route path='/instructor-courses' element={<CourseContainer currency={currency} type="instructor"/>} />
         <Route path='/search' element={<SearchResult currency={currency}/>} />
+        <Route path='/Register' element={<Register  type="all"/>} />
          {/* for getting sepcific course */}
         <Route path='/course/:id' element={<CourseOverview />} />
         <Route path='/adduser' element={<Adduser />} />
