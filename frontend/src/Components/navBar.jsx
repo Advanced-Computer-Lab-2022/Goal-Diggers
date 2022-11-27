@@ -6,30 +6,49 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { FormControl,Select,InputLabel,MenuItem} from "@mui/material";
 import coun_curr_code from '../coun-curr-code';
-
+import { Link } from "react-router-dom";
 
 const NavBar = ({handleCountry}) => {
   
     return (  
-    <Navbar bg="info" expand="lg">
+      <div>
+      {/* conditionally rendering */}
+      <div id="loginRegister">
+      
+      <div id='info'>
+      <p>Phone: +201001004070</p>
+      <p>Email: info@cancham.org.eg</p>
+      </div>
+      </div>
+    <Navbar className="nav-color navbar-custom mr-auto"  expand="lg">
       <Container fluid>
-        <Navbar.Brand href="/">
-            <img src='./video.png' className="mx-2" width='40px'/>
-            E-Learning
+        <Navbar.Brand id="brand" href="/">
+            <img src='./logo.png' className="mx-2" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
+        
+        <div id="nav-itemss">
           <Nav
-            className="me-auto mx-5 my-2 my-lg-0"
+            className=" ml-auto mx-5 my-2 my-lg-0 nav-links "
+            id=""
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link style={{fontWeight : 'bolder'}} href="/">Home</Nav.Link>
-            <Nav.Link style={{fontWeight : 'bolder'}} href="/instructor-courses">My Courses</Nav.Link>
-            <Nav.Link style={{fontWeight : 'bolder'}} href="/adduser">Add usre</Nav.Link>
-            <Nav.Link style={{fontWeight : 'bolder'}} href="/create-course">Add Course</Nav.Link>
+            <Nav.Link id="nav-item1" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/">Home</Nav.Link>
+            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">My Courses</Nav.Link>
+            <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/adduser">Add usre</Nav.Link>
+            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/create-course">Add Course</Nav.Link>
+
           </Nav>
-          <Form className="d-flex mx-5 pr-5" action="/search" method="GET">
+          </div>
+ 
+
+         
+      
+    
+        </Navbar.Collapse>
+        <Form id="nav-item6" className="d-flex mx-5 pr-5" action="/search" method="GET">
             <Form.Control
               type="search"
               placeholder="Search"
@@ -38,9 +57,10 @@ const NavBar = ({handleCountry}) => {
               style={{borderRadius : '15px'}}
               name='keyword'
             />
-            <Button type="submit" variant="outline-light" style={{borderRadius : '25px'}}><i className="fa fa-search" aria-hidden="true"></i></Button>
           </Form>
-          <FormControl className="mx-5 pr-5" sx={{ minWidth: 120 }} size="small">
+
+      </Container>
+      <FormControl id="nav-item5" className="mx-5 pr-5" sx={{ minWidth: 120 }} size="small">
             <InputLabel id="demo-simple-select-label">Country</InputLabel>
             <Select
                 defaultValue=""
@@ -51,14 +71,14 @@ const NavBar = ({handleCountry}) => {
                 {coun_curr_code.map(country => <MenuItem key={country.country} value={country.currency_code}>{country.country}</MenuItem>)}
             </Select>
           </FormControl>
-          <Nav className="ml-5">
-            {/* conditionally rendering */}
-          <Button className="btn-light mx-2" style={{borderRadius : '25px'}}>Login <i className="fa fa-sign-in" aria-hidden="true"></i></Button>
-          <Button className="btn-dark" style={{borderRadius : '25px'}}>Register <i className="fa fa-user-plus" aria-hidden="true"></i></Button>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
+
     </Navbar>
+    
+   
+        
+         
+          </div>
+   
     );
 }
  

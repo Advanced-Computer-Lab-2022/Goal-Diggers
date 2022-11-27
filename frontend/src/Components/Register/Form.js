@@ -2,14 +2,10 @@ import React from "react";
 
 function Form() {
   return (
-    <div>
-    <h1 className="header">Sign up and start learning</h1>
+    <div id="registerBody">
+    <h1 id="registerHeader">Sign up and start learning</h1>
     
-    <div className="container"  id="relative-layer">
-    
-    <div className="row" >
-        <div className="column" >
-       
+    <div className="container"  id="relative-layer " >    
       <div className="content">
         <form id='formm' action="#">
           <div className="user-details">
@@ -59,9 +55,9 @@ function Form() {
 </button>
         </form>
         </div>
-        </div>
+      
  
-    </div>
+  
     </div>
     
     </div>

@@ -2,6 +2,7 @@
   text-align: center;
 }
 
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -202,3 +203,8 @@
   left: 15%;
   color: white;
 }
+
+.nav-color{
+  background-color: #FFF;
+  
+  }

@@ -10,6 +10,7 @@ import Adduser from './Components/adduser';
 import Createcourse from './Components/createcourse';
 import CourseOverview from './Components/courseOverview';
 import Register from './Components/register';
+import RegisterFooter from './Components/registerFooter';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         
         <Route path='/' element={<CourseContainer currency={currency} type="all"/>} />
       </Routes>
+      <RegisterFooter></RegisterFooter>
     </React.Fragment>
   );
 }
