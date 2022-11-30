@@ -1,36 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
+import AuthService from "../../services/auth.service";
+import { useNavigate } from "react-router-dom";
 
 function Form() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    try {
+      await AuthService.signup(email, password).then(
+        (response) => {
+          // check for token and user already exists with 200
+          //   console.log("Sign up successfully", response);
+          navigate("/home");
+          window.location.reload();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div id="registerBody">
     <h1 id="registerHeader">Sign up and start learning</h1>
     
-    <div className="container"  id="relative-layer " >    
+    <div  id="registerContainer" >    
       <div className="content">
-        <form id='formm' action="#">
+        <form action="#" onSubmit={handleSignup}>
           <div className="user-details">
           <div class="material-textfield input-box ">
-              <input className="inputt" placeholder=" " type="text" required/>
+              <input className="inputt" placeholder="firstName" type="text" required/>
               <label className="labell">First Name</label>
             </div>
             <div class="material-textfield input-box  ">
-              <input className="inputt" placeholder=" " type="text" required/>
+              <input className="inputt" placeholder="lastName" type="text" required/>
               <label className="labell">Last Name</label>
             </div>
             <div class="material-textfield input-box ">
-              <input className="inputt" placeholder=" " type="text" required/>
+              <input className="inputt" placeholder="email" value={email}  type="text" required onChange={(e) => setEmail(e.target.value)}/>
               <label className="labell">Email</label>
             </div>
             <div class="material-textfield input-box ">
-              <input className="inputt" placeholder=" " type="text" required/>
+              <input className="inputt" placeholder="userName" type="text" required/>
               <label className="labell">User Name</label>
             </div>
             <div class="material-textfield input-box ">
-              <input className="inputt" placeholder=" " type="text" required/>
+              <input className="inputt" placeholder="password" value={password}  type="text" required onChange={(e) => setPassword(e.target.value)}/>
               <label className="labell">Password</label>
             </div>
             <div class="material-textfield input-box ">
-              <input className="inputt" placeholder=" " type="text" required/>
+              <input className="inputt" placeholder="confirmPassword" type="text" required/>
               <label className="labell">Confirm Password</label>
             </div>
           </div>
@@ -51,7 +76,7 @@ function Form() {
            
             </div>
           </div>
-          <button className="buttoon"> Sign Up
+          <button type="submit" className="buttoon"> Sign Up
 </button>
         </form>
         </div>

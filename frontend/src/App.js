@@ -11,8 +11,7 @@ import Createcourse from './Components/createcourse';
 import CourseOverview from './Components/courseOverview';
 import Register from './Components/register';
 import RegisterFooter from './Components/registerFooter';
-
-
+import Login from './Components/login';
 function App() {
   const [currency, setCurrency] = useState('');
   const handleCountry = (curr) => {
@@ -29,6 +28,8 @@ function App() {
         <Route path='/course/:id' element={<CourseOverview />} />
         <Route path='/adduser' element={<Adduser />} />
         <Route path='/create-course' element={<Createcourse />} />
+        <Route path='/login' element={<Login  type="all"/>} />
+        
         
         <Route path='/' element={<CourseContainer currency={currency} type="all"/>} />
       </Routes>
