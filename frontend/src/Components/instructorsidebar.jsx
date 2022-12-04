@@ -51,7 +51,7 @@ function Trainersidebar() {
           <Link to="#" onClick={()=> {setinstructorprofile(false);  setcoursemanagement(true);  setreviewsoninstructor(false); setEditinstructorprofile(false);setchangepassword(false)}}>ManageCourses</Link>
           <Link to="#" onClick={()=> {setinstructorprofile(false);  setcoursemanagement(false); setreviewsoninstructor(true);  setEditinstructorprofile(false);setchangepassword(false)}}>Reviews</Link>
           <Link to="#" onClick={()=> {setinstructorprofile(false);  setcoursemanagement(false); setreviewsoninstructor(false); setEditinstructorprofile(true); setchangepassword(false)}}>Editprofile</Link>
-          <Link to="#" onClick={()=> {setinstructorprofile(false);  setcoursemanagement(false); setreviewsoninstructor(true);  setEditinstructorprofile(false);setchangepassword(true)}}>Changepassword</Link>
+          <Link to="#" onClick={()=> {setinstructorprofile(false);  setcoursemanagement(false); setreviewsoninstructor(false);  setEditinstructorprofile(false);setchangepassword(true)}}>Changepassword</Link>
           <Link to="#">LogOut</Link>
         </div>
       </div>
@@ -62,6 +62,7 @@ function Trainersidebar() {
             {coursemanagement && <Coursemanagement />}
             {reviewsoninstructor && <Reviewsoninstructor />}
             {editinstructorprofile && <Editinstructorprofile/>} 
+            {changepassword && <Changepassword/>}
             
         </div>
       </div>
