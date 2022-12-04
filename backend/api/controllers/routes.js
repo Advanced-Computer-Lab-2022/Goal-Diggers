@@ -23,6 +23,10 @@ router.get('/reviews-ratings/:id', controller.getReviewsAndRatings);
 router.post('/change-password/:id', controller.ChangePassword);
 router.post('/change-email-biography/:id', controller.changeEmailorBiography);
 //////////////////////////////////////////////
+//////////3bto/////////
+router.post('/add-quiz', controller.addQuiz);
+router.post('/add-course', controller.addCourse);
+/////////////////
 
 
 

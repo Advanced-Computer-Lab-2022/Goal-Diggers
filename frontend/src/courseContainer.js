@@ -38,7 +38,8 @@ courseService.addUser = async(user) => {
 }
 
 courseService.addCourse = async(course) => {
-    const {data} = await http.post(apiUrl + 'add-course', course);
+    console.log(course);
+    const {data} = await http.post(apiUrl + 'add-course', {course});
     return data;
 }
 
@@ -93,6 +94,10 @@ courseService.saveQuiz = async(id, courseID,grade) => {
     return data.course;
 }
 
+courseService.addQuiz = async(quiz) => {
+    const {data} = await http.post(apiUrl + 'add-quiz',{ quiz });
+    return data;
+}
 
 
 export default courseService;

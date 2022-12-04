@@ -53,6 +53,18 @@ module.exports.uploadPreviewVideo = async (req, res) => {
     );
 };
 
+
+//POST 
+// url : api/add-course/ 
+module.exports.addCourse = async (req, res) => {
+  const course = req.body.course;
+  console.log(course);
+  course.overviewVideo = null;
+  Course.create(course).then(
+    result => {return res.status(200).json({result});}
+  )
+}
+
 //POST
 //url : /api/rate-course/12 -> rate to course
 module.exports.addCourseRate = async (req, res) => {
@@ -118,24 +130,9 @@ module.exports.getReviewsAndRatings = async (req, res) => {
 //POST
 //url : /api/add-quiz/12 -> add quiz to course
 module.exports.addQuiz = async (req, res) => {
-    const courseID = req.params.id;
     const quiz = req.body.quiz;
-    const type = req.body.type;
-    let quizID = null;
     Exam.create(quiz).then(
-        result =>  quizID = result._id
-    );
-    Course.findById(courseID).then(
-        course => {
-            if(type=='subtitle'){
-                let oreder = req.body.order;
-                course.subtitles[oreder].quizsId.push(quizID);
-            }
-            else {
-                course.examsId.push(quizID);
-            }
-            res.status(200).json({});
-        }
+        result => {return res.status(200).json(result._id)}
     );
 };
 
@@ -482,3 +479,4 @@ module.exports.getRegisterCourse = async (req, res) =>{
     }
    )
 }
+

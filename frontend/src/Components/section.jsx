@@ -82,12 +82,6 @@ const Sections = ({section,count}) => {
             </div> */}
 
 
-           
-
-
-
-
-
         </React.Fragment >
     );
 }
