@@ -42,4 +42,36 @@ courseService.addCourse = async(course) => {
     return data;
 }
 
+//also send data of user in sprint 3
+courseService.rateInstructor = async(review, rate, instructor,) => {
+    const {data} = await http.post(apiUrl + 'rate-instructor/' + instructor, {review , rate});
+    return data;
+}
+
+//also send data of user in sprint 3
+courseService.rateCourse = async(review, rate, course,) => {
+    const {data} = await http.post(apiUrl + 'rate-course/' + course, {review , rate});
+    return data;
+}
+
+//need update in sprint 3
+courseService.getRatingsAndReviews = async(id) => {
+    const {data} = await http.get(apiUrl + 'reviews-ratings/' + id);
+    return data;
+}
+
+//need update in sprint 3
+courseService.changePassword = async(id, passwords) => {
+    const {data} = await http.post(apiUrl + 'change-password/' + id, passwords);
+    return data;
+}
+
+//need update in sprint 3
+courseService.changeEmailorBiography = async(id, info) => {
+    const {data} = await http.post(apiUrl + 'change-email-biography/' + id, info);
+    return data;
+}
+
+
+
 export default courseService;

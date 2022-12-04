@@ -3,13 +3,15 @@ import NavBar from './Components/navBar';
 import React, { useEffect, useState } from 'react';
 import CourseContainer from './Components/courseContainer';
 import {Route, Routes } from 'react-router-dom';
-import Home from './Components/home';
-import SearchResult from './Components/search';
-import InstructorCourses from './Components/instructorCourses';
-import Adduser from './Components/adduser';
-import Createcourse from './Components/createcourse';
-import CourseOverview from './Components/courseOverview';
-import Register from './Components/register';
+import Editinstructorprofile from './Components/editinstructorprofile';
+import Instructorprofile from './Components/instructorprofile';
+import Edituserprofile from './Components/edituserprofile';
+import Instructorsidebar from './Components/instructorsidebar'
+import Reviewsoninstructor from './Components/reviewsoninstructor';
+import Reviewsoncourse from './Components/reviewsoncourse';
+import Ratecourse from './Components/ratecourse';
+import Rateinstructor from './Components/rateinstructor';
+
 
 
 function App() {
@@ -21,15 +23,14 @@ function App() {
     <React.Fragment>
       <NavBar handleCountry ={handleCountry}/>
       <Routes>
-        <Route path='/instructor-courses' element={<CourseContainer currency={currency} type="instructor"/>} />
-        <Route path='/search' element={<SearchResult currency={currency}/>} />
-        <Route path='/Register' element={<Register  type="all"/>} />
-         {/* for getting sepcific course */}
-        <Route path='/course/:id' element={<CourseOverview />} />
-        <Route path='/adduser' element={<Adduser />} />
-        <Route path='/create-course' element={<Createcourse />} />
-        
-        <Route path='/' element={<CourseContainer currency={currency} type="all"/>} />
+        <Route path='/editinstructorprofile' element={<Editinstructorprofile />} />
+        <Route path='/ratecourse/:id/:courseID' element={<Ratecourse />} />
+        <Route path='/rateinstructor/:id/:insturctorID' element={<Rateinstructor />} />
+        <Route path='/edituserprofile' element={<Edituserprofile />} />
+        <Route path='/instructorprofile' element={<Instructorprofile />} />
+        <Route path='/instructorsidebar' element={<Instructorsidebar />} />
+        <Route path='/reviewsoninstructor' element={<Reviewsoninstructor />} />
+        <Route path='/reviewsoncourse' element={<Reviewsoncourse />} />
       </Routes>
     </React.Fragment>
   );

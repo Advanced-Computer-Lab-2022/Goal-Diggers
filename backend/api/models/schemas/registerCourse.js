@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const videoSchema = new Schema({
     discription : String,
     url : String,
-    order : Number,
+    title : String,
 }, {timestamps : true});
 
 // const sectionSchema = new Schema({
@@ -15,39 +15,41 @@ const videoSchema = new Schema({
 //     videos : [{videoSchema}],
 // }, {timestamps : true});
 
-const quizsSchema = new Schema({
-    id : Object,
-}, {timestamps : true});
-
 const subtitleSchema = new Schema({
     totalHours : Number,
     title : String,
     summary : String,
-    quizs : [{quizsSchema}],
     videos : [{videoSchema}],
 }, {timestamps : true});
 
 
-const courseSchema = new Schema({
+const registerCourseSchema = new Schema({
         image : String,
-        createdById : Object,
+        createdByID : Object,
         createdByName : String,
+        courseID : Object,
+        studentID : Object,
+        completedVideos : [Object],
+        attemptedQuizs : [Object],
+        completedQuizs : Number,
+        totalItems : Number,
         // courseId : Object,
         totalHours : Number,
         price : Number,
         rate : Number,
-        ratedetails : [Number],
         numberofrates : Number,
         reviews : [String],
         discount : Object,
         // subtitle : Object,
+        rateInstructor : Boolean,
+        rateCourse : Boolean,
         subject : String,
         summary : String, 
         title : String,
         overviewVideo : videoSchema,
         examsId : [Object],
-        subtitles : [{subtitleSchema}]
+        subtitles : [Object]
 }, {timestamps : true});
 
 
-module.exports = courseSchema;
+module.exports = registerCourseSchema;
