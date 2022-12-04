@@ -139,11 +139,12 @@ img{
 
 /*login footer*/
 #footerSign{
-  background-color: #E26868;
+  background-color: #a00407;
   position:fixed !important;
   bottom: 0px;
   width: 100%;
   display: flex !important;
+  height: 8.5%;
   
 }
 
@@ -158,10 +159,14 @@ img{
   background-color:#E26868 ; 
   color: white; 
   font-size: 14px !important;
-  padding: 12px 20px !important;
+  
   border: 0px !important;
   border: 0.2px solid #EFF3F4 !important;
   border-radius: 20px !important;
+  height: 40px;
+  width: 90px;
+  position: absolute;
+  top:10px;
 
 }
 #button1:hover {
@@ -174,9 +179,15 @@ img{
  
   border: 0px !important;
   font-size: 14px !important;
-  padding: 12px 20px !important;
+  
   border: 0.2px solid #EFF3F4 !important;
   border-radius: 20px !important;
+  height: 40px;
+  width: 90px;
+  position: absolute;
+  top:10px;
+  right: 60px;
+
 }
 #button2:hover {
   background-color: #a00407 !important;
@@ -186,13 +197,30 @@ img{
   font-size: 23px;
   color: white;
   position: absolute;
-  left:20%;
-  top:15%;
+  left:10%;
+  top:0%;
 }
 #span2{
-  font-size: 15px;
+  font-size: 18px;
   color: white;
   position: absolute;
-  left:21%;
-  top:58%;
+  left:10%;
+  top:50%;
+}
+#linkpos{
+  position: absolute;
+  top:90%;
+  left: 30%;
+}
+
+#discountContainer{
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  position: absolute !important;
+  left: 30% !important;
+  top:25% !important; 
+}
+#disinput{
+  margin-bottom: 30px;
 }

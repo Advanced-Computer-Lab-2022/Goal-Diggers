@@ -12,6 +12,8 @@ import CourseOverview from './Components/courseOverview';
 import Register from './Components/register';
 import RegisterFooter from './Components/registerFooter';
 import Login from './Components/login';
+import ForgetPassword from './Components/forgetPassword';
+import Discount from './Components/courseDiscount';
 function App() {
   const [currency, setCurrency] = useState('');
   const handleCountry = (curr) => {
@@ -29,7 +31,8 @@ function App() {
         <Route path='/adduser' element={<Adduser />} />
         <Route path='/create-course' element={<Createcourse />} />
         <Route path='/login' element={<Login  type="all"/>} />
-        
+        <Route path='/forgetPassword' element={<ForgetPassword type="all"/>} />
+        <Route path='/discount' element={<Discount type="all"/>} />
         
         <Route path='/' element={<CourseContainer currency={currency} type="all"/>} />
       </Routes>

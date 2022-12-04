@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../services/auth.service";
+import { Link } from "react-router-dom";
 function Login(){
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,6 +41,7 @@ function Login(){
             </div>
             <button className="buttoon" type="submit"> Login
 </button>
+<Link id="linkpos">forget Password</Link>
 </form>
 </div>
     )
