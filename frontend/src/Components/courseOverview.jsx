@@ -13,6 +13,7 @@ const CourseOverview = () => {
         const getCourse = async (id) => {
             const res = await courseService.getCourse(id);
             setCourse(res);
+            console.log(res);
             setReady(true);
         }
         getCourse(id);

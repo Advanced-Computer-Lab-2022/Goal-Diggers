@@ -37,6 +37,31 @@
   }
 }
 
+.num {
+  cursor: pointer;
+}
+
+.card {
+  max-width : 900px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+li {
+  list-style-type: none;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+li .card:hover {
+  border:  1px solid orange;
+}
+
+ol {
+  padding: 0;
+}
+
+
 
 /* Loading */
 
@@ -184,21 +209,4 @@
 
 .spinner-message {
   text-align: center;
-}
-
-.hero-cover {
-  background-color: #110443;
-  height: 400px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-}
-
-.hero-text {
-  text-align: left;
-  position: absolute;
-  top: 35%;
-  left: 15%;
-  color: white;
 }

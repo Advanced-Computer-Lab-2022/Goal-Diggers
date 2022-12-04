@@ -11,6 +11,10 @@ import Reviewsoninstructor from './Components/reviewsoninstructor';
 import Reviewsoncourse from './Components/reviewsoncourse';
 import Ratecourse from './Components/ratecourse';
 import Rateinstructor from './Components/rateinstructor';
+import TakeCourse from './Components/takeCourse';
+import Quiz from './Components/quiz';
+import SearchResult from './Components/search'
+import CourseOverview from './Components/courseOverview';
 
 
 
@@ -31,6 +35,13 @@ function App() {
         <Route path='/instructorsidebar' element={<Instructorsidebar />} />
         <Route path='/reviewsoninstructor' element={<Reviewsoninstructor />} />
         <Route path='/reviewsoncourse' element={<Reviewsoncourse />} />
+        <Route path='/instructor-courses' element={<CourseContainer currency={currency} type="instructor"/>} />
+        <Route path='/search' element={<SearchResult currency={currency}/>} />
+         {/* for getting sepcific course */}
+        <Route path='/course/:id' element={<CourseOverview currency={currency}/>} />
+        <Route path='/take-course/:id' element={<TakeCourse />} />
+        <Route path='/quiz/:courseID/:id' element={<Quiz />} />
+        <Route path='/' element={<CourseContainer currency={currency} type="all"/>} />
       </Routes>
     </React.Fragment>
   );

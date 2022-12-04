@@ -72,6 +72,27 @@ courseService.changeEmailorBiography = async(id, info) => {
     return data;
 }
 
+courseService.getQuiz = async(id) => {
+    const {data} = await http.get(apiUrl + 'get-quiz/' + id);
+    return data.quiz;
+}
+
+courseService.saveProgress = async(course) => {
+    const {data} = await http.post(apiUrl + 'save-progress', {course : course});
+    return data.course;
+}
+
+courseService.getRegisteredCourse = async(id) => {
+    const {data} = await http.get(apiUrl + 'get-register-course/' + id);
+    return data.course;
+}
+
+courseService.saveQuiz = async(id, courseID,grade) => {
+    console.log(grade);
+    const {data} = await http.post(apiUrl + 'save-quiz/'+courseID + '/' + id,{ grade : grade});
+    return data.course;
+}
+
 
 
 export default courseService;
