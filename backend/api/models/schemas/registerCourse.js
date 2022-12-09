@@ -7,22 +7,6 @@ const videoSchema = new Schema({
     title : String,
 }, {timestamps : true});
 
-// const sectionSchema = new Schema({
-//     totalHours : Number,
-//     title : String,
-//     summary : String,
-//     quizsId : [Object],
-//     videos : [{videoSchema}],
-// }, {timestamps : true});
-
-const subtitleSchema = new Schema({
-    totalHours : Number,
-    title : String,
-    summary : String,
-    videos : [{videoSchema}],
-}, {timestamps : true});
-
-
 const registerCourseSchema = new Schema({
         image : String,
         createdByID : Object,
@@ -33,14 +17,12 @@ const registerCourseSchema = new Schema({
         attemptedQuizs : [Object],
         completedQuizs : Number,
         totalItems : Number,
-        // courseId : Object,
         totalHours : Number,
         price : Number,
         rate : Number,
         numberofrates : Number,
         reviews : [String],
         discount : Object,
-        // subtitle : Object,
         rateInstructor : Boolean,
         rateCourse : Boolean,
         subject : String,

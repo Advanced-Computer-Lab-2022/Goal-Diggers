@@ -58,8 +58,11 @@ module.exports.uploadPreviewVideo = async (req, res) => {
 // url : api/add-course/ 
 module.exports.addCourse = async (req, res) => {
   const course = req.body.course;
-  console.log(course);
-  course.overviewVideo = null;
+  course.rate = 0;
+  course.ratedetails = [0,0,0,0,0,0];
+  course.reviews = [];
+  course.numberofrates = 0;
+  course.overviewVideo = {title : "Welcome video", url : course.overviewVideo, description : course.summary};
   Course.create(course).then(
     result => {return res.status(200).json({result});}
   )
@@ -76,6 +79,7 @@ module.exports.addCourseRate = async (req, res) => {
             course.rate += courseRate;
             course.numberofrates ++;
             course.ratedetails[courseRate] ++;
+            course.rateCourse = true;
             // later we add user details for the review
             course.reviews.push(courseReview);
             Course.findByIdAndUpdate(courseID,course).then(
