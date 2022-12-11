@@ -124,5 +124,15 @@ courseService.RevokeAccess = async(id) => {
     return data;
 }
 
+courseService.getInprogressCourses= async() => {
+    const {data} = await http.get(apiUrl + 'inprogress-courses');
+    return data.courses;
+}
+
+courseService.getCompletedCourses= async() => {
+    const {data} = await http.get(apiUrl + 'completed-courses');
+    return data.courses;
+}
+
 
 export default courseService;

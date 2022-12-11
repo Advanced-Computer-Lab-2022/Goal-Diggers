@@ -33,6 +33,8 @@ router.get('/courses-requests-rejected', controller.getCoursesRequestsRejected);
 router.post('/admin-add-promotion', controller.AdminAddPromotions);
 router.post('/admin-grant-access', controller.AdminGrantAccess);
 router.post('/admin-revoke-access', controller.AdminRevokeAccess);
+router.get('/completed-courses', controller.getCompletedCourses);
+router.get('/inprogress-courses', controller.getInProgressCourses);
 
 
 

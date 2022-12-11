@@ -49,7 +49,8 @@ function Adduser(props) {
     <form className='px-5 mx-5 mt-3 bg-light py-3 card' style={{borderRadius:'25px'}}>
             {error && <div className='alert alert-danger'>{error}</div>}
             {success && <div className='alert alert-success'>User added successfully</div>}
-            <div className="form-floating">
+            <h5>Add new user date</h5>
+            <div className="form-floating mt-2">
                  <input onChange={(e)=>handle(e)} id = "username" value={data.username} type="text" className='form-control' placeholder="Username"/>
                  <label htmlFor='username'>Username</label>
             </div>

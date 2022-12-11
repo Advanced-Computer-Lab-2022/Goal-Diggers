@@ -17,6 +17,7 @@ import SearchResult from './Components/search'
 import CourseOverview from './Components/courseOverview';
 import Createcourse from './Components/createcourse';
 import AdminView from './Components/adminView'
+import ProfileView from './Components/profileView';
 
 
 
@@ -40,7 +41,8 @@ function App() {
         <Route path='/instructor-courses' element={<CourseContainer currency={currency} type="instructor"/>} />
         <Route path='/search' element={<SearchResult currency={currency}/>} />
         <Route path='/create-course' element={<Createcourse />} />
-        <Route path='/course-reuquests' element={<AdminView />} />
+        <Route path='/admin-profile' element={<AdminView />} />
+        <Route path='/student-profile' element={<ProfileView />} />
          {/* for getting sepcific course */}
         <Route path='/course/:id' element={<CourseOverview currency={currency}/>} />
         <Route path='/take-course/:id' element={<TakeCourse />} />

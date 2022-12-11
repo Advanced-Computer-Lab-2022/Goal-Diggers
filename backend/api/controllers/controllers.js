@@ -459,7 +459,7 @@ module.exports.saveQuiz = async (req, res) => {
     )
 };
 
-//GET url : api/get-registercourses/12 get specific course
+//GET url : api/get-registercourses/12 get specific course // need auth
 module.exports.getRegisterCourse = async (req, res) =>{
    // get student id from jwt
    const courseID = ObjectId(req.params.id);
@@ -551,4 +551,28 @@ module.exports.AdminRevokeAccess = async (req, res) =>{
           console.log(request);
           return res.status(200).json({});
       });
+} 
+
+//GET 
+// url : api/inprogress-courses/ student get in progress courses // need auth
+module.exports.getInProgressCourses = async(req,res) =>{
+    RegisterCourse.find({}).then(
+        courses =>{
+          let result = courses.filter(course=>{return course.totalItems > (course.completedQuizs + course.completedVideos.length)});
+          res.status(200).json({courses : result})
+        }
+    )
+} 
+
+//GET 
+// url : api/completed-courses/ student get completed courses // need auth
+module.exports.getCompletedCourses = async(req,res) =>{
+    RegisterCourse.find({}).then(
+        courses =>{
+          let result = courses.filter(course=>{
+            return course.totalItems === (course.completedQuizs + course.completedVideos.length);
+          });
+          res.status(200).json({courses : result})
+        }
+    )
 } 

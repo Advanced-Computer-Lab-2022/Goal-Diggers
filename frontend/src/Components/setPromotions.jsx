@@ -4,7 +4,7 @@ import swal from 'sweetalert';
 import {Rating, ThemeProvider} from "@mui/material";
 
 const SetPromotions = () => {
-    const [ready, setReady] = useState(true);
+    const [ready, setReady] = useState(false);
     const [coursesOriginal, setCoursesOriginal] = useState([]);
     const [coursesDisplayed, setCoursesDisplayed] = useState([]);
     const [filters, setFilters] = useState({subject:'',price:Infinity, title:''});
