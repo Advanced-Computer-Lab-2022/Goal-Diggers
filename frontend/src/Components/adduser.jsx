@@ -46,27 +46,26 @@ function Adduser(props) {
     }
 
   return (
-    <div>
+    <form className='px-5 mx-5 mt-3 bg-light py-3 card' style={{borderRadius:'25px'}}>
             {error && <div className='alert alert-danger'>{error}</div>}
             {success && <div className='alert alert-success'>User added successfully</div>}
-            <div className="col-sm-6">
-                 <label htmlFor='username'>User Name</label>
-                 <input onChange={(e)=>handle(e)} id = "username" value={data.username} type="text" className='form-control my-1'/>
+            <div className="form-floating">
+                 <input onChange={(e)=>handle(e)} id = "username" value={data.username} type="text" className='form-control' placeholder="Username"/>
+                 <label htmlFor='username'>Username</label>
             </div>
             <div>
                 {texterror?<label className = "l1">You must fill it</label>:""}
                 <div className="form-floating mb-3" />
             </div>
-            <div className="col-sm-6">
+            <div className="form-floating">
+                <input onChange={(e)=>handle(e)} id = "password" value={data.password} type="password" className='form-control'  placeholder="Password"/>
                 <label htmlFor='password'>Password</label>
-                <input onChange={(e)=>handle(e)} id = "password" value={data.password} type="password" className='form-control my-1'/>
             </div>
             <div>
                 {texterror?<label className = "l1">You must fill it</label>:""}
                 <div className="form-floating mb-3" />
             </div>
-            <div className="col-sm-6">
-                <label>Role</label>
+            <div className="form-floating">
                 <select onChange={(e)=>handle(e)} id = "role" value={data.role} className='form-control my-1' placeholder = 'role'>
                     <option  value="">Select Role</option>
                     <option value="administrator">Administrator</option>
@@ -75,8 +74,8 @@ function Adduser(props) {
                 </select>
                 {texterror?<label className = "l1">You must fill it</label>:""}
             </div>
-        <button className='btn btn-primary' onClick={()=>submit()}>Submit</button>
-    </div>
+        <button className='btn btn-primary mt-3' style={{borderRadius : '25px'}} onClick={()=>submit()}>Submit</button>
+    </form>
   )
 }
 

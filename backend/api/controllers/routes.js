@@ -27,6 +27,12 @@ router.post('/change-email-biography/:id', controller.changeEmailorBiography);
 router.post('/add-quiz', controller.addQuiz);
 router.post('/add-course', controller.addCourse);
 /////////////////
+router.get('/courses-requests-pending', controller.getCoursesRequestsPending);
+router.get('/courses-requests-approved', controller.getCoursesRequestsApproved);
+router.get('/courses-requests-rejected', controller.getCoursesRequestsRejected);
+router.post('/admin-add-promotion', controller.AdminAddPromotions);
+router.post('/admin-grant-access', controller.AdminGrantAccess);
+router.post('/admin-revoke-access', controller.AdminRevokeAccess);
 
 
 

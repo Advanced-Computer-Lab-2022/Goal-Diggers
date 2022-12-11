@@ -7,14 +7,6 @@ const videoSchema = new Schema({
     order : Number,
 }, {timestamps : true});
 
-// const sectionSchema = new Schema({
-//     totalHours : Number,
-//     title : String,
-//     summary : String,
-//     quizsId : [Object],
-//     videos : [{videoSchema}],
-// }, {timestamps : true});
-
 const quizsSchema = new Schema({
     id : Object,
 }, {timestamps : true});

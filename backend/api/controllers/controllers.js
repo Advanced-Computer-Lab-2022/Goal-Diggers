@@ -1,4 +1,4 @@
-const { User, Role, Exam, Course, Note, Instructor, RegisterCourse } = require('../models/db');
+const { User, Role, Exam, Course, Note, Instructor, RegisterCourse, CourseRequest} = require('../models/db');
 const bcrypt = require("bcrypt");
 const _ = require('lodash');
 const {ObjectId} = require('mongodb');
@@ -79,7 +79,6 @@ module.exports.addCourseRate = async (req, res) => {
             course.rate += courseRate;
             course.numberofrates ++;
             course.ratedetails[courseRate] ++;
-            course.rateCourse = true;
             // later we add user details for the review
             course.reviews.push(courseReview);
             Course.findByIdAndUpdate(courseID,course).then(
@@ -163,7 +162,6 @@ module.exports.Linkverify = async (req, res) => {
     }
   };
   
-
 //POST
 //url : /api/forgot-password -> verify user email and send reset password link
 module.exports.forgotPassword = async (req, res) => {
@@ -315,28 +313,21 @@ module.exports.loginUser = async (req, res) => {
   
 // POST
 //url : /api/change-password -> to change user password
-module.exports.ChangePassword = (req, res) => {
-    const id = ObjectId(req.params.id)
+module.exports.ChangePassword =async (req, res) => {
     let password = req.body.password;
     let password_old = req.body.password_old;
-    User.findById(req.user._id).then(async (user) => {
-      if (!user) {
-        res.status(403);
-        res.json({ error: "YOU MUST LOGIN" });
-      } else {
-        if (await bcrypt.compare(password_old, user.password)) {
-          user.password = await bcrypt.hash(password, 10);
-          User.findOneAndUpdate({ _id: req.user._id }, user, {
-            new: true,
-          }).then();
-          res.status(200).json({});
-        } else {
-          res.status(200).json({ error: "incorrect password" });
-        }
-      }
-    });
-  };
+    if (await bcrypt.compare(password_old, req.user.password)) {
+      req.user.password = await bcrypt.hash(password, 10);
+      User.findOneAndUpdate({ _id: req.user._id }, req.user, {
+        new: true,
+      }).then();
+      res.status(200).json({});
+    } else {
+      res.status(200).json({ error: "incorrect password" });
+    }
+};
   
+/// need edits
 module.exports.changeEmailorBiography = async(req,res)=>{
   const id = ObjectId(req.params.id);
   const data = req.body;
@@ -397,7 +388,7 @@ module.exports.getAllCourses = async (req, res) => {
     )
 }
 
-// GET url : /api/instructor-courses
+// GET url : /api/instructor-courses //need edits
 module.exports.getInstructorCourses = async (req, res) => {
     await Course.find({}).then(
         courses => {return res.status(200).json({courses});}
@@ -484,3 +475,80 @@ module.exports.getRegisterCourse = async (req, res) =>{
    )
 }
 
+//GET
+// url : api/courses-requests-pending/ admin get corporate trainees requests
+module.exports.getCoursesRequestsPending = async (req, res) =>{
+    CourseRequest.find({status : "pending"}).then (
+      requests =>{
+        return res.status(200).json({requests});
+      }
+    )
+} 
+
+//GET
+// url : api/courses-requests-approved/ admin get corporate trainees requests
+module.exports.getCoursesRequestsApproved = async (req, res) =>{
+    CourseRequest.find({status : "approved"}).then (
+      requests =>{
+        return res.status(200).json({requests});
+      }
+    )
+} 
+
+//GET
+// url : api/courses-requests-rejected/ admin get corporate trainees requests
+module.exports.getCoursesRequestsRejected = async (req, res) =>{
+    CourseRequest.find({status : "rejected"}).then (
+      requests =>{
+        return res.status(200).json({requests});
+      }
+    )
+} 
+
+//POST
+// url : api/admin-add-promotion/ admin add promotions
+module.exports.AdminAddPromotions = async (req, res) =>{
+    const courses = req.body.courses;
+    const promotion = req.body.promotion;
+    await Course.updateMany({_id : {$in : courses}}, {discount : promotion}).then(
+      coursesRes =>{
+        return res.status(200).json({});
+      }
+    )
+} 
+
+//POST
+// url : api/admin-grant-access/ admin grant access to corporate trainee
+module.exports.AdminGrantAccess = async (req, res) =>{
+    const request_id = ObjectId(req.body.id);
+    CourseRequest.findByIdAndUpdate(request_id, {status : 'approved'}, {new : true}).then(
+        request => {
+          console.log(request);
+          let course_id = ObjectId(request.courseID);
+          let student_id = request.studentID;
+          console.log(course_id);
+          Course.findOne({_id : course_id}).then(
+            course =>{
+              let RegCourse = _.omit(course,'_id');
+              console.log(RegCourse);
+              RegCourse.completedVideos = [];
+              RegCourse.attemptedQuizs = [];
+              RegCourse.completedQuizs = 0;
+              RegCourse.studentID = student_id;
+              RegisterCourse.create(RegCourse).then(
+                result=>{return res.status(200).json({});}
+              )
+          })
+      });
+} 
+
+//POST
+// url : api/admin-revoke-access/ admin revoke access to corporate trainee
+module.exports.AdminRevokeAccess = async (req, res) =>{
+    const request_id = ObjectId(req.body.id);
+    CourseRequest.findByIdAndUpdate(request_id, {status : 'rejected'}, {new : true}).then(
+        request => {
+          console.log(request);
+          return res.status(200).json({});
+      });
+} 
