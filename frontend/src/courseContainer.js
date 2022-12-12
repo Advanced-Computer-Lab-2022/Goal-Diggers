@@ -1,5 +1,5 @@
 import  http  from './http-modules';
-
+import { saveAs } from 'file-saver';
 
 const apiUrl = 'http://localhost:3000/api/';
 
@@ -133,6 +133,15 @@ courseService.getCompletedCourses= async() => {
     const {data} = await http.get(apiUrl + 'completed-courses');
     return data.courses;
 }
+
+courseService.createAndDownloadPdf = async(title, notes) => {
+    await http.post(apiUrl+'create-pdf', {title, notes})
+      .then(() => http.get(apiUrl+'fetch-pdf', { responseType: 'blob' }))
+      .then((res) => {
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+        saveAs(pdfBlob, `${title} Notes.pdf`);
+      })
+  }
 
 
 export default courseService;

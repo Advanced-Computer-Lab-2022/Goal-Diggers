@@ -1,11 +1,38 @@
 import React from 'react';
+import courseService from '../courseContainer';
+import ReactLoading from 'react-loading';
+import { useState } from 'react';
 
 const ViewNotes = ({title,notes}) => {
+    const [view, setView] = useState({download : true});
+    const download = async()=>{
+        setView({loading : true});
+        await courseService.createAndDownloadPdf(title, notes);
+        setView({done : true});
+    }
     return ( 
         <React.Fragment>
         <div className="row">
-            <div className="col-sm-10">
-            <h2>Notes of {title} Course : {notes.length >= 0 && <button className='btn btn-dark' style={{borderRadius : '25px'}}><i className="fa fa-download" aria-hidden="true"></i></button>}</h2>
+            <div className="col-sm-10"> 
+            { !view.loading &&
+                <h2>Notes of {title} Course : 
+                    {notes.length >= 0 && view.download && <button onClick={()=>{download()}} className='btn btn-dark mx-4' style={{borderRadius : '25px'}}><i className="fa fa-download" aria-hidden="true"></i></button>}
+                    {view.done && <img className='mx-2' src="../correct.png" alt="" width={'30px'}/>}
+                </h2>
+            }
+            { view.loading &&
+                <div className="row">
+                    <div className="col-sm-11">
+                        <h2>Notes of {title} Course : 
+                            {notes.length >= 0 && view.download && <button onClick={()=>{download()}} className='btn btn-dark mx-4' style={{borderRadius : '25px'}}><i className="fa fa-download" aria-hidden="true"></i></button>}
+                            {view.done && <img className='mx-4' src="../correct.png" alt="" width={'30px'}/>}
+                        </h2>
+                    </div>
+                    <div className="col-sm-1">
+                        <ReactLoading type={"bars"} color={'lightgreen'} height={'100%'} width={'100%'} />
+                    </div>
+                </div>
+            }
             <hr />
             {notes.length === 0 ?
                 <div className='row'>

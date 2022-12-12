@@ -2,6 +2,8 @@ const { User, Role, Exam, Course, Note, Instructor, RegisterCourse, CourseReques
 const bcrypt = require("bcrypt");
 const _ = require('lodash');
 const {ObjectId} = require('mongodb');
+const pdf = require('html-pdf');
+const pdfTemplate = require('./generatePDF');
 require('dotenv').config();
 
 // const transporter = nodemailer.createTransport({
@@ -382,7 +384,6 @@ module.exports.addUser = async (req, res) => {
 module.exports.getAllCourses = async (req, res) => {
     await Course.find({}).then(
         courses => {
-            console.log(courses);
             return res.status(200).json({courses});
         }
     )
@@ -421,8 +422,6 @@ module.exports.getCourse = async (req,res) => {
 //POST url : api/save-progress/ save course progress
 module.exports.saveProgress = async (req, res) =>{
   const course = req.body.course;
-  console.log(course);
-  console.log("course");
   RegisterCourse.findByIdAndUpdate(course._id, course).then(
     result  => {
                 return res.status(200).json({result})}
@@ -452,8 +451,7 @@ module.exports.saveQuiz = async (req, res) => {
         }
         let id = course._id
         RegisterCourse.updateOne({_id : id}, course, {new : true}).then(
-          result => {console.log(result);
-                    res.status(200).json({});}
+          result => { return res.status(200).json({});}
         )
       }
     )
@@ -523,14 +521,11 @@ module.exports.AdminGrantAccess = async (req, res) =>{
     const request_id = ObjectId(req.body.id);
     CourseRequest.findByIdAndUpdate(request_id, {status : 'approved'}, {new : true}).then(
         request => {
-          console.log(request);
           let course_id = ObjectId(request.courseID);
           let student_id = request.studentID;
-          console.log(course_id);
           Course.findOne({_id : course_id}).then(
             course =>{
               let RegCourse = _.omit(course,'_id');
-              console.log(RegCourse);
               RegCourse.completedVideos = [];
               RegCourse.attemptedQuizs = [];
               RegCourse.completedQuizs = 0;
@@ -548,7 +543,6 @@ module.exports.AdminRevokeAccess = async (req, res) =>{
     const request_id = ObjectId(req.body.id);
     CourseRequest.findByIdAndUpdate(request_id, {status : 'rejected'}, {new : true}).then(
         request => {
-          console.log(request);
           return res.status(200).json({});
       });
 } 
@@ -575,4 +569,19 @@ module.exports.getCompletedCourses = async(req,res) =>{
           res.status(200).json({courses : result})
         }
     )
-} 
+}
+
+// used to create notes pdf
+module.exports.createPDF = (req,res) =>{
+  pdf.create(pdfTemplate(req.body.title, req.body.notes), {}).toFile(`${__dirname}/PDFs/result.pdf`, (err) => {
+    if(err) {
+        res.send(Promise.reject());
+    }
+    res.send(Promise.resolve());
+});
+};
+
+// used to download the notes pdf
+module.exports.fetchPDF = (req,res) =>{
+  res.sendFile(`${__dirname}/PDFs/result.pdf`);
+};

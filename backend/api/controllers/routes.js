@@ -35,6 +35,8 @@ router.post('/admin-grant-access', controller.AdminGrantAccess);
 router.post('/admin-revoke-access', controller.AdminRevokeAccess);
 router.get('/completed-courses', controller.getCompletedCourses);
 router.get('/inprogress-courses', controller.getInProgressCourses);
+router.post('/create-pdf', controller.createPDF);
+router.get('/fetch-pdf', controller.fetchPDF);
 
 
 
