@@ -39,14 +39,16 @@ const TakeCourse = () => {
 
     const saveNote = async ()=>{
         if(note.note) {
+            let temp= {... course};
             if(course.notes){
-                course.notes.push(note);
+                temp.notes.push(note);
             }
             else {
-                course.notes = [note];
+                temp.notes = [note];
             }
             setNote({note:'', title:''});
-            await courseService.saveProgress(course);
+            setCourse(temp);
+            // await courseService.saveProgress(temp);
         }
         else {
             setOpen(false);
@@ -213,13 +215,13 @@ const TakeCourse = () => {
                                         </div>
                                         <div className="col-sm-3 text-center">
                                             <img onClick={()=>{setOpen(!open)}} src="../notepad.png" alt="" width={'75px'}  />
-                                            {open && <form className='card bg-light mt-' style={{borderRadius:'25px'}}>
+                                            {open && <div className='card bg-light mt-' style={{borderRadius:'25px'}}>
                                                         <div className="form-floating mb-3">
                                                             <textarea onChange={(e) => handle(e)} value={note.note} name="summary" id="summaryy" className="form-control" placeholder="write your note here" style={{ height: '100px' }}></textarea>
                                                             <label htmlFor="floatingTextarea2">Write your note here</label>
                                                         </div>
                                                         <button className='btn btn-primary'style={{borderRadius:'25px'}} onClick={()=>{saveNote()}}>Save</button>
-                                                    </form>
+                                                    </div>
                                             }
                                         </div>
                                     </div>
