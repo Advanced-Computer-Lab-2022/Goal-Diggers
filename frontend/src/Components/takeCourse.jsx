@@ -48,7 +48,7 @@ const TakeCourse = () => {
             }
             setNote({note:'', title:''});
             setCourse(temp);
-            // await courseService.saveProgress(temp);
+            await courseService.saveProgress(temp);
         }
         else {
             setOpen(false);
