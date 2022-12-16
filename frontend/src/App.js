@@ -18,6 +18,7 @@ import CourseOverview from './Components/courseOverview';
 import Createcourse from './Components/createcourse';
 import AdminView from './Components/adminView'
 import ProfileView from './Components/profileView';
+import AuthContext, { AuthContextProvider } from "./context/AuthContext";
 
 
 
@@ -29,6 +30,7 @@ function App() {
   return (
     <React.Fragment>
       <NavBar handleCountry ={handleCountry}/>
+      <AuthContextProvider>
       <Routes>
         <Route path='/editinstructorprofile' element={<Editinstructorprofile />} />
         <Route path='/ratecourse/:id/:courseID' element={<Ratecourse />} />
@@ -49,6 +51,7 @@ function App() {
         <Route path='/quiz/:courseID/:id' element={<Quiz />} />
         <Route path='/' element={<CourseContainer currency={currency} type="all"/>} />
       </Routes>
+      </AuthContextProvider>
     </React.Fragment>
   );
 }
