@@ -205,7 +205,7 @@ const TakeCourse = () => {
                                     </div>
                                     :(
                                         <React.Fragment>
-                                    <div className="container p-3 justify-content-center" >
+                                    <div className=" p-3 justify-content-center" >
                                         <ProgressBar width='73%' bgColor='#6a1b9a' completed={(((course.completedVideos.length + course.completedQuizs) / course.totalItems) * 100).toFixed(2)} />
                                     </div>
                                     <h2>{title} : </h2>

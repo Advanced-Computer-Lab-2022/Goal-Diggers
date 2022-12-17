@@ -7,6 +7,7 @@ function Sidebar({refund ,subtitles, overviewvideo, completedVideos, attemptedQu
     const [items, setItems] = useState([]);
     useEffect(()=>{
         let itemTemp = [{title : overviewvideo.title, itemId : [overviewvideo.url,overviewvideo.descriprion, overviewvideo.title], elemBefore: () => <i style={{color: 'green'}} className="fa fa-check-circle" aria-hidden="true"></i>}];
+        console.log(subtitles);
         subtitles.map((subtitle, index) => {
             itemTemp.push({
                             title: subtitle.title,
@@ -21,6 +22,7 @@ function Sidebar({refund ,subtitles, overviewvideo, completedVideos, attemptedQu
                                                             return <i style={{color: 'green'}} className="fa fa-check-circle" aria-hidden="true"></i>}
                                     })
                             });
+
         subtitle.quizs.map((quiz, i) =>{
                                 itemTemp[index + 1].subNav.push({
                                     title: `Quiz ${i+1}`,

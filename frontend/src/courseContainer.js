@@ -167,6 +167,15 @@ courseService.createAndDownloadPdf = async(title, notes) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         saveAs(pdfBlob, `${title} Notes.pdf`);
       })
+}
+
+courseService.createAndDownloadCertificate = async(title, instructor) => {
+    await http.post(apiUrl+'create-certificate', {title, instructor})
+      .then(() => http.get(apiUrl+'fetch-certificate', { responseType: 'blob' }))
+      .then((res) => {
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+        saveAs(pdfBlob, `${title}.pdf`);
+      })
   }
 
 

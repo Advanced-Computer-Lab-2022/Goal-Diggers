@@ -21,6 +21,8 @@ import ProfileView from './Components/profileView';
 import AuthContext, { AuthContextProvider } from "./context/AuthContext";
 import PayCourse from './Components/payCourse';
 import InstructorView from './Components/instructorView';
+import Certificate from './Components/certificate';
+import NotFound from './Components/notfound';
 
 
 
@@ -53,7 +55,9 @@ function App() {
         <Route path='/take-course/:id' element={<TakeCourse />} />
         <Route path='/quiz/:courseID/:id' element={<Quiz />} />
         <Route path='/payment/:id' element={<PayCourse />} />
-        <Route path='/' element={<CourseContainer currency={currency} type="all"/>} />
+        <Route path='/certificate/:id' element={<Certificate />} />
+        <Route path='/' exact element={<CourseContainer currency={currency} type="all"/>} />
+        <Route path='*' element={<NotFound/>} />
       </Routes>
       </AuthContextProvider>
     </React.Fragment>

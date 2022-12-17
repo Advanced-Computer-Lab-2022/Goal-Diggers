@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const _ = require('lodash');
 const {ObjectId} = require('mongodb');
 const pdf = require('html-pdf');
-const pdfTemplate = require('./generatePDF');
+const {pdfTemplate, certificateTemplate} = require('./generatePDF');
 require('dotenv').config();
 const stripe = require("stripe")(
   "sk_test_51MEsfyD8LuqksnQUfvq6KNmUnIpERtruMHXIKHHnc7EOy51ZdpuYFZ4VlfaIbztSjh7kRZM3OSR0gVIifQjmmhZ1008I0rGA9q"
@@ -640,6 +640,22 @@ module.exports.getCompletedCourses = async(req,res) =>{
         }
     )
 }
+
+// used to create Certificate pdf
+module.exports.createCertificate = (req,res) =>{
+  pdf.create(certificateTemplate(req.body.title,"Mahmoud Sayed",req.body.instructor), {}).toFile(`${__dirname}/PDFs/certificate.pdf`, (err) => {
+    if(err) {
+        res.send(Promise.reject());
+    }
+    res.send(Promise.resolve());
+});
+};
+
+// used to download the Certificate pdf
+module.exports.fetchCertificate = (req,res) =>{
+  res.sendFile(`${__dirname}/PDFs/certificate.pdf`);
+};
+
 
 // used to create notes pdf
 module.exports.createPDF = (req,res) =>{

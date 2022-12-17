@@ -37,6 +37,8 @@ router.get('/completed-courses', controller.getCompletedCourses);
 router.get('/inprogress-courses', controller.getInProgressCourses);
 router.post('/create-pdf', controller.createPDF);
 router.get('/fetch-pdf', controller.fetchPDF);
+router.post('/create-certificate', controller.createCertificate);
+router.get('/fetch-certificate', controller.fetchCertificate);
 
 /////// Payment /////
 router.post('/payment/create', controller.createPayment);

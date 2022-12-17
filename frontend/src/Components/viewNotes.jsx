@@ -16,7 +16,7 @@ const ViewNotes = ({title,notes}) => {
             <div className="col-sm-10"> 
             { !view.loading &&
                 <h2>Notes of {title} Course : 
-                    {notes.length >= 0 && view.download && <button onClick={()=>{download()}} className='btn btn-dark mx-4' style={{borderRadius : '25px'}}><i className="fa fa-download" aria-hidden="true"></i></button>}
+                    {notes.length > 0 && view.download && <button onClick={()=>{download()}} className='btn btn-dark mx-4' style={{borderRadius : '25px'}}><i className="fa fa-download" aria-hidden="true"></i></button>}
                     {view.done && <img className='mx-2' src="../correct.png" alt="" width={'30px'}/>}
                 </h2>
             }
