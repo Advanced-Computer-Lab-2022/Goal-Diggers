@@ -5,6 +5,9 @@ const {ObjectId} = require('mongodb');
 const pdf = require('html-pdf');
 const pdfTemplate = require('./generatePDF');
 require('dotenv').config();
+const stripe = require("stripe")(
+  "sk_test_51MEsfyD8LuqksnQUfvq6KNmUnIpERtruMHXIKHHnc7EOy51ZdpuYFZ4VlfaIbztSjh7kRZM3OSR0gVIifQjmmhZ1008I0rGA9q"
+);
 
 // const transporter = nodemailer.createTransport({
 //     service: "Gmail",
@@ -13,7 +16,22 @@ require('dotenv').config();
 //       pass: process.env.password, // generated ethereal password
 //     },
 //   });
-   
+
+//POST 
+// url : api/payment/create" Create client secret  
+module.exports.createPayment =  async (req, res) => {
+  const total = req.body.price;
+  console.log(total);
+  console.log("Payment Request recieved for this ruppess", total);
+  const payment = await stripe.paymentIntents.create({
+    amount: total * 100 ,
+    currency: "usd",
+  });
+  res.status(201).json({
+    clientSecret: payment.client_secret,
+  });
+};
+
 //GET
 // url : /api/get-quiz/12 -> to get quiz
 module.exports.getQuiz = async (req,res)=>{
@@ -407,7 +425,7 @@ module.exports.getSearchCourses = async (req, res) => {
     );
 }
 
-// GET url : api/course/:id
+// GET url : api/course/:id need some edits
 module.exports.getCourse = async (req,res) => {
     const id = req.params.id;
     await Course.findById(id).then(

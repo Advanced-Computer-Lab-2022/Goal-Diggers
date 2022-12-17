@@ -179,7 +179,24 @@ const CourseOverview = () => {
                     {/* ////////////////////////////////////// */}
                 </React.Fragment>
             ) : (
-                <h1>not ready</h1>
+                    <div  className="container text-center" style={{marginBottom: '300px'}}>
+                        <div className="container">
+                            <div className="row">
+                                <div id="loader">
+                                    <div className="dot"></div>
+                                    <div className="dot"></div>
+                                    <div className="dot"></div>
+                                    <div className="dot"></div>
+                                    <div className="dot"></div>
+                                    <div className="dot"></div>
+                                    <div className="dot"></div>
+                                    <div className="dot"></div>
+                                    <div className="loading"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
             )
             }
         </React.Fragment>

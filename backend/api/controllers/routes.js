@@ -38,6 +38,9 @@ router.get('/inprogress-courses', controller.getInProgressCourses);
 router.post('/create-pdf', controller.createPDF);
 router.get('/fetch-pdf', controller.fetchPDF);
 
+/////// Payment /////
+router.post('/payment/create', controller.createPayment);
+
 
 
 

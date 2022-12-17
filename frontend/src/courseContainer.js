@@ -134,6 +134,18 @@ courseService.getCompletedCourses= async() => {
     return data.courses;
 }
 
+// fetch the client secret to pay 
+courseService.getClientSecret= async(price) => {
+    const data = await http.post(apiUrl + "payment/create", {price});
+    return data.data.clientSecret;
+}
+
+// buy the course 
+courseService.buyCourse= async(id, course) => {
+    const data = await http.post(apiUrl + "buy-course/" + id, course);
+    return data.data.clientSecret;
+}
+
 courseService.createAndDownloadPdf = async(title, notes) => {
     await http.post(apiUrl+'create-pdf', {title, notes})
       .then(() => http.get(apiUrl+'fetch-pdf', { responseType: 'blob' }))

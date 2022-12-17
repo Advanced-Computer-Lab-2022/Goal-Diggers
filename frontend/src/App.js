@@ -18,6 +18,7 @@ import CourseOverview from './Components/courseOverview';
 import Createcourse from './Components/createcourse';
 import AdminView from './Components/adminView'
 import ProfileView from './Components/profileView';
+import PayCourse from './Components/payCourse';
 
 
 
@@ -47,6 +48,7 @@ function App() {
         <Route path='/course/:id' element={<CourseOverview currency={currency}/>} />
         <Route path='/take-course/:id' element={<TakeCourse />} />
         <Route path='/quiz/:courseID/:id' element={<Quiz />} />
+        <Route path='/payment/:id' element={<PayCourse />} />
         <Route path='/' element={<CourseContainer currency={currency} type="all"/>} />
       </Routes>
     </React.Fragment>
