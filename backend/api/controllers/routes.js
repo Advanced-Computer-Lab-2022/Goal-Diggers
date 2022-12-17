@@ -40,6 +40,8 @@ router.get('/fetch-pdf', controller.fetchPDF);
 
 /////// Payment /////
 router.post('/payment/create', controller.createPayment);
+router.post('/buy-course', controller.buyCourse);
+router.get('/wallet', controller.getWallet);
 
 
 

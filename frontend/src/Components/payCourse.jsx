@@ -50,12 +50,12 @@ const Child = () => {
             payment_method: {
               card: elements.getElement(CardElement),
             },
-          }).then((res)=>{
+          }).then(async (res)=>{
             if(res.error)
                 setError(res.error.message);
             else {
-                // save payment
-                //navigate(`/take-course/${id}`);
+                await courseService.buyCourse(course);
+                navigate(`/take-course/${id}`);
             }
             setLoading(false);
             }

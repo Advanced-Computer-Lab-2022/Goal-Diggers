@@ -16,6 +16,7 @@ const userSchema = new Schema({
         firstname : {type : String,  required : true ,minlength:2, maxlength:255},
         lastname : {type : String,  required : true ,minlength:2, maxlength:255},
         gender : {type : String,  required : true ,enum : ['Male', 'Female']},
+        wallet : Number,
 },{timestamps : true});
 
 

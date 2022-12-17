@@ -18,7 +18,7 @@ export default function Login() {
                 password,
             }
             //we need also to 
-            await axios.post("http://localhost:5000/auth/login",loginData);
+            await axios.post("http://localhost:3000/auth/login",loginData);
             await getLoggedIn();
             navigate('/');
         } catch (error) {

@@ -59,7 +59,7 @@ const CourseOverview = () => {
                     </div>
                     <hr />
                     <div id="sections">
-                        {course.subtitle.map((section, index) => {
+                        {course.subtitles.map((section, index) => {
                             return <Sections key={index} section={section} count={index + 1} />
                         })}
 

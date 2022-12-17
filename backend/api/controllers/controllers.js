@@ -1,4 +1,4 @@
-const { User, Role, Exam, Course, Note, Instructor, RegisterCourse, CourseRequest} = require('../models/db');
+const { User, Role, Exam, Course, Instructor, RegisterCourse, CourseRequest, Wallet} = require('../models/db');
 const bcrypt = require("bcrypt");
 const _ = require('lodash');
 const {ObjectId} = require('mongodb');
@@ -27,9 +27,49 @@ module.exports.createPayment =  async (req, res) => {
     amount: total * 100 ,
     currency: "usd",
   });
-  res.status(201).json({
+  res.status(200).json({
     clientSecret: payment.client_secret,
   });
+};
+
+//POST 
+// url : api/buy-course/ user buy the course need to student id
+module.exports.buyCourse =  async (req, res) => {
+  let course = req.body.course;
+  course.registers ++;
+  Course.updateOne({_id : course._id}, course).then();
+  course.attemptedQuizs = [];
+  course.completedQuizs = 0;
+  course.completedVideos = [];
+  course.notes = [];
+  course.courseID = course._id;
+  course = _.omit(course, '_id');
+  RegisterCourse.create(course).then(
+    result => {
+      Wallet.findOne({instructorID : ObjectId(course.createdById)}).then(
+        wallet =>{
+          if(wallet) {
+            wallet.total += course.price*0.7;
+            let exist = false;
+            wallet.details.forEach((month, index) => {
+                if(new Date(month.month).getMonth() === new Date().getMonth() && new Date(month.month).getFullYear() === new Date().getFullYear()) {
+                  wallet.details[index].total += course.price*0.7;
+                  exist = true;
+                }
+            });
+            if(!exist)
+                wallet.details.push({month: `${new Date().getMonth() + 1}-1-${new Date().getFullYear()}`, total : course.price*0.7});
+            Wallet.updateOne({_id : wallet._id}, wallet).then();
+          }
+          else {
+            let wallet = {instructorID : ObjectId(course.createdById), total : course.price*0.7, details : [{month: `${new Date().getMonth() + 1}-1-${new Date().getFullYear()}`, total : course.price*0.7}]};
+            Wallet.create(wallet).then()
+          }
+        }
+      )
+      return res.status(200).json({});
+    }
+  )
 };
 
 //GET
@@ -41,6 +81,16 @@ module.exports.getQuiz = async (req,res)=>{
                   res.status(200).json({quiz})
         }
     );
+}
+
+//GET
+// url : /api/wallet -> to get wallet // need updates
+module.exports.getWallet = async (req,res)=>{
+    Wallet.findOne({}).then(
+      wallet => {
+        return res.status(200).json({wallet});
+      }
+    )
 }
 
 //POST
@@ -82,6 +132,8 @@ module.exports.addCourse = async (req, res) => {
   course.ratedetails = [0,0,0,0,0,0];
   course.reviews = [];
   course.numberofrates = 0;
+  course.registers = 0;
+  course.viewers = 0;
   course.overviewVideo = {title : "Welcome video", url : course.overviewVideo, description : course.summary};
   Course.create(course).then(
     result => {return res.status(200).json({result});}

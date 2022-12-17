@@ -134,6 +134,7 @@ courseService.getCompletedCourses= async() => {
     return data.courses;
 }
 
+///////////////////////////////////////////////////////
 // fetch the client secret to pay 
 courseService.getClientSecret= async(price) => {
     const data = await http.post(apiUrl + "payment/create", {price});
@@ -141,10 +142,23 @@ courseService.getClientSecret= async(price) => {
 }
 
 // buy the course 
-courseService.buyCourse= async(id, course) => {
-    const data = await http.post(apiUrl + "buy-course/" + id, course);
+courseService.buyCourse= async( course) => {
+    const data = await http.post(apiUrl + "buy-course", {course});
     return data.data.clientSecret;
 }
+
+// fetch the client secret to pay 
+courseService.getClientSecret= async(price) => {
+    const data = await http.post(apiUrl + "payment/create", {price});
+    return data.data.clientSecret;
+}
+
+// get instructor wallet 
+courseService.getWallet= async( course) => {
+    const data = await http.get(apiUrl + "wallet");
+    return data.data.wallet;
+}
+///////////////////////////////////////////////////
 
 courseService.createAndDownloadPdf = async(title, notes) => {
     await http.post(apiUrl+'create-pdf', {title, notes})

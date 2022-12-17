@@ -20,6 +20,7 @@ import AdminView from './Components/adminView'
 import ProfileView from './Components/profileView';
 import AuthContext, { AuthContextProvider } from "./context/AuthContext";
 import PayCourse from './Components/payCourse';
+import InstructorView from './Components/instructorView';
 
 
 
@@ -46,6 +47,7 @@ function App() {
         <Route path='/create-course' element={<Createcourse />} />
         <Route path='/admin-profile' element={<AdminView />} />
         <Route path='/student-profile' element={<ProfileView />} />
+        <Route path='/instructor-profile' element={<InstructorView />} />
          {/* for getting sepcific course */}
         <Route path='/course/:id' element={<CourseOverview currency={currency}/>} />
         <Route path='/take-course/:id' element={<TakeCourse />} />
