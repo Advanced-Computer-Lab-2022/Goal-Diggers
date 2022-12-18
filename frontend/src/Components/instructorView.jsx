@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {Navigation} from 'react-minimal-side-navigation';
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import Changepassword from './changepassword';
+import Createcourse from './createcourse';
 import StudentProfile from './studentProfile';
 import Wallet from './wallet';
 
@@ -16,6 +17,8 @@ const InstructorView = () => {
             setView({changeinfo : true});
         else if(item === 'earn') 
             setView({earn : true});
+        else if(item === 'addc') 
+            setView({addcourse : true});
     }   
     return ( 
         <React.Fragment>
@@ -32,6 +35,9 @@ const InstructorView = () => {
                         items={[
                             {title : "Profile",
                             itemId : "profile"
+                            },
+                            {title : "Add Course",
+                            itemId : "addc"
                             },
                             {title : "Settings",
                             subNav : [
@@ -53,6 +59,7 @@ const InstructorView = () => {
                     {view.changepassword && <Changepassword />}
                     {view.profile && <StudentProfile />}
                     {view.earn && <Wallet />}
+                    {view.addcourse && <Createcourse />}
                 </div>
                 <div className="col-sm-1"></div>
             </div>

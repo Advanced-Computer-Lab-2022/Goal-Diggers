@@ -45,7 +45,7 @@ const Certificate = () => {
                         <div id='body'>
                             <div class="containerCER">
                                 <div class="logo">
-                                    An Organization
+                                    <img src="../logo.png" width={'300px'} alt="" />
                                 </div>
 
                                 <div class="marquee">

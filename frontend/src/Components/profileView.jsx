@@ -28,7 +28,7 @@ const ProfileView = () => {
         <div className="row mt-3">
             <div className="col-sm-1"></div>
             <div className="col-sm-3 text-center">
-                <img src="./user.png" width={'80px'} style={{borderRadius:'30px'}} alt="" />
+                <img src="./graduating-student.png" width={'80px'} style={{borderRadius:'30px'}} alt="" />
                 <h6 className='m-2'>Mahmoud Sayed</h6>
                 <Navigation
                     activeItemId={"profile"}

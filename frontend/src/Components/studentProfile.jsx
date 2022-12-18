@@ -10,9 +10,9 @@ const StudentProfile = () => {
     return ( 
         <React.Fragment>
             <div className="card bg-light px-5 py-3 mt-5" style={{borderRadius : '25px'}}>
-                <h5 className='text-left'><i className="fa fa-money" aria-hidden="true"></i> Your Wallet : 0.0</h5>
+                <h5 className='text-left'><img src="./wallet.png" width={'35px'} alt="" /> Your Wallet : 0.0</h5>
                 <div className="row mt-5">
-                    <div className="col-sm-6">
+                    <div className="col-sm-6 text-left">
                         <h6>Firstname : Mahmoud </h6>
                     </div>
                     <div className="col-sm-6">

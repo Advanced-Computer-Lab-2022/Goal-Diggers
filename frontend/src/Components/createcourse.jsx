@@ -195,10 +195,11 @@ function Createcourse(props) {
     return (
         <React.Fragment>
             {!done ? <div className="row">
-            <div className="col-sm-3">
+            <div className="col-sm-1">
             </div>
-            <div className="col-sm-6">
+            <div className="col-sm-10">
                 <div className='text-center p-2 my-2 bg-light' style={{ border: '1px solid black', borderRadius: '15px' }}>
+                <h4 style={{fontFamily : 'cursive'}}>Add Course</h4>
                     <div className="form-floating mb-3">
                         <input onChange={(e) => handle(e)} id="subject" value={data.subject} type="text" className="form-control" placeholder="Subject" />
                         <label htmlFor="floatingInput">Subject</label>
@@ -256,15 +257,36 @@ function Createcourse(props) {
                         {texterror ? <label className="l1">You must fill it</label> : ""}
                         <div className="form-floating mb-3" />
                     </div>
+                    <div className="p-3 m-3" style={{borderRadius : '25px', border :'1px solid black'}}>
+                        Subtitle {subtitles.length + 1}
                     <div className="form-floating mb-3" />
                     <div className="form-floating mb-3">
                         <input onChange={(e) => { settitle(e.target.value) }} id="titleofsubtitle" value={titleofsubtitle} type="text" className="form-control" placeholder="Subtitle" />
-                        <label htmlFor="floatingInput">Subtitle {subtitles.length + 1}</label>
+                        <label htmlFor="floatingInput">Title</label>
                     </div>
                     <div>
                         {titleerror ? <label className="l1">You must fill it</label> : ""}
                         <div className="form-floating mb-3" />
                     </div>
+                    <div className="form-floating mb-3">
+                        <input onChange={(e) => { sethours(e.target.value) }} id="totalhours" value={totalhours} type="number" className="form-control" min={0} placeholder="Totalhours" />
+                        <label htmlFor="price">Totalhours</label>
+                    </div>
+                    <div>
+                        {titleerror ? <label className="l1">You must fill it</label> : ""}
+                        <div className="form-floating mb-3" />
+                    </div>
+                    <div className="form-floating mb-3">
+                        <textarea onChange={(e) => { setsummary(e.target.value) }} id="summaryofsubtitle" value={summaryofsubtitle} className="form-control" placeholder="Leave a comment here" style={{ height: '100px' }}></textarea>
+                        <label htmlFor="floatingTextarea2">Summry of Subtitle</label>
+                    </div>
+                    <div>
+                        {titleerror ? <label className="l1">You must fill it</label> : ""}
+                        <div className="form-floating mb-3" />
+                    </div>
+                    <button className='btn btn-primary' onClick={(e) => addquiz()}>Add Quiz</button>
+                    <div className="bg-light p-3 m-3" style={{borderRadius : '25px', border:'1px solid black'}}>
+                    <h6>Video {videos.length + 1} for Subtitle {subtitles.length + 1}</h6>
                     <div className="form-floating mb-3">
                         <input onChange={(e) => { setvideotitle(e.target.value) }} id="videotitle" value={videotitle} type="text" className="form-control" placeholder="Video Title" />
                         <label htmlFor="floatingInput">Video Title {videos.length + 1} for section {subtitles.length + 1}</label>
@@ -282,30 +304,9 @@ function Createcourse(props) {
                         <div className="form-floating mb-3" />
                     </div>
                     <button className='btn btn-primary' onClick={() => addvideo()}>Add Video</button>
-                    <br></br>
-                    <br></br>
-                    
-                    <button className='btn btn-primary' onClick={(e) => addquiz()}>Add Quiz</button>
-                    <div className="form-floating mb-3" />
-                    <div className="form-floating mb-3">
-                        <input onChange={(e) => { sethours(e.target.value) }} id="totalhours" value={totalhours} type="number" className="form-control" min={0} placeholder="Totalhours" />
-                        <label htmlFor="price">Totalhours</label>
-                    </div>
-                    <div>
-                        {titleerror ? <label className="l1">You must fill it</label> : ""}
-                        <div className="form-floating mb-3" />
-                    </div>
-                    <div className="form-floating mb-3">
-                        <textarea onChange={(e) => { setsummary(e.target.value) }} id="summaryofsubtitle" value={summaryofsubtitle} className="form-control" placeholder="Leave a comment here" style={{ height: '100px' }}></textarea>
-                        <label htmlFor="floatingTextarea2">Summry of Subtitle</label>
-                    </div>
-                    <div>
-                        {titleerror ? <label className="l1">You must fill it</label> : ""}
-                        <div className="form-floating mb-3" />
                     </div>
                     <button className='btn btn-primary' onClick={() => addtitle()}>Add Subtitle</button>
-                    <div className="form-floating mb-3" />
-                    <div className="form-floating mb-3" />
+                    </div>
 
                     <button className='btn btn-primary' onClick={(e) => submit()}>Create Course</button>
                 </div>
