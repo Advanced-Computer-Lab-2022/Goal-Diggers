@@ -659,7 +659,7 @@ module.exports.fetchCertificate = (req,res) =>{
 
 // used to create notes pdf
 module.exports.createPDF = (req,res) =>{
-  pdf.create(pdfTemplate(req.body.title, req.body.notes), {}).toFile(`result.pdf`, (err) => {
+  pdf.create(pdfTemplate(req.body.title, req.body.notes), {}).toFile(`${__dirname}/PDFs/result.pdf`, (err) => {
     if(err) {
         res.send(Promise.reject());
     }
