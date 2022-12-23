@@ -9,17 +9,17 @@
     font-family: 'Open Sans', sans-serif;
 }
 
-body{
-    background: #f5f6fa;
-}
+
 
 .wrapper .sidebar{
     background: rgb(5, 68, 104);
     position: fixed;
     top: 0;
     left: 0;
-    width: 225px;
-    height: 100%;
+    margin-top: 80px;
+    margin-left: 200px;
+    width: 280px;
+    height: 80%;
     padding: 20px 0;
     transition: all 0.5s ease;
 }
@@ -47,10 +47,10 @@ body{
 }
 .wrapper .sidebar ul li a{
     display: block;
-    padding: 13px 30px;
+    padding: 15px 30px;
     border-bottom: 1px solid #10558d;
     color: rgb(241, 237, 237);
-    font-size: 16px;
+    font-size: 17px;
     position: relative;
 }
 
@@ -63,10 +63,10 @@ body{
 
 .wrapper .sidebar ul li a:hover,
 .wrapper .sidebar ul li a.active{
-    color: #0c7db1;
-
+    color: rgb(0, 0, 0);
     background:white;
-    border-right: 2px solid rgb(5, 68, 104);
+    border-right: 1px solid rgb(5, 68, 104);
+    border-left: 10px solid rgb(5, 68, 104);
 }
 
 .wrapper .sidebar ul li a:hover .icon,
@@ -78,3 +78,5 @@ body{
 .wrapper .sidebar ul li a.active:before{
     display: block;
 }
+
+ 

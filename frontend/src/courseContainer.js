@@ -62,6 +62,12 @@ courseService.getRatingsAndReviews = async(id) => {
 }
 
 //need update in sprint 3
+courseService.getCourseReviewsAndRatings = async(id) => {
+    const {data} = await http.get(apiUrl + 'getCourseReviewsAndRatings/' + id);
+    return data;
+}
+
+//need update in sprint 3
 courseService.changePassword = async(id, passwords) => {
     const {data} = await http.post(apiUrl + 'change-password/' + id, passwords);
     return data;
@@ -99,5 +105,14 @@ courseService.addQuiz = async(quiz) => {
     return data;
 }
 
+courseService.getMyCourses = async (id) => {
+    const {data} = await http.get(apiUrl + `getMyCourses/${id}`);
+    return data;
+}
+
+courseService.getNumberOFTrainees = async (id) => {
+    const {data} = await http.get(apiUrl + `getNumberOFTrainees`);
+    return data;
+}
 
 export default courseService;

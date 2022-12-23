@@ -5,24 +5,115 @@ import Edituserprofile from './edituserprofile';
 import "./sidebar.css";
 import Userprofile from './userprofile';
 import Changeimageprofile from './changeimageprofile';
+import Mycourses from './mycourses';
 
 function Trainersidebar() {
   const [userprofile, setuserprofile] = useState(true);
   const [changeimageprofile, setchangeimageprofile] = useState(false);
   const [edituserprofile, setedituserprofile] = useState(false);
+  const [mycourses, setmycourses] = useState(false);
 
   function openSlideMenu () {
     document.getElementById('menu').style.width = '250px';
     document.getElementById('content').style.marginLeft = '250px';
+
   }
   
   function closeSlideMenu () {
     document.getElementById('menu').style.width = '0';
     document.getElementById('content').style.marginLeft = '0';
+    
   }
 
   return (
     <React.Fragment>
+      <div>
+      <header id="header">
+
+<div class="header-top">
+    <div class="container">
+        <div class="row d-flex flex-center">
+            <div class="col-sm-8">
+                <div class="ht-address">
+                    <ul>
+                        <li><i class="fa fa-phone"></i>+ 88 01916 444137</li>
+                        <li><i class="fa fa-envelope"></i>info@example.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ht-social">
+                    <ul>
+                    <li><a href="https://youtu.be/z4tOlwuHEZI"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://youtu.be/kXhBKjDKF84"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://youtu.be/BG9HSntowA8"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="https://youtu.be/aiRY36TPVo8"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="header-bottom">
+    <div class="container">
+        <div class="header-bottom-inner">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-sm-9">
+                    <div class="logo">
+                        <a href="homepage2"><img src="assets2/images/icon/logo.png" alt="logo"/></a>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-lg-7 d-none d-lg-block">
+                    <div class="main-menu">
+                        <nav>
+                        <ul id="m_menu_active">
+                        <li><a href="homepage2">Home</a></li>
+                            <li><a href="about">About</a></li>
+                            <li ><a href="newcourses">Courses</a></li>
+                            <li><a href="teachers">Teachers</a></li>
+                            <li><a href="blog">Blogs</a></li>
+                            <li ><a href="contact">Contact</a></li>
+                            <li class="active"><a href='trainersidebar' class="avatar1"><img id='sidebar' src="r9.jpg" /></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-xl-1 col-lg-2 col-sm-3">
+                    <div class="hb-right">
+                        <ul> 
+                            <li class="search_btn"><i class="fa fa-search"></i></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12 d-block d-lg-none">
+                    <div id="mobile_menu"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</header>
+
+<div class="offset-search">
+<form action="#">
+    <input type="text" name="search" placeholder="Search here..."/>
+    <button type="submit"><i class="fa fa-search"></i></button>
+</form>
+</div>
+
+<div class="body_overlay"></div>
+
+<div class="crumbs-area">
+<div class="container">
+    <div class="crumb-content">
+        <h4 class="crumb-title"><span>Single</span> Course DeatilS</h4>
+    </div>
+</div>
+</div>
+<div className="form-floating mb-3" />
+      </div>
       <div className="row">
         <div className="col-sm-2">
         <div id="main">
@@ -44,15 +135,45 @@ function Trainersidebar() {
           </a>
           <Link to="#" onClick={()=> {setuserprofile(true); setchangeimageprofile(false); setedituserprofile(false); console.log(userprofile);}}>Profile</Link>
           <Link to="#">My Courses</Link>
-          <Link to="#"  onClick={()=> {setuserprofile(false); setchangeimageprofile(true); setedituserprofile(false); console.log(userprofile);}}>Change Profile Image</Link>
+          <Link to="#"  onClick={()=> {setuserprofile(false); setchangeimageprofile(true); setedituserprofile(false); console.log(userprofile);}}><a href="#">
+                        <span className="icon"><i class="fa fa-sliders" aria-hidden="true"></i></span>
+                        <span className="item">Settings</span>
+                    </a></Link>
           <Link to="#"  onClick={()=> {setuserprofile(false); setchangeimageprofile(false); setedituserprofile(true)}}>Settings</Link>
           <Link to="#">LogOut</Link>
+          {/* <ul>
+                <li>
+                    <a href="userprofile" className="active">
+                        <span className="icon"><i className="fa fa-home"></i></span>
+                        <span className="item">Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span className="icon"><i class="fa fa-book" aria-hidden="true"></i></span>
+                        <span className="item">My Courses</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span className="icon"><i class="fa fa-sliders" aria-hidden="true"></i></span>
+                        <span className="item">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                        <span className="item">LogOut</span>
+                    </a>
+                </li>
+            </ul> */}
         </div>
       </div>
     </div>
         </div>
         <div className="col-sm-10">
             {userprofile && <Userprofile />}
+            {mycourses && <Mycourses />}
             {changeimageprofile && <Changeimageprofile />}
             {edituserprofile && <Edituserprofile/>} 
         </div>
@@ -69,6 +190,64 @@ function Trainersidebar() {
     } */}
   
     
+  <footer>
+        <div class="footer-top has-color pt--120 pb--30">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="widget widget-company">
+                            <img src="assets2/images/icon/logo.png" alt="image"/>
+                            <div class="address">
+                                <h6>OFFICE ADDRESS</h6>
+                                <p>London Oxford Street, 012 United Kingdom.</p>
+                            </div>
+                            <div class="address">
+                                <h6>BUSINESS PHONE</h6>
+                                <p>+012 3456 7890</p>
+                            </div>
+                            <div class="address">
+                                <h6>BUSINESS EMAIL</h6>
+                                <p>Business@themerocket.net</p>
+                            </div>
+                            <ul class="social">
+                                <li><a href="https://youtu.be/z4tOlwuHEZI"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="https://youtu.be/kXhBKjDKF84"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="https://youtu.be/BG9HSntowA8"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="https://youtu.be/aiRY36TPVo8"><i class="fa fa-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="widget footer-link">
+                            <h4 class="fwidget-title mb-5 pb-3 primary-color2">Footer Menu</h4> 
+                            <ul>
+                                <li><a href="whycc"><i class="fa fa-arrow-right"></i>Why Canadian Company</a></li>
+                                <li><a href="about"><i class="fa fa-arrow-right"></i>About Us</a></li>
+                                <li><a href="workwithus"><i class="fa fa-arrow-right"></i>Work with Us</a></li>
+                                <li><a href="careers"><i class="fa fa-arrow-right"></i>Careers</a></li>
+                                <li><a href="contact"><i class="fa fa-arrow-right"></i>Contact us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="widget widget-opening">
+                            <h4 class="fwidget-title mb-5 pb-3 primary-color2">Working Day & time</h4>
+                            <p>Architecto beatae vitae dicta sunt ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit</p>
+                           <ul>
+                                <li><span>Mon - Tus :</span>6.00 am - 10.00 pm</li>
+                                <li><span>Wed - Tur :</span>8.00 am - 6.00 pm</li>
+                                <li><span>Friday :</span>3.00 pm - 8.00 pm</li>
+                                <li><span>Sunday :</span>Closed</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>Copyright © 2022 <span><a class="primary-color2" href="https://youtu.be/r6zIGXun57U" target="_blank">Edification</a> </span> - All Rights Reserved. Made by <span><a class="primary-color2" href="https://youtu.be/r6zIGXun57U" target="_blank">GoalDiggers</a></span></p>
+                </div>
+            </div>
+        </div>
+    </footer>
     
     </React.Fragment>
   )

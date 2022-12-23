@@ -27,8 +27,9 @@ router.post('/change-email-biography/:id', controller.changeEmailorBiography);
 router.post('/add-quiz', controller.addQuiz);
 router.post('/add-course', controller.addCourse);
 /////////////////
-
-
+router.get('/getNumberOFTrainees',controller.getNumberOFTrainees)
+router.get('/getMyCourses/:id',controller.getMyCourses)
+router.get('/getCourseReviewsAndRatings/:id',getCourseReviewsAndRatings)
 
 
 module.exports = router;

@@ -376,8 +376,7 @@ function Createcourse(props) {
                 </div>
                 <div className="text-center"><button className="btn btn-primary" onClick={() => addquestion()} type="submit" style={{ borderRadius: '25px' }}>Go To next Question <i
                     className="fa fa-step-htmlForward" aria-hidden="true"></i></button></div>
-                <div className="text-center" ><button
-                    className="btn btn-primary" style={{ borderRadius: '25px' }} onClick={() => submitquiz()}>Save the Quiz <i className="fa fa-floppy-o"
+                <div className="text-center" ><button className="btn btn-primary" style={{ borderRadius: '25px' }} onClick={() => submitquiz()}>Save the Quiz <i className="fa fa-floppy-o"
                         aria-hidden="true"></i></button></div>
             </div>
         </div>

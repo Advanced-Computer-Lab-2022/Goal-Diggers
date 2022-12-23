@@ -130,7 +130,16 @@ module.exports.getReviewsAndRatings = async (req, res) => {
         }
     )
 };
-
+//GET
+//url : /api/reviews-ratings/-> course get reviews and ratings
+module.exports.getCourseReviewsAndRatings = async (req, res) => {
+  const id = ObjectId(req.params.id);
+  Course.findById(id).then(
+      course => {
+          res.status(200).json({reviews : course.reviews, rate : course.rate, numberofrates : course.numberofrates, ratedetails : course.ratedetails});
+      }
+  )
+};
 //POST
 //url : /api/add-quiz/12 -> add quiz to course
 module.exports.addQuiz = async (req, res) => {
@@ -484,3 +493,23 @@ module.exports.getRegisterCourse = async (req, res) =>{
    )
 }
 
+module.exports.getNumberOFTrainees = async (req, res) =>{
+  try{
+    const num = await Role.countDocuments({})
+    res.status(200).json({num})
+  }
+  catch(error){
+    res.status(401).json({error})
+  }
+}
+
+module.exports.getMyCourses = async (req, res) =>{
+  try{
+    const id = req.params.id;
+    const courses = await RegisterCourse.find({studentID:id},{price:0}) // '-price'
+    res.status(200).json(courses)
+  }
+  catch(error){
+    res.status(401).json({error})
+  }
+}
