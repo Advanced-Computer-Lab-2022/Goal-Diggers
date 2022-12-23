@@ -28,6 +28,7 @@ const registerCourseSchema = new Schema({
         subject : String,
         summary : String, 
         title : String,
+        notes : [Object],
         overviewVideo : videoSchema,
         examsId : [Object],
         subtitles : [Object]

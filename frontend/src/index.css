@@ -49,3 +49,220 @@ code {
   position: absolute;
   width: 1px;
 }
+
+/* certificate */
+#body, #html {
+  margin: 0;
+  padding: 0;
+}
+#body {
+  color: black;
+  display: table;
+  font-family: Georgia, serif;
+  font-size: 24px;
+  width: 900px;
+  text-align: center;
+}
+.containerCER {
+  border: 20px solid rgb(224, 91, 73);
+  width: 750px;
+  height: 563px;
+  display: table-cell;
+  vertical-align: middle;
+}
+.logo {
+  color: rgb(224, 91, 73);
+}
+
+.marquee {
+  color: rgb(224, 91, 73);
+  font-size: 48px;
+  margin: 20px;
+}
+.assignment {
+  margin: 20px;
+}
+.person {
+  border-bottom: 2px solid black;
+  font-size: 32px;
+  font-style: italic;
+  margin: 20px auto;
+  width: 400px;
+}
+.reason {
+  margin: 20px;
+}
+/*------------*/
+
+/* nav bar */
+#img{
+  height: 80px;
+  width: 200px;
+  display: flex !important;
+  
+}
+.nav-links {
+  display: flex !important;
+  height: 40px !important;
+  color:#252525 !important;/*will change background-color of element */ /*will change color of text within the element */
+  }
+  
+  .nav-links:hover {
+    color: red !important; /*will change color of text within the element on hover */
+  }
+  .navbar-custom{
+    height: 80px !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+
+  Button{
+    margin-left: 50px !important;
+   
+  }
+#search{
+  display: flex;
+  justify-content: center;
+  background-color:#f8f9fa;
+}
+#nav-item1{
+  position: absolute !important;
+  left: 750px !important;
+}
+#nav-item2{
+  position: absolute !important;
+  left: 850px !important;
+}
+#nav-item3{
+  position: absolute !important;
+  left: 970px !important;
+}
+#nav-item4{
+  position: absolute !important;
+  left: 1070px !important;
+}
+#nav-item5{
+  position: absolute !important;
+  left: 1170px !important;
+}
+#nav-item6{
+  position: absolute !important;
+  left: 400px !important;
+}
+#brand{
+  position: absolute !important;
+  left: 100px !important;
+}
+
+#loginRegister{
+
+  background-color: #a00407;
+  border-bottom: 1px solid #eeeeee;
+  color: #eeeeee;
+  display: flex;
+  max-height: 40px;
+  
+ }
+#info{
+  display: flex;
+  width: 400px;
+  justify-content: space-between;
+  margin: 7px 90px;
+  font-size: 14px;
+}
+#logg{
+  display: flex;
+  
+  left: 10%;
+  top: 1%;
+}
+
+/*login footer*/
+#footerSign{
+  background-color: #a00407;
+  position:fixed !important;
+  bottom: 0px;
+  width: 100%;
+  display: flex !important;
+  height: 8.5%;
+  
+}
+
+#footerButtons{
+  display: flex !important;
+  justify-content: space-between !important;
+  width:190px !important;
+  margin: 20px 0px 20px 1200px !important;
+}
+#button1{
+
+  background-color:#E26868 ; 
+  color: white; 
+  font-size: 14px !important;
+  
+  border: 0px !important;
+  border: 0.2px solid #EFF3F4 !important;
+  border-radius: 20px !important;
+  height: 40px;
+  width: 90px;
+  position: absolute;
+  top:10px;
+
+}
+#button1:hover {
+  background-color: white ;
+  color: #a00407;
+}
+#button2{
+  background-color: #EFF3F4 !important; 
+  color: #a00407 !important; 
+ 
+  border: 0px !important;
+  font-size: 14px !important;
+  
+  border: 0.2px solid #EFF3F4 !important;
+  border-radius: 20px !important;
+  height: 40px;
+  width: 90px;
+  position: absolute;
+  top:10px;
+  right: 60px;
+
+}
+#button2:hover {
+  background-color: #a00407 !important;
+  color: white !important;
+}
+#span1{
+  font-size: 23px;
+  color: white;
+  position: absolute;
+  left:10%;
+  top:0%;
+}
+#span2{
+  font-size: 18px;
+  color: white;
+  position: absolute;
+  left:10%;
+  top:50%;
+}
+#linkpos{
+  position: absolute;
+  top:90%;
+  left: 30%;
+}
+
+#discountContainer{
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  position: absolute !important;
+  left: 30% !important;
+  top:25% !important; 
+}
+#disinput{
+  margin-bottom: 30px;
+}
+/*-----------*/

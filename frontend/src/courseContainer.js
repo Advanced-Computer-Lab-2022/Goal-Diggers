@@ -1,5 +1,5 @@
 import  http  from './http-modules';
-
+import { saveAs } from 'file-saver';
 
 const apiUrl = 'http://localhost:3000/api/';
 
@@ -105,14 +105,84 @@ courseService.addQuiz = async(quiz) => {
     return data;
 }
 
-courseService.getMyCourses = async (id) => {
-    const {data} = await http.get(apiUrl + `getMyCourses/${id}`);
+courseService.adminAddPromotions = async(courses,promotion) => {
+    const {data} = await http.post(apiUrl + 'admin-add-promotion',{ courses, promotion});
+    return data;
+}
+courseService.getCoursesRequestsP = async() => {
+    const {data} = await http.get(apiUrl + 'courses-requests-pending');
+    return data.requests;
+}
+courseService.getCoursesRequestsA = async() => {
+    const {data} = await http.get(apiUrl + 'courses-requests-approved');
+    return data.requests;
+}
+courseService.getCoursesRequestsR = async() => {
+    const {data} = await http.get(apiUrl + 'courses-requests-rejected');
+    return data.requests;
+}
+courseService.GrantAccess = async(id) => {
+    const {data} = await http.post(apiUrl + 'admin-grant-access',{id});
+    return data;
+}
+courseService.RevokeAccess = async(id) => {
+    const {data} = await http.post(apiUrl + 'admin-revoke-access',{id});
     return data;
 }
 
-courseService.getNumberOFTrainees = async (id) => {
-    const {data} = await http.get(apiUrl + `getNumberOFTrainees`);
-    return data;
+courseService.getInprogressCourses= async() => {
+    const {data} = await http.get(apiUrl + 'inprogress-courses');
+    return data.courses;
 }
+
+courseService.getCompletedCourses= async() => {
+    const {data} = await http.get(apiUrl + 'completed-courses');
+    return data.courses;
+}
+
+///////////////////////////////////////////////////////
+// fetch the client secret to pay 
+courseService.getClientSecret= async(price) => {
+    const data = await http.post(apiUrl + "payment/create", {price});
+    return data.data.clientSecret;
+}
+
+// buy the course 
+courseService.buyCourse= async( course) => {
+    const data = await http.post(apiUrl + "buy-course", {course});
+    return data.data.clientSecret;
+}
+
+// fetch the client secret to pay 
+courseService.getClientSecret= async(price) => {
+    const data = await http.post(apiUrl + "payment/create", {price});
+    return data.data.clientSecret;
+}
+
+// get instructor wallet 
+courseService.getWallet= async( course) => {
+    const data = await http.get(apiUrl + "wallet");
+    return data.data.wallet;
+}
+///////////////////////////////////////////////////
+
+courseService.createAndDownloadPdf = async(title, notes) => {
+    await http.post(apiUrl+'create-pdf', {title, notes})
+      .then(() => http.get(apiUrl+'fetch-pdf', { responseType: 'blob' }))
+      .then((res) => {
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+        saveAs(pdfBlob, `${title} Notes.pdf`);
+      })
+}
+
+courseService.createAndDownloadCertificate = async(title, instructor) => {
+    await http.post(apiUrl+'create-certificate', {title, instructor})
+      .then(() => http.get(apiUrl+'fetch-certificate', { responseType: 'blob' }))
+      .then((res) => {
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+        saveAs(pdfBlob, `${title}.pdf`);
+      })
+  }
+
 
 export default courseService;
