@@ -5,12 +5,12 @@ import  { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 //first we need to take the values from the input fields using use state
 function Register() {
-    const[userName,setUserName]=useState("");
+    const[username,setUserName]=useState("");
     const[email,setEmail]=useState("");
     const[password,setPassword]=useState("");
-    const[firstName,setFirstName]=useState("");
-    const[lastName,setlastName]=useState("");
-    const[passwordVerify,setPasswordVerify]=useState("");
+    const[firstname,setFirstName]=useState("");
+    const[lastname,setlastName]=useState("");
+    const[gender,setGender]=useState("male");
     const {getLoggedIn}=useContext(AuthContext);
     const navigate = useNavigate();
     async function register(e){
@@ -18,15 +18,15 @@ function Register() {
         e.preventDefault();
         try {
             const registerData={
-                userName,
+                username,
                 email,
                 password,
-                firstName,
-                lastName,
-                passwordVerify,
+                firstname,
+                lastname,
+                gender,
             }
             //we need also to 
-            await axios.post("http://localhost:5000/auth/",registerData);
+            await axios.post("http://localhost:3000/api/register",registerData);
             await getLoggedIn();
             navigate('/');
         } catch (error) {
@@ -44,8 +44,8 @@ function Register() {
           <div class="material-textfield input-box ">
           <input 
           className="inputt"
-         placeholder="firstName"
-         value={firstName}
+     
+         value={firstname}
         onChange={(e)=>setFirstName(e.target.value)}>
         </input>
               <label className="labell">First Name</label>
@@ -53,8 +53,8 @@ function Register() {
             <div class="material-textfield input-box  ">
             <input 
             className="inputt"
-         placeholder="lastName"
-         value={lastName}
+         
+         value={lastname}
         onChange={(e)=>setlastName(e.target.value)}>
         </input>
               <label className="labell">Last Name</label>
@@ -63,7 +63,7 @@ function Register() {
             <input 
             className="inputt"
         type="email"
-         placeholder="email"
+        
          value={email}
         onChange={(e)=>setEmail(e.target.value)}>
         </input>
@@ -72,8 +72,8 @@ function Register() {
             <div class="material-textfield input-box ">
             <input 
        className="inputt"
-         placeholder="userName"
-         value={userName}
+        
+         value={username}
         onChange={(e)=>setUserName(e.target.value)}>
         </input>
               <label className="labell">User Name</label>
@@ -82,27 +82,18 @@ function Register() {
             <input 
             className="inputt"
         type="password"
-         placeholder="password"
+        
          value={password}
         onChange={(e)=>setPassword(e.target.value)}>
         </input>
               <label className="labell">Password</label>
             </div>
-            <div class="material-textfield input-box ">
-            <input 
-            className="inputt"
-        type="password"
-         placeholder="confirm password"
-         value={passwordVerify}
-        onChange={(e)=>setPasswordVerify(e.target.value)}>
-        </input>
-              <label className="labell">Confirm Password</label>
-            </div>
+       
           </div>
           <div className="gender-details">
-            <input type="radio" name="gender" id="dot-1" />
-            <input type="radio" name="gender" id="dot-2" />
-            <input type="radio" name="gender" id="dot-3" />
+            <input type="radio" name="gender" id="dot-1" value="male"/>
+            <input type="radio" name="gender" id="dot-2" value="female"/>
+          
             <span className="gender-title">Gender</span>
             <div className="category">
               <label htmlFor="dot-1">
@@ -113,6 +104,7 @@ function Register() {
                 <span className="dot two"></span>
                 <span className="gender">Female</span>
               </label>
+              
            
             </div>
           </div>

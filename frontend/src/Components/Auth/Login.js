@@ -5,22 +5,25 @@ import AuthContext from '../../context/AuthContext';
 import  { useNavigate }from 'react-router-dom';
 //first we need to take the values from the input fields using use state
 export default function Login() {
-    const[userName,setUserName]=useState("");
+    const[username,setUserName]=useState("");
     const[password,setPassword]=useState("");
-    const {getLoggedIn}=useContext(AuthContext);
+    const[type,setType]=useState("");
+    const {loggedIn,getLoggedIn}=useContext(AuthContext);
     const navigate = useNavigate();
     async function login(e){
         //to prevent the page from refreshing when submit
         e.preventDefault();
         try {
             const loginData={
-                userName,
+                username,
                 password,
+                type,
             }
             //we need also to 
-            await axios.post("http://localhost:3000/auth/login",loginData);
+            await axios.post("http://localhost:3000/api/login",loginData);
             await getLoggedIn();
-            navigate('/');
+           if(loggedIn==true){
+            navigate('/');}
         } catch (error) {
             console.log(error.message);
         }
@@ -31,7 +34,7 @@ export default function Login() {
     <form onSubmit={login}>
         <input 
          placeholder="User Name"
-         value={userName}
+         value={username}
         onChange={(e)=>setUserName(e.target.value)}>
         </input>
         <input 
@@ -39,6 +42,13 @@ export default function Login() {
         placeholder="password"
         value={password}
         onChange={(e)=>setPassword(e.target.value)}
+        >
+        </input>
+        <input 
+         
+        placeholder="type"
+        value={type}
+        onChange={(e)=>setType(e.target.value)}
         >
         </input>
         <button>login</button>

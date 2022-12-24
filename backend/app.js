@@ -3,6 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
+const createError = require('http-errors');
 require('dotenv').config();
 
 //Database connection 
@@ -21,7 +22,7 @@ var usersRouter = require('./routes/users');
 var apiRouter = require('./api/controllers/routes');
 
 var app = express();
-app.use(cors({'origin' : '*'}));
+app.use(cors({origin:["http://localhost:3001"] ,credentials:true,}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

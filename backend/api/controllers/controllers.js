@@ -4,6 +4,7 @@ const _ = require('lodash');
 const {ObjectId} = require('mongodb');
 const pdf = require('html-pdf');
 const {pdfTemplate, certificateTemplate} = require('./generatePDF');
+const jwt =require("jsonwebtoken");
 require('dotenv').config();
 const stripe = require("stripe")(
   "sk_test_51MEsfyD8LuqksnQUfvq6KNmUnIpERtruMHXIKHHnc7EOy51ZdpuYFZ4VlfaIbztSjh7kRZM3OSR0gVIifQjmmhZ1008I0rGA9q"
@@ -271,47 +272,34 @@ module.exports.forgotPassword = async (req, res) => {
 // POST
 // url : /api/register -> to register user 
 module.exports.registerUser = async (req, res) => {
-    const { error } = schema.validate(req.body);
-    if (error) return res.status(200).json({ error: error.details[0].message });
-    await User.findOne({ username: req.body.username }).then(async (result) => {
-      if (result) {
-        return res.status(200).json({ error: "username already exist" });
-      } else {
-        try {
-          let hashedpassword = await bcrypt.hash(req.body.password, 10);
-          let newUser = _.pick(req.body, ["email", "firstname", "lastname","username", "gender"]);
-          newUser.password = hashedpassword;
-          let user = new User(newUser);
-          await user.save(async (error, registeredUser) => {
-            if (error) {
-              res.status(500).json({error});
-            } else {
-              let payload = { ... newUser };
-              jwt.sign(payload, process.env.secretKey, async (error, token) => {
-                const url = `http://localhost:3001/confirmation/${token}`;
-                await transporter.sendMail(
-                  {
-                    from: "examtaking.ms@gmail.com",
-                    to: newUser.email,
-                    subject: "Confirm Email",
-                    html: `Please click this Link to confirm your email <a href="${url}">${url}</a>`,
-                  },
-                  (error, info) => {
-                    if (error) {
-                      return res.status(500).json({ error });
-                    } else {
-                      return res.status(200).json({});
-                    }
-                  }
-                );
-              });
-            }
-          });
-        } catch {
-          res.status(500).send();
-        }
+  await User.findOne({ username: req.body.username }).then(async (result) => {
+    if (result) {
+      return res.status(200).json({ error: "username already exist" });
+    } else {
+      try {
+        let hashedpassword = await bcrypt.hash(req.body.password, 10);
+        let newUser = _.pick(req.body, ["email", "firstname", "lastname","username", "gender"]);
+        newUser.password = hashedpassword;
+        let user = new User(newUser);
+        await user.save(async (error, registeredUser) => {
+          if (error) {
+            console.log(error);
+            res.status(500).json({error});
+          } else {
+            console.log(registeredUser);
+          }
+        });
+        const token=jwt.sign({user:newUser._id},process.env.JWT_SECRET);
+        console.log(token);
+        res.cookie("token",token,{
+          httpOnly:true,
+      }).send();
+      
+      } catch {
+        res.status(500).send();
       }
-    });
+    }
+  });
 };
 
 //GET
@@ -344,44 +332,138 @@ module.exports.confirmUser = async (req, res) => {
 //POST
 // URL : /api/login -> to log user in
 module.exports.loginUser = async (req, res) => {
-    let user = _.pick(['username', 'password']);
-    try {
+  let user = _.pick(req.body,['username', 'password','type']);
+  try {
+    if(user.type==="student"){
       User.findOne({ username: user.username })
-        .then(async (result) => {
-          if (result && result.confirmed) {
-            if (await bcrypt.compare(user.password, result.password)) {
-              let payload = { ... result};
-              let token = jwt.sign(payload, process.env.secretKey);
-              res
-                .status(200)
-                .json({
-                  token
-                });
-              return;
-            } else {
-              res.status(201);
-              res.json({ error: "incorrect password" });
-              return;
-            }
+      .then(async (result) => {
+        console.log(result);
+        if (result ) {
+          if (await bcrypt.compare(user.password, result.password)) {
+  
+            const token=jwt.sign({user:result._id},process.env.JWT_SECRET);
+    res.cookie("token",token,{
+        httpOnly:true,
+    }).send();
+            return;
           } else {
-            if (!result) {
-              res.status(201);
-              res.json({ error: "incorrect username" });
-              return;
-            } else {
-              res.status(201);
-              res.json({ error: "This account need to be confirmed" });
-              return;
-            }
+            res.status(201);
+            res.json({ error: "incorrect password" });
+            return;
           }
-        })
-        .catch((error) => {
-          res.status(500).json({error});
-        });
-    } catch (error) {
-      res.status(500).json({error});
+        } else {
+          if (!result) {
+            res.status(201);
+            res.json({ error: "incorrect username" });
+            return;
+          }
+        }
+      })
+      .catch((error) => {
+        res.status(500).json({error});
+      });
+    }else if(user.type==="instructor"){
+      Instructor.findOne({ username: user.username })
+      .then(async (result) => {
+        if (result ) {
+          if (await bcrypt.compare(user.password, result.password)) {
+           
+            const token=jwt.sign({user:result._id},process.env.JWT_SECRET);
+            res.cookie("token",token,{
+                httpOnly:true,
+            }).send();
+            return;
+          } else {
+            res.status(201);
+            res.json({ error: "incorrect password" });
+            return;
+          }
+        } else {
+          if (!result) {
+            res.status(201);
+            res.json({ error: "incorrect username" });
+            return;
+          }
+        }
+      })
+      .catch((error) => {
+        res.status(500).json({error});
+      });
+
+    }else{
+      Role.findOne({ username: user.username })
+      .then(async (result) => {
+        if (result) {
+          if (await bcrypt.compare(user.password, result.password)) {
+            const token=jwt.sign({user:result._id},process.env.JWT_SECRET);
+            res.cookie("token",token,{
+                httpOnly:true,
+            }).send();
+            return;
+          } else {
+            res.status(201);
+            res.json({ error: "incorrect password" });
+            return;
+          }
+        } else {
+          if (!result) {
+            res.status(201);
+            res.json({ error: "incorrect username" });
+            return;
+          }
+        }
+      })
+      .catch((error) => {
+        res.status(500).json({error});
+      });
     }
+
+  } catch (error) {
+    res.status(500).json({error});
+  }
 };
+
+//logout
+module.exports.Logout=async(req,res)=>{
+  res.cookie("token","",{
+    httpOnly:true,
+    expires:new Date(0)
+}).send();
+}
+
+//check loggedin
+module.exports.LoggedIn=async(req,res)=>{
+  try {
+    //we need to parse cookies into javascrip objects
+    //using the cookie-parser
+    //this is an express middleware that reads any incoming cookies and parse it into req.cookies object
+    const token=req.cookies.token;
+    console.log(token);
+    if(!token){
+        return res.json(false);
+    }
+    //verifiy the tooken to check if it has our secret and not a random tooken
+    //if not verified it will go to the catch and
+    //if verified it will decode it and put the tooken value an an object
+    //it have the user id
+    const verified=jwt.verify(token,process.env.JWT_SECRET);
+
+    if(await User.findById(verified.user)){
+      type="student";
+    }else if(await Role.findById(verified.user)){
+      type="role";
+    }else if(await Instructor.findById(verified.user)){
+      type="Admin";
+    }
+    
+   res.send({id:verified.user,verified:true,type:type});
+    
+} catch (error) {
+    console.log(error.message); 
+    res.json(false);
+}
+}
+
   
 // POST
 //url : /api/change-password -> to change user password

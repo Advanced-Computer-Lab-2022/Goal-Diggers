@@ -49,7 +49,11 @@ router.get('/fetch-certificate', controller.fetchCertificate);
 router.post('/payment/create', controller.createPayment);
 router.post('/buy-course', controller.buyCourse);
 router.get('/wallet', controller.getWallet);
-
+router.post('/register', controller.registerUser);
+router.post('/login', controller.loginUser);
+router.get('/logout', controller.Logout);
+router.get('/loggedin', controller.LoggedIn);
+/////////////////
 
 
 

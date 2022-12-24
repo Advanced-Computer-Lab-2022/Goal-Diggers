@@ -1,6 +1,6 @@
 import './App.css';
 import NavBar from './Components/navBar';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext} from 'react';
 import CourseContainer from './Components/courseContainer';
 import {Route, Routes } from 'react-router-dom';
 import Editinstructorprofile from './Components/editinstructorprofile';
@@ -23,7 +23,10 @@ import PayCourse from './Components/payCourse';
 import InstructorView from './Components/instructorView';
 import Certificate from './Components/certificate';
 import NotFound from './Components/notfound';
-
+import Login from './Components/Auth/Login';
+import Register from './Components/Auth/Register';
+import axios from "axios";
+axios.defaults.withCredentials=true;
 
 
 function App() {
@@ -33,8 +36,8 @@ function App() {
   }
   return (
     <React.Fragment>
+    <AuthContextProvider>
       <NavBar handleCountry ={handleCountry}/>
-      <AuthContextProvider>
       <Routes>
         <Route path='/editinstructorprofile' element={<Editinstructorprofile />} />
         <Route path='/ratecourse/:id/:courseID' element={<Ratecourse />} />
@@ -57,6 +60,8 @@ function App() {
         <Route path='/payment/:id' element={<PayCourse />} />
         <Route path='/certificate/:id' element={<Certificate />} />
         <Route path='/' exact element={<CourseContainer currency={currency} type="all"/>} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
         <Route path='*' element={<NotFound/>} />
       </Routes>
       </AuthContextProvider>

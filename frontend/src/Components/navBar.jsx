@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useContext }  from "react";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -7,9 +7,10 @@ import Navbar from 'react-bootstrap/Navbar';
 import { FormControl,Select,InputLabel,MenuItem} from "@mui/material";
 import coun_curr_code from '../coun-curr-code';
 import { Link } from "react-router-dom";
-
+import AuthContext, { AuthContextProvider } from"../context/AuthContext";
+import LogoutBtn from "./Auth/LogoutBtn";
 const NavBar = ({handleCountry}) => {
-  
+  const {loggedIn,id,type}=useContext(AuthContext);
     return (  
       <div>
       {/* conditionally rendering */}
@@ -35,12 +36,36 @@ const NavBar = ({handleCountry}) => {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link id="nav-item1" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/">Home</Nav.Link>
-            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">My Courses</Nav.Link>
-            <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/adduser">Add usre</Nav.Link>
-            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/create-course">Add Course</Nav.Link>
+          <Nav.Link id="nav-item1" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/">Home</Nav.Link>
 
+          {type=="student"&&<> <Nav.Link id="nav-item1" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/">Home</Nav.Link>
+            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">profile</Nav.Link>
+            <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/adduser">Add usre</Nav.Link>
+            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/create-course">Add Course</Nav.Link></>}
+
+            {type=="role"&&<> <Nav.Link id="nav-item1" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/">Home</Nav.Link>
+            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">profile</Nav.Link>
+            <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/adduser">Add usre</Nav.Link>
+            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/create-course">Add Course</Nav.Link></>}
+            {type=="instructor"&&<> <Nav.Link id="nav-item1" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/">Home</Nav.Link>
+            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">profile</Nav.Link>
+            <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/adduser">My courses</Nav.Link>
+            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/create-course">Add Course</Nav.Link></>}
+            {!loggedIn&&<>
+            <Nav.Link id="nav-item7" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/login"> <Button>login</Button></Nav.Link>
+            <Nav.Link id="nav-item8" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/register"> <Button>register</Button></Nav.Link>
+            </>}
+            {
+              loggedIn&&<>
+            <Nav.Link id="nav-item7" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/login"> <LogoutBtn></LogoutBtn></Nav.Link>
+           
+            </>
+            }
+
+        
           </Nav>
+        
+        
           </div>
  
 
@@ -71,6 +96,7 @@ const NavBar = ({handleCountry}) => {
                 {coun_curr_code.map(country => <MenuItem key={country.country} value={country.currency_code}>{country.country}</MenuItem>)}
             </Select>
           </FormControl>
+          
 
         
 

@@ -7,7 +7,7 @@ export default function LogoutBtn() {
     const navigate = useNavigate();
     const {getLoggedIn}=useContext(AuthContext);
     async function Logout(){
-    await axios.get("http://localhost:5000/auth/logout")
+    await axios.get("http://localhost:3000/api/logout")
     await getLoggedIn();
     navigate('/');
     
