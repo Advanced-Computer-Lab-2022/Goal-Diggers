@@ -103,6 +103,28 @@ courseService.adminAddPromotions = async(courses,promotion) => {
     const {data} = await http.post(apiUrl + 'admin-add-promotion',{ courses, promotion});
     return data;
 }
+//------------------------------------------------------------------------------------//
+courseService.getCoursesProblemsP = async() => {
+    const {data} = await http.get(apiUrl + 'courses-problems-pending');
+    return data.problems;
+}
+courseService.getCoursesProblemsR = async() => {
+    const {data} = await http.get(apiUrl + 'courses-problems-resolved');
+    return data.problems;
+}
+courseService.getCoursesProblemsU = async() => {
+    const {data} = await http.get(apiUrl + 'courses-problems-unseen');
+    return data.problems;
+}
+courseService.MarkAsPending = async(id) => {
+    const {data} = await http.post(apiUrl + 'mark-pending',{id});
+    return data;
+}
+courseService.MarkAsResolved = async(id) => {
+    const {data} = await http.post(apiUrl + 'mark-resolved',{id});
+    return data;
+}
+//-----------------------------------------------------------------------------------//
 courseService.getCoursesRequestsP = async() => {
     const {data} = await http.get(apiUrl + 'courses-requests-pending');
     return data.requests;
@@ -115,6 +137,7 @@ courseService.getCoursesRequestsR = async() => {
     const {data} = await http.get(apiUrl + 'courses-requests-rejected');
     return data.requests;
 }
+
 courseService.GrantAccess = async(id) => {
     const {data} = await http.post(apiUrl + 'admin-grant-access',{id});
     return data;

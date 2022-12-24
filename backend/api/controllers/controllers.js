@@ -419,11 +419,11 @@ module.exports.changeEmailorBiography = async(req,res)=>{
 //POST /api/add-user
 module.exports.addUser = async (req, res) => {
     const new_user = _.pick(req.body, ['username', 'password', 'role']);
-    if(new_user != 'instructor'){
+    if(new_user.role != 'instructor'){
         await Role.findOne({username : new_user.username}).then(
             async user => {
                 if(user)
-                    return res.status(400).json({error : "Username Already exist"});
+                    return res.status(200).json({error : "Username Already exist"});
                 else {
                     new_user.password = await bcrypt.hash(new_user.password, 10);
                     await Role.create(new_user).then(
@@ -437,8 +437,11 @@ module.exports.addUser = async (req, res) => {
         await Instructor.findOne({username : new_user.username}).then(
             async user => {
                 if(user)
-                    return res.status(400).json({error : "Username Already exist"});
+                    return res.status(200).json({error : "Username Already exist"});
                 else {
+                    new_user.ratedetails = [0,0,0,0,0,0];
+                    new_user.numberofrates = 0;
+                    new_user.rate = 0;
                     new_user.password = await bcrypt.hash(new_user.password, 10);
                     await Instructor.create(new_user).then(
                         user =>  {return res.status(200).json({user});}
@@ -542,6 +545,54 @@ module.exports.getRegisterCourse = async (req, res) =>{
     }
    )
 }
+
+//GET
+// url : api/courses-problems-pending/ admin get problems
+module.exports.getCoursesProblemsPending = async (req, res) =>{
+    Problems.find({status : "pending"}).then (
+      problems =>{
+        return res.status(200).json({problems});
+      }
+    )
+} 
+
+//GET
+// url : api/courses-problems-resolved/ admin get problems
+module.exports.getCoursesProblemsResolved = async (req, res) =>{
+    Problems.find({status : "resolved"}).then (
+      problems =>{
+        return res.status(200).json({problems});
+      }
+    )
+} 
+
+//GET
+// url : api/courses-problems-unseen/ admin get Problems
+module.exports.getCoursesProblemsUnseen = async (req, res) =>{
+    Problems.find({status : "unseen"}).then (
+      problems =>{
+        return res.status(200).json({problems});
+      }
+    )
+}
+//POST
+// url : api/mark-pending/ admin mark problem as pending
+module.exports.MarkAsPending = async (req, res) =>{
+  const request_id = ObjectId(req.body.id);
+  Problems.updateOne(request_id, {status : 'Pending'}, {new : true}).then(
+      request => {
+          return res.status(200).json({});
+    });
+} 
+//POST
+// url : api/mark-resolved/ admin mark problem as resolved
+module.exports.MarkAsResolved = async (req, res) =>{
+  const request_id = ObjectId(req.body.id);
+  Problems.updateOne(request_id, {status : 'resolved', answered : true}, {new : true}).then(
+      request => {
+          return res.status(200).json({});
+    });
+} 
 
 //GET
 // url : api/courses-requests-pending/ admin get corporate trainees requests

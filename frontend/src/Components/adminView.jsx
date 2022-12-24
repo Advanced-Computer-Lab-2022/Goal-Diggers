@@ -6,16 +6,22 @@ import CoursesRequests from './coursesRequests';
 import SetPromotions from './setPromotions';
 const AdminView = () => {
     const [status, setStatus] = useState(''); 
-    const [view, setView] = useState({adduser : true, addpromo :false, requests:false});
+    const [view, setView] = useState({adduser : true});
     const chooseItem = (item) => {
         if(['pending','approved','rejected'].includes(item)){
-            setView({adduser : false, addpromo :false, requests:true});
+            setView({requests:true});
+            setStatus(item);
+        }
+        if(['pendingpro','resolved','unseen'].includes(item)){
+            setView({problems:true});
             setStatus(item);
         }
         else if (item === 'add promotion') 
-            setView({adduser : false, addpromo :true, requests:false});
+            setView({addpromo :true});
         else if (item === 'add user') 
-            setView({adduser : true, addpromo :false, requests:false});
+            setView({adduser : true});
+        else if (item === 'refund') 
+            setView({refund : true});
     }   
     return ( 
         <React.Fragment>
@@ -36,7 +42,11 @@ const AdminView = () => {
                             {title : "Add Promotion",
                             itemId : "add promotion"
                             },
+                            {title : "Refund Requests",
+                            itemId : "refund"
+                            },
                             {title : "Courses Requests",
+                            itemId : "requests",
                             subNav : [
                                 {title : "Pending Requests",
                                 itemId : "pending",
@@ -49,11 +59,25 @@ const AdminView = () => {
                                 },
                             ]
                             },
+                            {title : "Courses Problems",
+                            subNav : [
+                                {title : "Unseen problems",
+                                itemId : "unseen",
+                                },
+                                {title : "Pending problems",
+                                itemId : "pendingpro",
+                                },
+                                {title : "Resolved problems",
+                                itemId : "resolved",
+                                },
+                            ]
+                            },
                         ]}
                     />
                 </div>
                 <div className="col-sm-7 text-center">
                     {view.requests && <CoursesRequests status={status}/>}
+                    {view.problems && <CoursesRequests status={status}/>}
                     {view.addpromo && <SetPromotions /> }
                     {view.adduser && <Adduser /> }
                 </div>

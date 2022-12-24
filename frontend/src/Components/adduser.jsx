@@ -26,6 +26,7 @@ function Adduser(props) {
         else{
             settexterror(false);
             const res = await courseService.addUser(data);
+            console.log(res);
             if(res.error){
                 seterror(res.error);
             }
@@ -42,14 +43,16 @@ function Adduser(props) {
         const newdata = {...data}
         newdata[e.target.id] = e.target.value
         setdata(newdata);
+        seterror("");
+        setsuccess(false);
         console.log(newdata);
     }
 
   return (
-    <form className='px-5 mx-5 mt-3 bg-light py-3 card' style={{borderRadius:'25px'}}>
+    <div className='px-5 mx-5 mt-3 bg-light py-3 card' style={{borderRadius:'25px'}}>
             {error && <div className='alert alert-danger'>{error}</div>}
             {success && <div className='alert alert-success'>User added successfully</div>}
-            <h5>Add new user date</h5>
+            <h5>Add new user</h5>
             <div className="form-floating mt-2">
                  <input onChange={(e)=>handle(e)} id = "username" value={data.username} type="text" className='form-control' placeholder="Username"/>
                  <label htmlFor='username'>Username</label>
@@ -76,7 +79,7 @@ function Adduser(props) {
                 {texterror?<label className = "l1">You must fill it</label>:""}
             </div>
         <button className='btn btn-primary mt-3' style={{borderRadius : '25px'}} onClick={()=>submit()}>Submit</button>
-    </form>
+    </div>
   )
 }
 
