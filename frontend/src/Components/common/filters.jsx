@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {Rating} from "@mui/material";
+import AuthContext, { AuthContextProvider } from"../../context/AuthContext";
 
 const Filters = ({handleChange}) => {
     const [value, setValue] = useState(0);
+    const {loggedIn,id,type}=useContext(AuthContext);
     return ( 
         <React.Fragment>
             <div style={{color : 'black'}} className='bg-light p-3 my-2'>
@@ -28,12 +30,14 @@ const Filters = ({handleChange}) => {
                         </div>
 
                         {/* Conditionally rendered */}
+                        {type != "corporatetrainees " && 
                         <div className="col-sm-2 px-3 text-center">
                             <div className="input-group col-sm-3">
                                 <span className="input-group-text ">Highest price</span>
                                 <input onChange={(e)=>handleChange("price", e.target.value)} type="number" name='price' min={0} aria-label="price" className="form-control" />
                             </div>
                         </div>
+                        }
                     </div>
                 </form>
             </div>

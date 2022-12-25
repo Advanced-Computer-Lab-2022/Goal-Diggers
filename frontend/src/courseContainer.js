@@ -56,8 +56,8 @@ courseService.rateCourse = async(review, rate, course,) => {
 }
 
 //need update in sprint 3
-courseService.getRatingsAndReviews = async(id) => {
-    const {data} = await http.get(apiUrl + 'reviews-ratings/' + id);
+courseService.getRatingsAndReviews = async() => {
+    const {data} = await http.get(apiUrl + 'reviews-ratings');
     return data;
 }
 
@@ -68,8 +68,8 @@ courseService.changePassword = async(id, passwords) => {
 }
 
 //need update in sprint 3
-courseService.changeEmailorBiography = async(id, info) => {
-    const {data} = await http.post(apiUrl + 'change-email-biography/' + id, info);
+courseService.changeEmailorBiography = async(info) => {
+    const {data} = await http.post(apiUrl + 'change-email-biography', info);
     return data;
 }
 
@@ -185,21 +185,27 @@ courseService.getWallet= async( course) => {
 
 courseService.createAndDownloadPdf = async(title, notes) => {
     await http.post(apiUrl+'create-pdf', {title, notes})
-      .then(() => http.get(apiUrl+'fetch-pdf', { responseType: 'blob' }))
-      .then((res) => {
+    .then(() => http.get(apiUrl+'fetch-pdf', { responseType: 'blob' }))
+    .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         saveAs(pdfBlob, `${title} Notes.pdf`);
-      })
+    })
 }
 
 courseService.createAndDownloadCertificate = async(title, instructor) => {
     await http.post(apiUrl+'create-certificate', {title, instructor})
-      .then(() => http.get(apiUrl+'fetch-certificate', { responseType: 'blob' }))
-      .then((res) => {
+    .then(() => http.get(apiUrl+'fetch-certificate', { responseType: 'blob' }))
+    .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         saveAs(pdfBlob, `${title}.pdf`);
-      })
-  }
+    })
+}
+
+courseService.acceptTerms= async() => {
+    const data = await http.get(apiUrl + "accept-terms");
+    return data;
+}
+
 
 
 export default courseService;

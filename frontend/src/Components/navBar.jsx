@@ -11,6 +11,8 @@ import AuthContext, { AuthContextProvider } from"../context/AuthContext";
 import LogoutBtn from "./Auth/LogoutBtn";
 const NavBar = ({handleCountry}) => {
   const {loggedIn,id,type}=useContext(AuthContext);
+  console.log("DSADSAd");
+  console.log(type);
     return (  
       <div>
       {/* conditionally rendering */}
@@ -38,19 +40,25 @@ const NavBar = ({handleCountry}) => {
           >
           <Nav.Link id="nav-item1" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/">Home</Nav.Link>
 
-          {type=="student"&&<> <Nav.Link id="nav-item1" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/">Home</Nav.Link>
-            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">profile</Nav.Link>
-            <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/adduser">Add usre</Nav.Link>
-            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/create-course">Add Course</Nav.Link></>}
+          {type=="student"&& 
+            <> 
+            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/student-profile">profile</Nav.Link>
+            </>
+          }
 
-            {type=="role"&&<> <Nav.Link id="nav-item1" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/">Home</Nav.Link>
-            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">profile</Nav.Link>
-            <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/adduser">Add usre</Nav.Link>
-            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/create-course">Add Course</Nav.Link></>}
-            {type=="instructor"&&<> <Nav.Link id="nav-item1" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/">Home</Nav.Link>
-            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">profile</Nav.Link>
-            <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/adduser">My courses</Nav.Link>
-            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/create-course">Add Course</Nav.Link></>}
+            {type=="administrator"&&<> 
+            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/admin-profile">profile</Nav.Link>
+            </>
+            }
+            {type=="corporatetrainees "&&<> 
+            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/student-profile">profile</Nav.Link>
+            </>
+            }
+            {type=="instructor"&&<> 
+            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-profile">profile</Nav.Link>
+            <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">My courses</Nav.Link>
+            </>
+            }
             {!loggedIn&&<>
             <Nav.Link id="nav-item7" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/login"> <Button>login</Button></Nav.Link>
             <Nav.Link id="nav-item8" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/register"> <Button>register</Button></Nav.Link>

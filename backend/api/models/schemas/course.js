@@ -38,7 +38,8 @@ const courseSchema = new Schema({
         title : String,
         overviewVideo : Object,
         examsId : [Object],
-        subtitles : [Object]
+        subtitles : [Object],
+        totalItems : Number,
 }, {timestamps : true});
 
 

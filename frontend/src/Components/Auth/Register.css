@@ -108,7 +108,6 @@
   .buttoon {
   
     display: inline-block;
-    margin: 60px;
     padding: 15px 30px;
     text-align: center;
     font-size: 18px;
@@ -124,13 +123,34 @@
 
     width: 220px;
   }
+  .butttoon {
+    display: inline-block;
+    padding: 15px 30px;
+    text-align: center;
+    letter-spacing: 1px;
+    text-decoration: none;
+    color: #a00407;
+    background: transparent;
+    cursor: pointer;
+    transition: ease-out 0.5s;
+    border: 1px solid #a00407;
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 0 #a00407;
+  }
   
   .buttoon:hover {
     color: white;
     box-shadow: inset 0 -100px 0 0 #a00407;
   }
+  .butttoon:hover {
+    color: white;
+    box-shadow: inset 0 -100px 0 0 #a00407;
+  }
   
   .buttoon:active {
+    transform: scale(0.9);
+  }
+  .butttoon:active {
     transform: scale(0.9);
   }
   .material-textfield {
@@ -166,7 +186,7 @@
   }
   .inputt:focus + label {
     color: #a00407;
-    top: 0;
+    top: 0; 
     transform: translateY(-50%) scale(.9);
   }
   .inputt:not(:placeholder-shown) + label {

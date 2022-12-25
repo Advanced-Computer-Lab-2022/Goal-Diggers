@@ -19,9 +19,9 @@ router.post('/save-progress', controller.saveProgress);
 ///////mahmoud yassin //////
 router.post('/rate-instructor/:id', controller.addInstructorRate);
 router.post('/rate-course/:id', controller.addCourseRate);
-router.get('/reviews-ratings/:id', controller.getReviewsAndRatings);
+router.get('/reviews-ratings', controller.getReviewsAndRatings);
 router.post('/change-password/:id', controller.ChangePassword);
-router.post('/change-email-biography/:id', controller.changeEmailorBiography);
+router.post('/change-email-biography', controller.changeEmailorBiography);
 //////////////////////////////////////////////
 //////////3bto/////////
 router.post('/add-quiz', controller.addQuiz);
@@ -49,6 +49,7 @@ router.get('/fetch-certificate', controller.fetchCertificate);
 router.post('/payment/create', controller.createPayment);
 router.post('/buy-course', controller.buyCourse);
 router.get('/wallet', controller.getWallet);
+router.get('/accept-terms', controller.AcceptTerms);
 router.post('/register', controller.registerUser);
 router.post('/login', controller.loginUser);
 router.get('/logout', controller.Logout);

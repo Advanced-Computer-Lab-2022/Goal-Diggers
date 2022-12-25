@@ -128,17 +128,29 @@ module.exports.uploadPreviewVideo = async (req, res) => {
 //POST 
 // url : api/add-course/ 
 module.exports.addCourse = async (req, res) => {
-  const course = req.body.course;
-  course.rate = 0;
-  course.ratedetails = [0,0,0,0,0,0];
-  course.reviews = [];
-  course.numberofrates = 0;
-  course.registers = 0;
-  course.viewers = 0;
-  course.overviewVideo = {title : "Welcome video", url : course.overviewVideo, description : course.summary};
-  Course.create(course).then(
-    result => {return res.status(200).json({result});}
-  )
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
+    }
+    const verified=jwt.verify(token,process.env.JWT_SECRET);
+    const course = req.body.course;
+    course.rate = 0;
+    course.ratedetails = [0,0,0,0,0,0];
+    course.reviews = [];
+    course.numberofrates = 0;
+    course.registers = 0;
+    course.viewers = 0;
+    course.createdById = ObjectId(verified.user);
+    course.createdByName = verified.username;
+    course.overviewVideo = {title : "Welcome video", url : course.overviewVideo, discription : course.summary};
+    Course.create(course).then(
+      result => {return res.status(200).json({result});}
+    )
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 }
 
 //POST
@@ -195,12 +207,25 @@ module.exports.addInstructorDiscount = async (req, res) => {
 //GET
 //url : /api/reviews-ratings/-> instructor get reviews and ratings
 module.exports.getReviewsAndRatings = async (req, res) => {
-    const id = ObjectId(req.params.id);
+  try {
+    const token=req.cookies.token;
+    console.log(token);
+    if(!token){
+        return res.json(false);
+    }
+    const verified=jwt.verify(token,process.env.JWT_SECRET);
+    const id = ObjectId(verified.user);
     Instructor.findById(id).then(
         instructor => {
+            console.log(instructor);
             res.status(200).json({reviews : instructor.reviews, rate : instructor.rate, numberofrates : instructor.numberofrates, ratedetails : instructor.ratedetails});
         }
     )
+    
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 };
 
 //POST
@@ -272,6 +297,9 @@ module.exports.forgotPassword = async (req, res) => {
 // POST
 // url : /api/register -> to register user 
 module.exports.registerUser = async (req, res) => {
+  if(Role.findOne({ username: req.body.username }) || Instructor.findOne({ username: req.body.username })) {
+      return res.status(200).json({ error: "username already exist" });
+  }
   await User.findOne({ username: req.body.username }).then(async (result) => {
     if (result) {
       return res.status(200).json({ error: "username already exist" });
@@ -289,7 +317,7 @@ module.exports.registerUser = async (req, res) => {
             console.log(registeredUser);
           }
         });
-        const token=jwt.sign({user:newUser._id},process.env.JWT_SECRET);
+        const token=jwt.sign({user:newUser._id, username : newUser.username},process.env.JWT_SECRET);
         console.log(token);
         res.cookie("token",token,{
           httpOnly:true,
@@ -332,43 +360,33 @@ module.exports.confirmUser = async (req, res) => {
 //POST
 // URL : /api/login -> to log user in
 module.exports.loginUser = async (req, res) => {
-  let user = _.pick(req.body,['username', 'password','type']);
+  console.log(req.body);
+  let user = _.pick(req.body,['username', 'password']);
   try {
-    if(user.type==="student"){
+    if(await User.findOne({ username: user.username })){
       User.findOne({ username: user.username })
       .then(async (result) => {
         console.log(result);
-        if (result ) {
           if (await bcrypt.compare(user.password, result.password)) {
-  
             const token=jwt.sign({user:result._id},process.env.JWT_SECRET);
-    res.cookie("token",token,{
-        httpOnly:true,
-    }).send();
-            return;
-          } else {
-            res.status(201);
-            res.json({ error: "incorrect password" });
-            return;
-          }
-        } else {
-          if (!result) {
-            res.status(201);
-            res.json({ error: "incorrect username" });
-            return;
-          }
+            res.cookie("token",token,{
+                httpOnly:true,
+            }).send();
+                    return;
+            } else {
+              res.status(201);
+              res.json({ error: "incorrect password" });
+              return;
         }
       })
       .catch((error) => {
         res.status(500).json({error});
       });
-    }else if(user.type==="instructor"){
+    }else if(await Instructor.findOne({ username: user.username })){
       Instructor.findOne({ username: user.username })
       .then(async (result) => {
-        if (result ) {
           if (await bcrypt.compare(user.password, result.password)) {
-           
-            const token=jwt.sign({user:result._id},process.env.JWT_SECRET);
+            const token=jwt.sign({user:result._id, username : result.username},process.env.JWT_SECRET);
             res.cookie("token",token,{
                 httpOnly:true,
             }).send();
@@ -378,22 +396,14 @@ module.exports.loginUser = async (req, res) => {
             res.json({ error: "incorrect password" });
             return;
           }
-        } else {
-          if (!result) {
-            res.status(201);
-            res.json({ error: "incorrect username" });
-            return;
-          }
-        }
       })
       .catch((error) => {
         res.status(500).json({error});
       });
 
-    }else{
+    }else if(Role.findOne({ username: user.username })){
       Role.findOne({ username: user.username })
       .then(async (result) => {
-        if (result) {
           if (await bcrypt.compare(user.password, result.password)) {
             const token=jwt.sign({user:result._id},process.env.JWT_SECRET);
             res.cookie("token",token,{
@@ -405,17 +415,14 @@ module.exports.loginUser = async (req, res) => {
             res.json({ error: "incorrect password" });
             return;
           }
-        } else {
-          if (!result) {
-            res.status(201);
-            res.json({ error: "incorrect username" });
-            return;
-          }
-        }
       })
       .catch((error) => {
         res.status(500).json({error});
       });
+    } else {
+      res.status(201);
+      res.json({ error: "incorrect username" });
+      return;
     }
 
   } catch (error) {
@@ -438,6 +445,7 @@ module.exports.LoggedIn=async(req,res)=>{
     //using the cookie-parser
     //this is an express middleware that reads any incoming cookies and parse it into req.cookies object
     const token=req.cookies.token;
+    let user = {};
     console.log(token);
     if(!token){
         return res.json(false);
@@ -449,14 +457,30 @@ module.exports.LoggedIn=async(req,res)=>{
     const verified=jwt.verify(token,process.env.JWT_SECRET);
 
     if(await User.findById(verified.user)){
-      type="student";
+      await User.findById(verified.user).then(
+        value => {
+          user = value;
+          type="student";
+        }
+      )
     }else if(await Role.findById(verified.user)){
-      type="role";
+      await Role.findById(verified.user).then(
+            value => {
+                user = value;
+                type = value.role;
+            }
+      )
     }else if(await Instructor.findById(verified.user)){
-      type="Admin";
+      await Instructor.findById(verified.user).then(
+        value => {
+          user = value;
+          type="instructor";
+        }
+      )
     }
-    
-   res.send({id:verified.user,verified:true,type:type});
+   res.send({id:verified.user,verified:true,type:type, firstname : user.firstname, lastname : user.lastname,
+     wallet : user.wallet, email : user.email, gender : user.gender, 
+     username : user.username, minibiography : user.minibiography, accepted : user.accepted});
     
 } catch (error) {
     console.log(error.message); 
@@ -464,7 +488,26 @@ module.exports.LoggedIn=async(req,res)=>{
 }
 }
 
-  
+// Post 
+//url : /api/accept-terms
+module.exports.AcceptTerms = async(req, res) =>{
+  try {
+    const token=req.cookies.token;
+    let user = {};
+    console.log(token);
+    if(!token){
+        return res.json(false);
+    }
+    const verified=jwt.verify(token,process.env.JWT_SECRET);
+    Instructor.findByIdAndUpdate(verified.user, {accepted : true}).then(
+        result => {return res.status(200).json({});}
+    )
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
+} 
+
 // POST
 //url : /api/change-password -> to change user password
 module.exports.ChangePassword =async (req, res) => {
@@ -483,44 +526,55 @@ module.exports.ChangePassword =async (req, res) => {
   
 /// need edits
 module.exports.changeEmailorBiography = async(req,res)=>{
-  const id = ObjectId(req.params.id);
-  const data = req.body;
-  Instructor.findById(id).then(
-    instructor => {
-      if(data.email)
-        instructor.email=data.email;
-      if(data.minibiography)
-        instructor.minibiography=data.minibiography;
-      Instructor.findByIdAndUpdate(id, instructor).then(
-        result => {return res.status(200).json({});}
-      )
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
     }
-  )
+    const verified=jwt.verify(token,process.env.JWT_SECRET);
+    const id = ObjectId(verified.user);
+    const data = req.body;
+    Instructor.findById(id).then(
+      instructor => {
+        if(data.email)
+          instructor.email=data.email;
+        if(data.minibiography)
+          instructor.minibiography=data.minibiography;
+        Instructor.findByIdAndUpdate(id, instructor).then(
+          result => {return res.status(200).json({});}
+        )
+      }
+    )
+    
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 }
 
 //POST /api/add-user
 module.exports.addUser = async (req, res) => {
     const new_user = _.pick(req.body, ['username', 'password', 'role']);
-    if(new_user.role != 'instructor'){
+    // let exist = false;
+    if(await User.findOne({username : new_user.username}))
+      return res.status(200).json({error : "Username Already exist"});
+    if(await Role.findOne({username : new_user.username}))
+      return res.status(200).json({error : "Username Already exist"});
+    if(await Instructor.findOne({username : new_user.username}))
+      return res.status(200).json({error : "Username Already exist"});
+      if(new_user.role != 'instructor'){
         await Role.findOne({username : new_user.username}).then(
-            async user => {
-                if(user)
-                    return res.status(200).json({error : "Username Already exist"});
-                else {
+            async user => { 
                     new_user.password = await bcrypt.hash(new_user.password, 10);
                     await Role.create(new_user).then(
                         user =>  {return res.status(200).json({user});}
                     )
-                }
             }
         )
     }
     else {
         await Instructor.findOne({username : new_user.username}).then(
             async user => {
-                if(user)
-                    return res.status(200).json({error : "Username Already exist"});
-                else {
                     new_user.ratedetails = [0,0,0,0,0,0];
                     new_user.numberofrates = 0;
                     new_user.rate = 0;
@@ -528,7 +582,7 @@ module.exports.addUser = async (req, res) => {
                     await Instructor.create(new_user).then(
                         user =>  {return res.status(200).json({user});}
                     )
-                }
+                
             }
         )
     }
@@ -546,9 +600,20 @@ module.exports.getAllCourses = async (req, res) => {
 
 // GET url : /api/instructor-courses //need edits
 module.exports.getInstructorCourses = async (req, res) => {
-    await Course.find({}).then(
-        courses => {return res.status(200).json({courses});}
-    )
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
+    }
+    const verified=jwt.verify(token,process.env.JWT_SECRET);
+    console.log(verified.user);
+    await Course.find({createdById : ObjectId(verified.user)}).then(
+      courses => {return res.status(200).json({courses});}
+    )    
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 }
 
 // GET url : /api//search/:keyword

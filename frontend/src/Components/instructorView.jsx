@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {Navigation} from 'react-minimal-side-navigation';
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import Changepassword from './changepassword';
 import Createcourse from './createcourse';
 import StudentProfile from './studentProfile';
 import Wallet from './wallet';
+import Reviewsoninstructor from './reviewsoninstructor';
+import Editinstructorprofile from './editinstructorprofile';
+import AuthContext, { AuthContextProvider } from"../context/AuthContext";
 
 const InstructorView = () => {
-    const [view, setView] = useState({adduser : true, addpromo :false, requests:false});
+    const [view, setView] = useState({profile : true,});
+    const {loggedIn,id,username}=useContext(AuthContext);
     const chooseItem = (item) => {
         if(item === 'profile') 
             setView({profile : true});
@@ -19,6 +23,8 @@ const InstructorView = () => {
             setView({earn : true});
         else if(item === 'addc') 
             setView({addcourse : true});
+        else if(item === 'rate') 
+            setView({rate : true});
     }   
     return ( 
         <React.Fragment>
@@ -26,7 +32,7 @@ const InstructorView = () => {
                 <div className="col-sm-1"></div>
                 <div className="col-sm-3 text-center">
                     <img src="./instructor.png" width={'80px'} style={{borderRadius:'30px'}} alt="" />
-                    <h6 className='m-2'>Mahmoud Sayed</h6>
+                    <h6 className='m-2'>{username}</h6>
                     <Navigation
                         activeItemId={"profile"}
                         onSelect={({itemId}) => {
@@ -35,6 +41,9 @@ const InstructorView = () => {
                         items={[
                             {title : "Profile",
                             itemId : "profile"
+                            },
+                            {title : "Rating and Reviews",
+                            itemId : "rate"
                             },
                             {title : "Add Course",
                             itemId : "addc"
@@ -60,6 +69,8 @@ const InstructorView = () => {
                     {view.profile && <StudentProfile />}
                     {view.earn && <Wallet />}
                     {view.addcourse && <Createcourse />}
+                    {view.rate && <Reviewsoninstructor />}
+                    {view.changeinfo && <Editinstructorprofile />}
                 </div>
                 <div className="col-sm-1"></div>
             </div>
