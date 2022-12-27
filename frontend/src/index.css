@@ -488,10 +488,37 @@ form .category label .dot {
 #registerContainer{
   position: absolute !important;
   left: 35% !important;
-  top:25% !important;
+  top:35% !important;
 }
 #loginContainer{
   position: absolute !important;
   left: 40% !important;
-  top:25% !important; 
+  top:35% !important; 
+}
+#footer{
+  
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+
+}
+#relativecont{
+  position: relative;
+}
+#mar{
+  margin-bottom: 700px;
+}
+#mar2{
+  margin-bottom: 500px;
+}
+#regtitle{
+  margin-top: 3%;
+  margin-left: 35%;
+}
+#logintitle{
+  margin-top: 3%;
+  margin-left: 40%;
 }

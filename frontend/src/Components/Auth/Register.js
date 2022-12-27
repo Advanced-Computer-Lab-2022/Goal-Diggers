@@ -34,8 +34,10 @@ function Register() {
         }
     } 
   return (
+    <div>
+    <h1 id='regtitle'>Sign up and start learning</h1>
     <div id="registerBody">
-    <h1 id="registerHeader">Sign up and start learning</h1>
+    
     
     <div  id="registerContainer" >    
       <div className="content">
@@ -44,7 +46,7 @@ function Register() {
           <div class="material-textfield input-box ">
           <input 
           className="inputt"
-     
+          placeholder=" "
          value={firstname}
         onChange={(e)=>setFirstName(e.target.value)}>
         </input>
@@ -53,7 +55,7 @@ function Register() {
             <div class="material-textfield input-box  ">
             <input 
             className="inputt"
-         
+            placeholder=" "
          value={lastname}
         onChange={(e)=>setlastName(e.target.value)}>
         </input>
@@ -63,7 +65,7 @@ function Register() {
             <input 
             className="inputt"
         type="email"
-        
+        placeholder=" "
          value={email}
         onChange={(e)=>setEmail(e.target.value)}>
         </input>
@@ -72,7 +74,7 @@ function Register() {
             <div class="material-textfield input-box ">
             <input 
        className="inputt"
-        
+       placeholder=" "
          value={username}
         onChange={(e)=>setUserName(e.target.value)}>
         </input>
@@ -82,7 +84,7 @@ function Register() {
             <input 
             className="inputt"
         type="password"
-        
+        placeholder=" "
          value={password}
         onChange={(e)=>setPassword(e.target.value)}>
         </input>
@@ -115,9 +117,10 @@ function Register() {
  
   
     </div>
-    
+   
     </div>
-
+    <h1 id="mar"> </h1>
+</div>
   
     
     
