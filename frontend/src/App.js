@@ -27,7 +27,8 @@ import Login from './Components/Auth/Login';
 import Register from './Components/Auth/Register';
 import axios from "axios";
 import RegisterFooter from './registerFooter';
-import Footer from './Components/footer'
+import Footer from './Components/footer';
+import TermsAndConditions from './Components/termsandconditions';
 axios.defaults.withCredentials=true;
 
 
@@ -65,6 +66,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='*' element={<NotFound/>} />
+        <Route path='/termsandconditions' element={<TermsAndConditions />} />
       </Routes>
       <RegisterFooter></RegisterFooter>
       <Footer></Footer>
