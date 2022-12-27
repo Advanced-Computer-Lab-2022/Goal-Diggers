@@ -4,6 +4,7 @@ import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import Adduser from './adduser';
 import CoursesRequests from './coursesRequests';
 import Problems from './problems';
+import RefundRequests from './refundRequests';
 import SetPromotions from './setPromotions';
 const AdminView = () => {
     const [status, setStatus] = useState(''); 
@@ -81,6 +82,7 @@ const AdminView = () => {
                     {view.problems && <Problems status={status}/>}
                     {view.addpromo && <SetPromotions role={'admin'}/> }
                     {view.adduser && <Adduser /> }
+                    {view.refund && <RefundRequests /> }
                 </div>
                 <div className="col-sm-1"></div>
             </div>

@@ -28,7 +28,7 @@ const Wallet = () => {
         <React.Fragment>
             {ready && 
                     <div className="bg-light p-3" style={{borderRadius : '25px', border : '1px solid black'}}>
-                        <img src="./wallet.png" width={'30px'} alt="" /> <span className='mx-2' style={{color : 'green'}}> {wallet.total} </span> USD.
+                        <img src="./wallet.png" width={'30px'} alt="" /> <span className='mx-2' style={{color : 'green'}}> {Number(wallet.total).toFixed(2)} </span> USD.
                         <TableContainer component={Paper} className="my-2">
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
@@ -48,7 +48,7 @@ const Wallet = () => {
                                         {i + 1}
                                     </TableCell>
                                     <TableCell align="center"> {new Date(earn.month).getMonth() + 1} - {new Date(earn.month).getFullYear() }</TableCell>
-                                    <TableCell align="right" color='green'>+{earn.total} USD</TableCell>
+                                    <TableCell align="right" color='green'>+{Number(earn.total).toFixed(2)} USD</TableCell>
                                     </TableRow>
                                 ))}
                                 </TableBody>

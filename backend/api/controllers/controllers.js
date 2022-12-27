@@ -42,6 +42,8 @@ module.exports.buyCourse =  async (req, res) => {
     }
     const verified=jwt.verify(token,process.env.JWT_SECRET);
     let course = req.body.course;
+    const price = req.body.price;
+    course.price = price;
     course.registers ++;
     Course.updateOne({_id : course._id}, course).then();
     course.attemptedQuizs = [];
@@ -1123,17 +1125,22 @@ module.exports.AdminRefundCourse = async(req,res) => {
     );
     await Wallet.findOneAndUpdate({instructorID : ObjectId(course.createdById)}).then(
         wallet => {
-          wallet.total -= course*0.7;
+          console.log(wallet.instructorID);
+          console.log(course.createdById);
+          wallet.total -= course.price*0.7;
           let exist = false;
           wallet.details.forEach((month, index) => {
           if(new Date(month.month).getMonth() === new Date().getMonth() && new Date(month.month).getFullYear() === new Date().getFullYear()) {
+            console.log(wallet.details[index].total);
             wallet.details[index].total -= course.price*0.7;
             exist = true;
+            console.log(wallet.details[index].total);
             }
           });
           if(!exist)
             wallet.details.push({month: `${new Date().getMonth() + 1}-1-${new Date().getFullYear()}`, total : -course.price*0.7});
-          wallet.save();
+          console.log(wallet.details[0].total);
+          Wallet.updateOne({_id : wallet._id}, wallet).then();
         }
     )
     await RegisterCourse.findByIdAndDelete(course._id).then(
@@ -1142,6 +1149,7 @@ module.exports.AdminRefundCourse = async(req,res) => {
 };
 
 module.exports.getRefundRequests = async(req,res) => {
+    console.log("sads");
     RegisterCourse.find({pending : true}).then(
       courses => {
         return res.status(200).json({courses});

@@ -27,18 +27,19 @@ const Child = () => {
     const [ ready, setReady] = useState(false);
     const [ loading, setLoading] = useState(false);
     const [ err, setError] = useState("");
+    const [ price, setPrice] = useState(0);
 
     useEffect(() => {
         const fetchClientSecret = async () => {
         let res = await courseService.getCourse(id);
+        setPrice(res.course.price);
         if(res.course.discount && new Date(res.course.discount.date) >= Date.now()) {
-            console.log(res.course.discount);
-            res.course.price -= res.course.price * (res.course.discount.promotion / 100);
-            console.log(res.course.price);
+            setPrice(res.course.price - res.course.price * (res.course.discount.promotion / 100));
+            console.log(price);
         }
         setCourse(res.course);
         console.log(res);
-        const secret = await courseService.getClientSecret(res.course.price);
+        const secret = await courseService.getClientSecret(res.course.price - res.course.price * (res.course.discount.promotion / 100));
         console.log("clientSecret is >>>>", secret);
         setClientSecret(secret);
         setReady(true);
@@ -58,7 +59,7 @@ const Child = () => {
             if(res.error)
                 setError(res.error.message);
             else {
-                await courseService.buyCourse(course);
+                await courseService.buyCourse(course, price);
                 navigate(`/take-course/${id}`);
             }
             setLoading(false);
@@ -76,12 +77,12 @@ const Child = () => {
                             <div className="card bg-light mt-2" style={{borderRadius : '25px'}}>
                                 <div className="row">
                                 <div className="col-sm-4">
-                                    <img src={`.${course.image}`} alt="" width={'200px'}/>
+                                    <img src={course.image} alt="" width={'200px'}/>
                                 </div>
                                 <div className="col-sm-8 pt-5">
                                     <span>Title : {course.title}</span> <br />
                                     <span>Subject : {course.subject}</span> <br />
-                                    <span>Price : {course.price} USD</span> <br />
+                                    <span>Price : {price} USD {'->'} {course.price}</span> <br />
                                     <Rating name="rating" value={course.rate} readOnly/>
                                 </div>
                                 </div>

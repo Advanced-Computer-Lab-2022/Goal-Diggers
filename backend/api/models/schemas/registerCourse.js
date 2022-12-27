@@ -9,7 +9,7 @@ const Schema = mongoose.Schema;
 
 const registerCourseSchema = new Schema({
         image : String,
-        createdByID : Object,
+        createdById : Object,
         createdByName : String,
         courseID : Object,
         studentID : Object,

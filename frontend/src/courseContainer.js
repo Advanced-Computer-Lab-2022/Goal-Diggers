@@ -167,8 +167,8 @@ courseService.getClientSecret= async(price) => {
 }
 
 // buy the course 
-courseService.buyCourse= async( course) => {
-    const data = await http.post(apiUrl + "buy-course", {course});
+courseService.buyCourse= async( course, price) => {
+    const data = await http.post(apiUrl + "buy-course", {course, price});
     return data.data.clientSecret;
 }
 
@@ -234,7 +234,7 @@ courseService.AdminRefundCourse = async(course) => {
     return data;
 }
 courseService.getRefundRequests = async() => {
-    const {data} = await http.get(apiUrl + 'refund--requests');
+    const {data} = await http.get(apiUrl + 'refund-requests');
     return data.courses;
 }
 
