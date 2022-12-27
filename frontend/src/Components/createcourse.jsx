@@ -31,8 +31,8 @@ function Createcourse(props) {
         price: "",
         summary: "",
         image: "",
-        totalItems : 0,
-        overviewVideo:"",
+        totalItems : 1,
+        overviewvideo:"",
         subtitles: []
     })
 

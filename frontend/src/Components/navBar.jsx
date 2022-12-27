@@ -59,8 +59,8 @@ const NavBar = ({handleCountry}) => {
             <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">My courses</Nav.Link>
             </>
             }
-            <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">Most Popular</Nav.Link>
-            <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">Most Viewed</Nav.Link>
+            {/* <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">Most Popular</Nav.Link> */}
+            {/* <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">Most Viewed</Nav.Link> */}
 
             
             {

@@ -210,7 +210,10 @@ ol {
 .spinner-message {
   text-align: center;
 }
-
+.btn-primary {
+  border-radius: 25px;
+  background-color: #490405;
+}
 .hero-cover {
   background-color: #490405;
   height: 400px;

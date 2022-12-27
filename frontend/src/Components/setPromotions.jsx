@@ -4,7 +4,7 @@ import swal from 'sweetalert';
 import {Rating, ThemeProvider} from "@mui/material";
 import ReactLoading from 'react-loading';
 
-const SetPromotions = () => {
+const SetPromotions = ({role}) => {
     const [ready, setReady] = useState(false);
     const [coursesOriginal, setCoursesOriginal] = useState([]);
     const [coursesDisplayed, setCoursesDisplayed] = useState([]);
@@ -17,10 +17,18 @@ const SetPromotions = () => {
     useEffect(() =>{
         setReady(false);
         const getCourses = async () => {
-                const res = await courseService.getAllCourses();
-                setCoursesDisplayed(res);
-                setCoursesOriginal(res);
-                setReady(true);
+                if(role == 'admin') {
+                    const res = await courseService.getAllCourses();
+                    setCoursesDisplayed(res);
+                    setCoursesOriginal(res);
+                    setReady(true);
+                } else if(role == 'instructor') {
+                    const res = await courseService.getInstructorCourses();
+                    console.log(res);
+                    setCoursesDisplayed(res);
+                    setCoursesOriginal(res);
+                    setReady(true);
+                }
         };
         getCourses();
     },[reload]);

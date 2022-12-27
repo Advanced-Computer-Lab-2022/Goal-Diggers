@@ -163,7 +163,7 @@ module.exports.addCourse = async (req, res) => {
     course.viewers = 0;
     course.createdById = ObjectId(verified.user);
     course.createdByName = verified.username;
-    course.overviewVideo = {title : "Welcome video", url : course.overviewVideo, discription : course.summary};
+    course.overviewvideo = {title : "Welcome video", url : course.overviewVideo, discription : course.summary};
     Course.create(course).then(
       result => {return res.status(200).json({result});}
     )
@@ -695,7 +695,7 @@ module.exports.getInstructorCourses = async (req, res) => {
     }
     const verified=jwt.verify(token,process.env.JWT_SECRET);
     console.log(verified.user);
-    await Course.find({createdById : ObjectId(verified.user)}).then(
+    await Course.find({createdById : verified.user}).then(
       courses => {return res.status(200).json({courses});}
     )    
   } catch (error) {

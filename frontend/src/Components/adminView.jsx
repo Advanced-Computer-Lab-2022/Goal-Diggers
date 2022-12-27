@@ -79,7 +79,7 @@ const AdminView = () => {
                 <div className="col-sm-7 text-center">
                     {view.requests && <CoursesRequests status={status}/>}
                     {view.problems && <Problems status={status}/>}
-                    {view.addpromo && <SetPromotions /> }
+                    {view.addpromo && <SetPromotions role={'admin'}/> }
                     {view.adduser && <Adduser /> }
                 </div>
                 <div className="col-sm-1"></div>
