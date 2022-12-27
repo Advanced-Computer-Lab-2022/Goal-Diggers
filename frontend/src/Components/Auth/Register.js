@@ -13,6 +13,7 @@ function Register() {
     const[gender,setGender]=useState("male");
     const {getLoggedIn}=useContext(AuthContext);
     const navigate = useNavigate();
+    const [agree, setAgree] = useState(false);
     async function register(e){
         //to prevent the page from refreshing when submit
         e.preventDefault();
@@ -33,6 +34,16 @@ function Register() {
             console.log(error.message);
         }
     } 
+    const checkboxHandler = () => {
+      // if agree === true, it will be set to false
+      // if agree === false, it will be set to true
+      if(agree==true){
+
+      }
+      setAgree(!agree);
+      // Don't miss the exclamation mark
+    }
+
   return (
     <div>
     <h1 id='regtitle'>Sign up and start learning</h1>
@@ -110,8 +121,16 @@ function Register() {
            
             </div>
           </div>
-          <button type="submit" className="buttoon pt-2"> Sign Up </button>
+          <div>
+          <input type="checkbox" id="agree" onChange={checkboxHandler} />
+          <label htmlFor="agree"> I agree to <a href='/termsandconditions' className='me-4 text-reset'> terms and conditions</a></label>
+        </div>
+          <button  disabled={!agree} type="submit"  className={agree?"buttoon pt-2":"buttoon2"}> Sign Up </button>
         </form>
+       
+
+        {/* Don't miss the exclamation mark* */}
+       
         </div>
       
  

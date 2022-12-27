@@ -496,7 +496,7 @@ form .category label .dot {
   top:35% !important; 
 }
 #footer{
-  
+
   left: 0;
   bottom: 0;
   width: 100%;
@@ -521,4 +521,27 @@ form .category label .dot {
 #logintitle{
   margin-top: 3%;
   margin-left: 40%;
+}
+/*button not active style*/
+.buttoon2 {
+
+  display: inline-block;
+  margin: 60px;
+  padding: 15px 30px;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: #a00407;
+  background: transparent;
+  cursor: pointer;
+  transition: ease-out 0.5s;
+  border: 2px solid #a00407;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 0 #a00407;
+
+  width: 220px;
+}
+#terms{
+  margin: 5%;
 }
