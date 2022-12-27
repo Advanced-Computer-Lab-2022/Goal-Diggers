@@ -22,6 +22,7 @@ const Problems = ({status}) => {
             } else {
                 const res = await courseService.getCoursesProblemsU();
                 setProblems(res);
+                console.log(res);
                 setReady(true);
             }
         }
@@ -40,7 +41,7 @@ const Problems = ({status}) => {
               swal("The problem has been pended", {
                 icon: "success",
               });
-              const res = await courseService.GrantAccess(e.target.id);
+              const res = await courseService.MarkAsPending(e.target.id);
               setReload(!reload);
             }
           });
@@ -58,7 +59,7 @@ const Problems = ({status}) => {
               swal("Problem has been marked as resolved", {
                 icon: "success",
             });
-            const res = await courseService.RevokeAccess(e.target.id);
+            const res = await courseService.MarkAsResolved(e.target.id);
             setReload(!reload);
             }
           });
@@ -75,26 +76,30 @@ const Problems = ({status}) => {
                 :(problems.map(request => {
                     return <div key={request._id} className="card bg-light m-2">
                         <div className="row">
-                            <div className="col-sm-1">
-                                <img src="./video.png" alt="" width={'60px'}/>
-                            </div>
-                            <div className="col-sm-8">
-                                <p>{request.studentName} requested to take {request.title} Course</p>
+                            <div className="col-sm-5">
+                                <p>Problem : {request.question}. <br /> Type : {request.type}</p>
                             </div>
                             {request.status == 'unseen' && 
-                            <div className="col-sm-3">
-                                <button onClick={(e)=>{markpending(e)}} id={request._id} style={{borderRadius:'25px'}} className='btn btn-info mx-1'>Mark as pending</button>
+                            <div className="col-sm-7">
+                                <button onClick={(e)=>{markpending(e)}} id={request._id} style={{borderRadius:'25px'}} className='btn btn-info'>Mark as pending</button>
                                 <button onClick={(e)=>{markresolved(e)}} id={request._id} style={{borderRadius:'25px'}}className='btn btn-success'>Mark as resolved</button>
                             </div>
                             }
-                            {request.status == 'pendingpro' && 
-                            <div className="col-sm-3">
-                                    <button onClick={(e)=>{markresolved(e)}} id={request._id} style={{borderRadius:'25px'}}className='btn btn-success'>Mark as resolved</button>                            </div>
+                            {request.status == 'pending' && 
+                                <React.Fragment>
+                                    <div className="col-sm-3"/>
+                                    <div className="col-sm-4">
+                                        <button onClick={(e)=>{markresolved(e)}} id={request._id} style={{borderRadius:'25px'}}className='btn btn-success'>Mark as resolved</button>                            
+                                    </div>
+                                </React.Fragment>
                             }
                             {request.status == 'resolved' && 
-                            <div className="col-sm-3">
-                                <h6 style={{color : 'lightgreen'}}><i className="fa fa-check-circle" aria-hidden="true"></i> Resolved </h6>                           
-                            </div>
+                                <React.Fragment>
+                                    <div className="col-sm-3"/>
+                                    <div className="col-sm-4">
+                                        <h6 style={{color : 'lightgreen'}}><i className="fa fa-check-circle" aria-hidden="true"></i> Resolved </h6>                           
+                                    </div>
+                                </React.Fragment>
                             }
                         </div>
                     </div>

@@ -9,6 +9,7 @@ const instructorSchema = require('./schemas/instructor');
 const registerCourseSchema = require('./schemas/registerCourse');
 const CourseRequestSchema = require('./schemas/courserequest');
 const walletSchema = require('./schemas/wallet');
+const problemSchema = require('./schemas/problem');
 
 const User = mongoose.model('user', userSchema);
 const Role = mongoose.model('role', roleSchema);
@@ -19,6 +20,7 @@ const Instructor = mongoose.model('instructor', instructorSchema);
 const RegisterCourse = mongoose.model('registercourse', registerCourseSchema);
 const CourseRequest = mongoose.model('CourseRequest', CourseRequestSchema);
 const Wallet = mongoose.model('wallet', walletSchema);
+const Problem = mongoose.model('problem', problemSchema);
 
 module.exports.User = User;
 module.exports.Role = Role;
@@ -29,3 +31,4 @@ module.exports.Instructor = Instructor;
 module.exports.RegisterCourse = RegisterCourse;
 module.exports.CourseRequest = CourseRequest;
 module.exports.Wallet = Wallet;
+module.exports.Problem = Problem;

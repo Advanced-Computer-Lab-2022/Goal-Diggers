@@ -1,4 +1,4 @@
-const { User, Role, Exam, Course, Instructor, RegisterCourse, CourseRequest, Wallet} = require('../models/db');
+const { User, Role, Exam, Course, Instructor, RegisterCourse, CourseRequest, Wallet, Problem} = require('../models/db');
 const bcrypt = require("bcrypt");
 const _ = require('lodash');
 const {ObjectId} = require('mongodb');
@@ -48,8 +48,8 @@ module.exports.buyCourse =  async (req, res) => {
     course.completedQuizs = 0;
     course.completedVideos = [];
     course.notes = [];
-    course.courseID = ObjectId(course._id);
-    course.studentID = ObjectId(verified.user);
+    course.courseID = course._id;
+    course.studentID = verified.user;
     course = _.omit(course, '_id');
     RegisterCourse.create(course).then(
       result => {
@@ -741,10 +741,17 @@ module.exports.getCourse = async (req,res) => {
                       }
                     )
                 }
-                else if (await CourseRequest.findOne({courseID : id, studentID : verified.user}))
-                  return res.status(200).json({course, requested : true});
-                else
-                  return res.status(200).json({course, register : false});
+                else  {
+                  await CourseRequest.findOne({courseID : id, studentID : verified.user, status : 'pending'}).then(
+                    request => {
+                      if(request)
+                        return res.status(200).json({course, requested : true});
+                      else
+                        return res.status(200).json({course, register : false});
+                    }
+                  )
+                }
+                  
             } else {
 
               return res.status(404).json({error : "Course Not Found"});
@@ -837,7 +844,7 @@ module.exports.getRegisterCourse = async (req, res) =>{
 //GET
 // url : api/courses-problems-pending/ admin get problems
 module.exports.getCoursesProblemsPending = async (req, res) =>{
-    Problems.find({status : "pending"}).then (
+    Problem.find({status : "pending"}).then (
       problems =>{
         return res.status(200).json({problems});
       }
@@ -847,7 +854,7 @@ module.exports.getCoursesProblemsPending = async (req, res) =>{
 //GET
 // url : api/courses-problems-resolved/ admin get problems
 module.exports.getCoursesProblemsResolved = async (req, res) =>{
-    Problems.find({status : "resolved"}).then (
+    Problem.find({status : "resolved"}).then (
       problems =>{
         return res.status(200).json({problems});
       }
@@ -857,7 +864,7 @@ module.exports.getCoursesProblemsResolved = async (req, res) =>{
 //GET
 // url : api/courses-problems-unseen/ admin get Problems
 module.exports.getCoursesProblemsUnseen = async (req, res) =>{
-    Problems.find({status : "unseen"}).then (
+    Problem.find({status : "unseen"}).then (
       problems =>{
         return res.status(200).json({problems});
       }
@@ -866,8 +873,8 @@ module.exports.getCoursesProblemsUnseen = async (req, res) =>{
 //POST
 // url : api/mark-pending/ admin mark problem as pending
 module.exports.MarkAsPending = async (req, res) =>{
-  const request_id = ObjectId(req.body.id);
-  Problems.updateOne(request_id, {status : 'Pending'}, {new : true}).then(
+  const request_id = ObjectId(req.params.id);
+  Problem.updateOne({_id:request_id}, {status : 'pending'}, {new : true}).then(
       request => {
           return res.status(200).json({});
     });
@@ -875,8 +882,8 @@ module.exports.MarkAsPending = async (req, res) =>{
 //POST
 // url : api/mark-resolved/ admin mark problem as resolved
 module.exports.MarkAsResolved = async (req, res) =>{
-  const request_id = ObjectId(req.body.id);
-  Problems.updateOne(request_id, {status : 'resolved', answered : true}, {new : true}).then(
+  const request_id = ObjectId(req.params.id);
+  Problem.updateOne({_id : request_id}, {status : 'resolved', answered : true}, {new : true}).then(
       request => {
           return res.status(200).json({});
     });
@@ -935,17 +942,67 @@ module.exports.AdminGrantAccess = async (req, res) =>{
           Course.findOne({_id : course_id}).then(
             course =>{
               let RegCourse = _.omit(course,'_id');
+              course.registers++;
+              course.save();
               RegCourse.completedVideos = [];
               RegCourse.attemptedQuizs = [];
               RegCourse.completedQuizs = 0;
               RegCourse.studentID = student_id;
+              RegCourse.courseID = request.courseID;
+              console.log(course.overviewvideo);
+              console.log(course.overviewVideo);
+              console.log(RegCourse.overviewvideo);
               RegisterCourse.create(RegCourse).then(
-                result=>{return res.status(200).json({});}
+                result=>{
+                  console.log(result.overviewvideo);
+                  return res.status(200).json({});
+                }
               )
           })
       });
 } 
+//-------------------------------------------------------------------------------------//
+// getproblem
+module.exports.getproblem = async (req,res)=>{
+  const id = ObjectId(req.params.id); 
+  console.log(id); 
+  console.log("odasd"); 
+  Problem.find({courseID : id}).then(
+      problems => {
+          console.log(problems);
+                return res.status(200).json({problems});
+      }
+  );
+}
 
+// add problem
+module.exports.addproblem = async (req,res)=>{
+  const problem = req.body.problem;
+  problem.courseID = ObjectId(problem.courseID);
+  problem.status = "unseen";
+  Problem.create(problem).then(
+      problem => {
+                return res.status(200).json({});
+      }
+  );
+}
+
+
+//Post
+//url : /api/refundcourse  
+module.exports.refundcourse = async (req, res) => {
+  const courseID = ObjectId(req.params.id);
+  console.log("course");
+  RegisterCourse.findByIdAndUpdate(courseID, { pending : true}).then(
+      course => {
+          console.log(course);
+           return res.status(200).json({});
+      }
+  );
+};
+
+
+//-------------------------------------------------------------------------------------//
 //POST
 // url : api/admin-revoke-access/ admin revoke access to corporate trainee
 module.exports.AdminRevokeAccess = async (req, res) =>{
@@ -966,7 +1023,7 @@ module.exports.getInProgressCourses = async(req,res) =>{
         return res.json(false);
     }
     const verified= jwt.verify(token,process.env.JWT_SECRET);
-    RegisterCourse.find({studentID : verified.user}).then(
+    RegisterCourse.find({studentID : verified.user, pending : false}).then(
         courses =>{
           let result = courses.filter(course=>{return course.totalItems > (course.completedQuizs + course.completedVideos.length)});
           res.status(200).json({courses : result})
@@ -1031,4 +1088,63 @@ module.exports.createPDF = (req,res) =>{
 // used to download the notes pdf
 module.exports.fetchPDF = (req,res) =>{
   res.sendFile(`${__dirname}/PDFs/result.pdf`);
+};
+
+// POST 
+// url api/request/ corporate trainee request an course
+module.exports.RequestCourse = async (req,res) => {
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
+    }
+    const verified= jwt.verify(token,process.env.JWT_SECRET);
+    const request = req.body.course;
+    console.log(req.body);
+    request.studentID = verified.user;
+    request.studentName = verified.username;
+    request.status = "pending";
+    let couresReq = new CourseRequest(request);
+    couresReq.save();
+    return res.status(200).json({});
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
+};
+
+module.exports.AdminRefundCourse = async(req,res) => {
+    let course = req.body.course;
+    await User.findByIdAndUpdate(ObjectId(course.studentID)).then(
+        user => {
+          user.wallet += Number(course.price);
+          user.save();
+        }
+    );
+    await Wallet.findOneAndUpdate({instructorID : ObjectId(course.createdById)}).then(
+        wallet => {
+          wallet.total -= course*0.7;
+          let exist = false;
+          wallet.details.forEach((month, index) => {
+          if(new Date(month.month).getMonth() === new Date().getMonth() && new Date(month.month).getFullYear() === new Date().getFullYear()) {
+            wallet.details[index].total -= course.price*0.7;
+            exist = true;
+            }
+          });
+          if(!exist)
+            wallet.details.push({month: `${new Date().getMonth() + 1}-1-${new Date().getFullYear()}`, total : -course.price*0.7});
+          wallet.save();
+        }
+    )
+    await RegisterCourse.findByIdAndDelete(course._id).then(
+      result => {return res.status(200).json({});}
+    )
+};
+
+module.exports.getRefundRequests = async(req,res) => {
+    RegisterCourse.find({pending : true}).then(
+      courses => {
+        return res.status(200).json({courses});
+      }
+    )
 };

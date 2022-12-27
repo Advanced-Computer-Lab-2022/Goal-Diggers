@@ -118,11 +118,11 @@ courseService.getCoursesProblemsU = async() => {
     return data.problems;
 }
 courseService.MarkAsPending = async(id) => {
-    const {data} = await http.post(apiUrl + 'mark-pending',{id});
+    const {data} = await http.post(apiUrl + 'mark-pending/' + id);
     return data;
 }
 courseService.MarkAsResolved = async(id) => {
-    const {data} = await http.post(apiUrl + 'mark-resolved',{id});
+    const {data} = await http.post(apiUrl + 'mark-resolved/' + id);
     return data;
 }
 //-----------------------------------------------------------------------------------//
@@ -208,6 +208,34 @@ courseService.acceptTerms= async() => {
     return data;
 }
 
+courseService.requestCourse= async(course) => {
+    const data = await http.post(apiUrl + "request", {course});
+    return data;
+}
 
+courseService.getproblems = async(id) => {
+    console.log(id);
+    const {data} = await http.get(apiUrl + 'get-problems/' + id);
+    return data.problems;
+}
+
+courseService.addproblems = async(problem) => {
+    const {data} = await http.post(apiUrl + 'add-problem', {problem});
+    return data;
+}
+//////refund course
+
+courseService.refundcourse = async(id) => {
+    const {data} = await http.post(apiUrl + 'refund-course/'+ id);
+    return data;
+}
+courseService.AdminRefundCourse = async(course) => {
+    const {data} = await http.post(apiUrl + 'refund', {course});
+    return data;
+}
+courseService.getRefundRequests = async() => {
+    const {data} = await http.get(apiUrl + 'refund--requests');
+    return data.courses;
+}
 
 export default courseService;

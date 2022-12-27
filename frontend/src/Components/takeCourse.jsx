@@ -10,6 +10,10 @@ import swal from 'sweetalert';
 import {useFloating} from '@floating-ui/react';
 import ViewNotes from './viewNotes';
 import ReactLoading from 'react-loading';
+import Reportproblem from './reportproblem';
+// import Refundcourse from './refundcourse';
+import Showpreviousproblems from './showpreviousproblems';
+import Refundcourse from './refundcourse';
 // import Refundcourse from './refundcourse';
 // import Showpreviousproblems from './showpreviousproblems';
 
@@ -61,7 +65,7 @@ const TakeCourse = () => {
         console.log(item);
         if (item.length > 1) {
             if (item[0] == "quiz") {
-               
+
                 setQuizGrade(null);
                 for (let index = 0; index < course.attemptedQuizs.length; index++) {
                     if (course.attemptedQuizs[index].id === item[1])
@@ -71,29 +75,29 @@ const TakeCourse = () => {
                 setviewrefund(false);
                 setfollowup(false);
                 setQuizStart(true);
-                setreport(false); 
+                setreport(false);
                 setshowpreviousproblems(false);
                 setShowNotes(false);
                 console.log("quiz");
-               }
-            else if(item[0] == "refund"){
+            }
+            else if (item[0] == "refund") {
                 console.log("refund");
-                    setviewrefund(true);
-                    setfollowup(false);
-                    setQuizStart(false);
-                    setreport(false);
-                    setshowpreviousproblems(false);
-                    setShowNotes(false);
+                setviewrefund(true);
+                setfollowup(false);
+                setQuizStart(false);
+                setreport(false);
+                setshowpreviousproblems(false);
+                setShowNotes(false);
             }
-            else if(item[0] == "notes"){
-                    setviewrefund(false);
-                    setfollowup(false);
-                    setQuizStart(false);
-                    setreport(false);
-                    setshowpreviousproblems(false);
-                    setShowNotes(true);
+            else if (item[0] == "notes") {
+                setviewrefund(false);
+                setfollowup(false);
+                setQuizStart(false);
+                setreport(false);
+                setshowpreviousproblems(false);
+                setShowNotes(true);
             }
-            else if(item[0] == "report"){
+            else if (item[0] == "report") {
                 setviewrefund(false);
                 setfollowup(false);
                 setQuizStart(false);
@@ -101,7 +105,7 @@ const TakeCourse = () => {
                 setshowpreviousproblems(false);
                 setShowNotes(false);
             }
-            else if(item[0] == "followup"){
+            else if (item[0] == "followup") {
                 setviewrefund(false);
                 setfollowup(true);
                 setQuizStart(false);
@@ -109,7 +113,7 @@ const TakeCourse = () => {
                 setshowpreviousproblems(false);
                 setShowNotes(false);
             }
-            else if(item[0] == "previousproblems"){
+            else if (item[0] == "previousproblems") {
                 setviewrefund(false);
                 setfollowup(false);
                 setQuizStart(false);
@@ -213,49 +217,51 @@ const TakeCourse = () => {
                                 </div>
                             </div>
                         }
-                        {quizStart ?
-                            <WelcomeQuiz courseID={course.courseID} id={quizId} grade={quizGrade} />
+                                                {quizStart ?
+                            <WelcomeQuiz courseID={course._id} id={quizId} grade={quizGrade} />
                             : (viewrefund ?
-                                refundcourse ()
-                                : ( report ?
-                                    <WelcomeQuiz courseID={course._id} id={quizId} grade={quizGrade} /> 
-                                : (followup ?
-                                    <h1></h1>
-                                : ( showpreviousproblems ?
-                                    <WelcomeQuiz courseID={course._id} id={quizId} grade={quizGrade} />     
-                                
-                                : (
-                                    showNotes ? 
+                                <Refundcourse  courseID={course._id}  /> : (report ?
                                     <div className="container p-3 justify-content-center" >
-                                        <ViewNotes title={course.title} notes={course.notes}/>
+                                        <Reportproblem courseID={course.courseID} />
                                     </div>
-                                    :(
-                                        <React.Fragment>
-                                    <div className=" p-3 justify-content-center" >
-                                        <ProgressBar width='73%' bgColor='#6a1b9a' completed={(((course.completedVideos.length + course.completedQuizs) / course.totalItems) * 100).toFixed(2)} />
-                                    </div>
-                                    <h2>{title} : </h2>
-                                    <div className="row">
-                                        <div className="col-sm-9">
-                                        <ReactPlayer width={750} height={500} url={url} />
-                                        </div>
-                                        <div className="col-sm-3 text-center">
-                                            <img onClick={()=>{setOpen(!open)}} src="../notepad.png" alt="" width={'75px'}  />
-                                            {open && <div className='card bg-light mt-' style={{borderRadius:'25px'}}>
-                                                        <div className="form-floating mb-3">
-                                                            <textarea onChange={(e) => handle(e)} value={note.note} name="summary" id="summaryy" className="form-control" placeholder="write your note here" style={{ height: '100px' }}></textarea>
-                                                            <label htmlFor="floatingTextarea2">Write your note here</label>
-                                                        </div>
-                                                        <button className='btn btn-primary'style={{borderRadius:'25px'}} onClick={()=>{saveNote()}}>Save</button>
+
+                                    : (followup ?
+                                        <Showpreviousproblems title={course.title} courseID={course.courseID} all={false} />
+                                        : (showpreviousproblems ?
+                                            <Showpreviousproblems title={course.title} courseID={course.courseID} all={true} />
+
+                                            : (
+                                                showNotes ?
+                                                    <div className="container p-3 justify-content-center" >
+                                                        <ViewNotes title={course.title} notes={course.notes} />
                                                     </div>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className='mt-2 p-3 col-sm-9' style={{ border: '1px solid lightcoral', borderRadius: '25px' }}>
-                                        <h4>Video Discription : </h4>
-                                        <p>{discription}</p>
-                                    </div>
-                                </React.Fragment>
+                                                    : (
+                                                        <React.Fragment>
+                                                            <div className="container p-3 justify-content-center" >
+                                                                <ProgressBar width='73%' bgColor='#6a1b9a' completed={(((course.completedVideos.length + course.completedQuizs) / course.totalItems) * 100).toFixed(2)} />
+                                                            </div>
+                                                            <h2>{title} : </h2>
+                                                            <div className="row">
+                                                                <div className="col-sm-9">
+                                                                    <ReactPlayer width={750} height={500} url={url} />
+                                                                </div>
+                                                                <div className="col-sm-3 text-center">
+                                                                    <img onClick={() => { setOpen(!open) }} src="../notepad.png" alt="" width={'75px'} />
+                                                                    {open && <div className='card bg-light mt-' style={{ borderRadius: '25px' }}>
+                                                                        <div className="form-floating mb-3">
+                                                                            <textarea onChange={(e) => handle(e)} value={note.note} name="summary" id="summaryy" className="form-control" placeholder="write your note here" style={{ height: '100px' }}></textarea>
+                                                                            <label htmlFor="floatingTextarea2">Write your note here</label>
+                                                                        </div>
+                                                                        <button className='btn btn-primary' style={{ borderRadius: '25px' }} onClick={() => { saveNote() }}>Save</button>
+                                                                    </div>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            <div className='mt-2 p-3 col-sm-9' style={{ border: '1px solid lightcoral', borderRadius: '25px' }}>
+                                                                <h4>Video Discription : </h4>
+                                                                <p>{discription}</p>
+                                                            </div>
+                                                        </React.Fragment>
                                     )
                                 
                                 )

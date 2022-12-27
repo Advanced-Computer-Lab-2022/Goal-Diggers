@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const videoSchema = new Schema({
-    discription : String,
-    url : String,
-    title : String,
-}, {timestamps : true});
+// const videoSchema = new Schema({
+//     discription : String,
+//     url : String,
+//     title : String,
+// }, {timestamps : true});
 
 const registerCourseSchema = new Schema({
         image : String,
@@ -21,7 +21,7 @@ const registerCourseSchema = new Schema({
         price : Number,
         rate : Number,
         numberofrates : Number,
-        reviews : [String],
+        reviews : [Object],
         discount : Object,
         rateInstructor : Boolean,
         rateCourse : Boolean,
@@ -30,7 +30,8 @@ const registerCourseSchema = new Schema({
         title : String,
         notes : [Object],
         pending : Boolean,
-        overviewvideo : videoSchema,
+        overviewvideo : Object,
+        pending : {type : Boolean,default : false},
         examsId : [Object],
         subtitles : [Object]
 }, {timestamps : true});

@@ -13,17 +13,26 @@ const CourseOverview = () => {
     const [response, setres] = useState({});
     const { id } = useParams();
     const [ready, setReady] = useState(false);
-    const url = "https://www.youtube.com/embed/zpOULjyy-n8?rel=0";
+    const [loading, setLoading] = useState(false);
+    const [reload, setReload] = useState(false);
+    const [requested, setRequested] = useState(false);
     useEffect(() => {
         const getCourse = async (id) => {
             const res = await courseService.getCourse(id);
             setCourse(res.course);
-            setres({reg : res.register, pen : res.pending});
+            setres({reg : res.register, pen : res.pending, requested : res.requested});
             console.log(res);
             setReady(true);
         }
         getCourse(id);
-    }, [])
+    }, [reload]);
+    const requestCourse = async () => {
+        setLoading(true);
+        const res = await courseService.requestCourse({title : course.title, image : course.image, courseID : course._id});
+        setLoading(false);
+        setRequested(true);
+        setReload(!reload);
+    }
     return (
         <React.Fragment >
             {ready ? (
@@ -36,17 +45,18 @@ const CourseOverview = () => {
                                     <p>{course.title}</p>
                                     {type != 'instructor' && 
                                         <React.Fragment>
-                                            {response.reg && <Link to={`/take-course/${course._id}`} className="btn btn-primary">GO TO Course</Link>}
-                                            {response.pen && <button disabled={true}  className="btn btn-primary">Your Request to fund is being processed</button>}
-                                            {response.requested && <button disabled={true}  className="btn btn-primary ">Your Request is being processed</button>}
-                                            {response.reg == false && type == "student" && <Link to={`/payment/${course._id}`} className="btn btn-primary">Enroll Now</Link>}
-                                            {response.reg == false && type != "student" && <Link to={`/payment/${course._id}`} className="btn btn-primary">Request to Enroll</Link>}
+                                            {console.log(response )}
+                                            {response.reg && <Link to={`/take-course/${course._id}`} className="btn btn-light" style={{borderRadius : '25px', color :'#a00407'}}>GO TO Course</Link>}
+                                            {response.pen && <button disabled={true}  className="btn btn-light" style={{borderRadius : '25px', color :'#a00407'}} >Your Request to fund is being processed</button>}
+                                            {response.requested && <button disabled={true}  className="btn btn-light" style={{borderRadius : '25px', color :'#a00407'}}>Your Request is being processed</button>}
+                                            {response.reg == false && type == "student" && <Link to={`/payment/${course._id}`} className="btn btn-light" style={{borderRadius : '25px', color :'#a00407'}}>Enroll Now</Link>}
+                                            {response.reg == false && type != "student" &&<button onClick={()=>{requestCourse()}} className="btn btn-light" style={{borderRadius : '25px', color :'#a00407'}}>Request to Enroll</button>}     
                                         </React.Fragment>
                                     }
                                 </div>
                             </div>
                             <div className="col-sm-4 p-5 mr-5">
-                                <img src={"." + course.image} style={{ width: '80%', height: '80%' }} />
+                                <img src={course.image} style={{ width: '80%', height: '80%' }} />
                             </div>
                         </div>
                     </div>
@@ -92,9 +102,10 @@ const CourseOverview = () => {
                                     <div>5 star</div>
                                 </div>
                                 <div class="middle">
-                                    <div class="bar-container">
-                                        <div class="bar-5" style={{ width: (course.ratedetails[5] / course.numberofrates) * 100 + '%' }}></div>
-                                    </div>
+                                    {course.ratedetails[5] > 0 ? <div class="bar-5" style={{width : (course.ratedetails[5]/course.numrate)*100+'%'}}></div>
+                                    :
+                                        <div class="bar-5" style={{width : '0%'}}></div>
+                                    }
                                 </div>
                                 <div class="side right">
                                     <div>{course.ratedetails[5]}</div>
@@ -103,9 +114,10 @@ const CourseOverview = () => {
                                     <div>4 star</div>
                                 </div>
                                 <div class="middle">
-                                    <div class="bar-container">
-                                        <div class="bar-4" style={{ width: (course.ratedetails[4] / course.numberofrates) * 100 + '%' }}></div>
-                                    </div>
+                                    {course.ratedetails[4] > 0 ? <div class="bar-4" style={{width : (course.ratedetails[4]/course.numrate)*100+'%'}}></div>
+                                    :
+                                        <div class="bar-4" style={{width : '0%'}}></div>
+                                    }
                                 </div>
                                 <div class="side right">
                                     <div>{course.ratedetails[4]}</div>
@@ -114,9 +126,10 @@ const CourseOverview = () => {
                                     <div>3 star</div>
                                 </div>
                                 <div class="middle">
-                                    <div class="bar-container">
-                                        <div class="bar-3" style={{ width: (course.ratedetails[3] / course.numberofrates) * 100 + '%' }}></div>
-                                    </div>
+                                    {course.ratedetails[3] > 0 ? <div class="bar-3" style={{width : (course.ratedetails[3]/course.numrate)*100+'%'}}></div>
+                                    :
+                                        <div class="bar-3" style={{width : '0%'}}></div>
+                                    }
                                 </div>
                                 <div class="side right" >
                                     <div>{course.ratedetails[3]}</div>
@@ -125,9 +138,10 @@ const CourseOverview = () => {
                                     <div>2 star</div>
                                 </div>
                                 <div class="middle">
-                                    <div class="bar-container">
-                                        <div class="bar-2" style={{ width: (course.ratedetails[2] / course.numberofrates) * 100 + '%' }}></div>
-                                    </div>
+                                    {course.ratedetails[2] > 0 ? <div class="bar-2" style={{width : (course.ratedetails[2]/course.numrate)*100+'%'}}></div>
+                                    :
+                                        <div class="bar-2" style={{width : '0%'}}></div>
+                                    }
                                 </div>
                                 <div class="side right">
                                     <div>{course.ratedetails[2]}</div>
@@ -136,9 +150,10 @@ const CourseOverview = () => {
                                     <div>1 star</div>
                                 </div>
                                 <div class="middle">
-                                    <div class="bar-container">
-                                        <div class="bar-1" style={{ width: (course.ratedetails[1] / course.numberofrates) * 100 + '%' }}></div>
-                                    </div>
+                                    {course.ratedetails[1] > 0 ? <div class="bar-1" style={{width : (course.ratedetails[1]/course.numrate)*100+'%'}}></div>
+                                    :
+                                        <div class="bar-1" style={{width : '0%'}}></div>
+                                    }
                                 </div>
                                 <div class="side right" >
                                     <div>{course.ratedetails[1]}</div>

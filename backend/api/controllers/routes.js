@@ -33,8 +33,8 @@ router.get('/courses-requests-rejected', controller.getCoursesRequestsRejected);
 router.get('/courses-problems-pending', controller.getCoursesProblemsPending);
 router.get('/courses-problems-resolved', controller.getCoursesProblemsResolved);
 router.get('/courses-problems-unseen', controller.getCoursesProblemsUnseen);
-router.post('/mark-pending',controller.MarkAsPending);
-router.post('/mark-resolved',controller.MarkAsResolved);
+router.post('/mark-pending/:id',controller.MarkAsPending);
+router.post('/mark-resolved/:id',controller.MarkAsResolved);
 router.post('/admin-add-promotion', controller.AdminAddPromotions);
 router.post('/admin-grant-access', controller.AdminGrantAccess);
 router.post('/admin-revoke-access', controller.AdminRevokeAccess);
@@ -55,7 +55,12 @@ router.post('/login', controller.loginUser);
 router.get('/logout', controller.Logout);
 router.get('/loggedin', controller.LoggedIn);
 /////////////////
-
+router.post('/request', controller.RequestCourse);
+router.post('/add-problem', controller.addproblem);
+router.get('/get-problems/:id', controller.getproblem);
+router.post('/refund-course/:id', controller.refundcourse);
+router.post('/refund', controller.AdminRefundCourse);
+router.get('/refund-requests', controller.getRefundRequests);
 
 
 module.exports = router;

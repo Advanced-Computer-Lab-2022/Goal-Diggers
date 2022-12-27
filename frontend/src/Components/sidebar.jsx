@@ -1,13 +1,15 @@
-import React, { useState }  from 'react';
+import React, { useContext, useState }  from 'react';
 import { useEffect } from 'react';
 import {Navigation} from 'react-minimal-side-navigation';
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
+import AuthContext, { AuthContextProvider } from"../context/AuthContext";
 
 function Sidebar({refund ,subtitles, overviewvideo, completedVideos, attemptedQuizs, choosevideo}) {
     const [items, setItems] = useState([]);
+    const {loggedIn,id,type}=useContext(AuthContext);
     useEffect(()=>{
+        console.log(type);
         let itemTemp = [{title : overviewvideo.title, itemId : [overviewvideo.url,overviewvideo.descriprion, overviewvideo.title], elemBefore: () => <i style={{color: 'green'}} className="fa fa-check-circle" aria-hidden="true"></i>}];
-        console.log(subtitles);
         subtitles.map((subtitle, index) => {
             itemTemp.push({
                             title: subtitle.title,
@@ -22,7 +24,6 @@ function Sidebar({refund ,subtitles, overviewvideo, completedVideos, attemptedQu
                                                             return <i style={{color: 'green'}} className="fa fa-check-circle" aria-hidden="true"></i>}
                                     })
                             });
-
         subtitle.quizs.map((quiz, i) =>{
                                 itemTemp[index + 1].subNav.push({
                                     title: `Quiz ${i+1}`,
@@ -45,19 +46,16 @@ function Sidebar({refund ,subtitles, overviewvideo, completedVideos, attemptedQu
                         
         setItems(itemTemp);
         });
-        if(refund){
-        itemTemp.push({title: 'refund the course' ,itemId:["refund","refund",""]}) ;
-        setItems(itemTemp);
+        let issues = {title : "Course Issues", itemId:["fds"], subNav:[]};
+        issues.subNav.push({title: 'report a problem' ,itemId:["report","report",""]});
+        issues.subNav.push({title: 'follow up problems' ,itemId:["followup","followup",""]});
+        issues.subNav.push({title: 'previous problems' ,itemId:["previousproblems","previousproblems",""]});
+        if(refund && type != 'corporatetrainees '){
+            issues.subNav.push({title: 'refund the course' ,itemId:["refund","refund",""]}) ;
         }
-        itemTemp.push({title: 'report a problem' ,itemId:["report","report",""]}) ;
-        setItems(itemTemp);
-        itemTemp.push({title: 'follow up problems' ,itemId:["followup","followup",""]}) ;
-        setItems(itemTemp);
-        itemTemp.push({title: 'previous problems' ,itemId:["previousproblems","previousproblems",""]}) ;
-        setItems(itemTemp);
+        itemTemp.push(issues);
         itemTemp.push({title: 'Notes' ,itemId:["notes","notes","botes"]}) ;
         setItems(itemTemp);
-        
     },[completedVideos])
     return (
       <>

@@ -38,10 +38,11 @@ const courseSchema = new Schema({
         title : String,
         registers : {type  : Number, default : 0},
         views : {type  : Number, default : 0},
-        overviewVideo : Object,
+        overviewvideo : Object,
         examsId : [Object],
         subtitles : [Object],
         totalItems : Number,
+        
 }, {timestamps : true});
 
 
