@@ -8,6 +8,7 @@ import Wallet from './wallet';
 import Reviewsoninstructor from './reviewsoninstructor';
 import Editinstructorprofile from './editinstructorprofile';
 import AuthContext, { AuthContextProvider } from"../context/AuthContext";
+import SetPromotions from './setPromotions';
 
 const InstructorView = () => {
     const [view, setView] = useState({profile : true,});
@@ -25,6 +26,8 @@ const InstructorView = () => {
             setView({addcourse : true});
         else if(item === 'rate') 
             setView({rate : true});
+        else if(item === 'promo') 
+            setView({addpromo : true});
     }   
     return ( 
         <React.Fragment>
@@ -41,6 +44,9 @@ const InstructorView = () => {
                         items={[
                             {title : "Profile",
                             itemId : "profile"
+                            },
+                            {title : "Add Promotion",
+                            itemId : "promo"
                             },
                             {title : "Rating and Reviews",
                             itemId : "rate"
@@ -71,6 +77,7 @@ const InstructorView = () => {
                     {view.addcourse && <Createcourse />}
                     {view.rate && <Reviewsoninstructor />}
                     {view.changeinfo && <Editinstructorprofile />}
+                    {view.addpromo && <SetPromotions role={'instructor'}/> }
                 </div>
                 <div className="col-sm-1"></div>
             </div>

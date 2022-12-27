@@ -32,7 +32,9 @@ const Child = () => {
         const fetchClientSecret = async () => {
         let res = await courseService.getCourse(id);
         if(res.course.discount && new Date(res.course.discount.date) >= Date.now()) {
-            res.course.price -= res.course.price * res.course.discount.promotion;
+            console.log(res.course.discount);
+            res.course.price -= res.course.price * (res.course.discount.promotion / 100);
+            console.log(res.course.price);
         }
         setCourse(res.course);
         console.log(res);
