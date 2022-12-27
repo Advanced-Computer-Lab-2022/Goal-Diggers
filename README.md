@@ -256,7 +256,7 @@ If you have a suggestion that would make this better, please fork the repo and c
 5-Open a Pull Request
 
 # Credits
-Creadits goes to our TA's Hadwa Pasha and Noha for supervising us along the project.
+Creadits goes to our TA's Hadwa Pasha, Nada-abdelfattah and Noha for supervising us along the project.
 
 # Liscence
 ?
