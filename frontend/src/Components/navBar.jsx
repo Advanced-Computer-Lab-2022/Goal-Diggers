@@ -62,10 +62,7 @@ const NavBar = ({handleCountry}) => {
             <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">Most Popular</Nav.Link>
             <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">Most Viewed</Nav.Link>
 
-            {!loggedIn&&<>
-            <Nav.Link id="nav-item7" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/login"> <Button>login</Button></Nav.Link>
-            <Nav.Link id="nav-item8" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/register"> <Button>register</Button></Nav.Link>
-            </>}
+            
             {
               loggedIn&&<>
             <Nav.Link id="nav-item7" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/login"> <LogoutBtn></LogoutBtn></Nav.Link>

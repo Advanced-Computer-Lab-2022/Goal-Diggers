@@ -29,13 +29,18 @@ export default function Login() {
         }
     } 
   return (
-    <div id='loginContainer' className='text-center'>
-    <h1>Login now</h1>
+   <div>
+    <h1 id='logintitle'>Login now</h1>
+    <div id="loginContainer">
+   
     <form onSubmit={login}>
         
-        <div class="material-textfield input-box my-4">
+    <div className="user-details">
+    <div class="material-textfield input-box ">
             <input 
-            className='inputt'
+            className="inputt"
+            placeholder=" "
+            type="text"
             value={username}
             onChange={(e)=>setUserName(e.target.value)}>
             </input>
@@ -45,14 +50,18 @@ export default function Login() {
             <input 
             type="password" 
             className='inputt'
+            placeholder=" "
             value={password}
             onChange={(e)=>setPassword(e.target.value)}
             >
             </input>
             <label className="labell">Password</label>
         </div>
+        </div>
         <button className='buttoon pt-2'>login</button>
     </form>
     </div>
+    <h1 id="mar2"> </h1>
+</div>
   )
 }

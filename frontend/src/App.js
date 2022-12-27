@@ -26,6 +26,8 @@ import NotFound from './Components/notfound';
 import Login from './Components/Auth/Login';
 import Register from './Components/Auth/Register';
 import axios from "axios";
+import RegisterFooter from './registerFooter';
+import Footer from './Components/footer'
 axios.defaults.withCredentials=true;
 
 
@@ -64,6 +66,8 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='*' element={<NotFound/>} />
       </Routes>
+      <RegisterFooter></RegisterFooter>
+      <Footer></Footer>
       </AuthContextProvider>
     </React.Fragment>
   );
