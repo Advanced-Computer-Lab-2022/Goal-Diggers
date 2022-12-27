@@ -3,6 +3,7 @@ import Filters from './common/filters';
 import courseService from '../courseContainer.js'
 import CourseCard from './courseCard';
 import axios from 'axios';
+import ReactLoading from 'react-loading';
 
 const CourseContainer = ({type, keyword, currency}) => {
     const [coursesOriginal, setCoursesOriginal] = useState([]);
@@ -145,20 +146,8 @@ const CourseContainer = ({type, keyword, currency}) => {
             )
             :
             (
-                <div className="container">
-                    <div className="row">
-                        <div id="loader">
-                            <div className="dot"></div>
-                        <div className="dot"></div>
-                        <div className="dot"></div>
-                        <div className="dot"></div>
-                        <div className="dot"></div>
-                        <div className="dot"></div>
-                        <div className="dot"></div>
-                        <div className="dot"></div>
-                        <div className="loading"></div>
-                        </div>
-                    </div>
+                <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center', height : '500px'}}>
+                    <ReactLoading type={"bars"} color={'#a00407'} height={'5%'} width={'5%'} />
                 </div>
             )
         }

@@ -40,7 +40,7 @@ function App() {
       <NavBar handleCountry ={handleCountry}/>
       <Routes>
         <Route path='/editinstructorprofile' element={<Editinstructorprofile />} />
-        <Route path='/ratecourse/:id/:courseID' element={<Ratecourse />} />
+        <Route path='/ratecourse/:id' element={<Ratecourse />} />
         <Route path='/rateinstructor/:id/:insturctorID' element={<Rateinstructor />} />
         <Route path='/edituserprofile' element={<Edituserprofile />} />
         <Route path='/instructorprofile' element={<Instructorprofile />} />

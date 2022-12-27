@@ -11,7 +11,6 @@ function Ratecourse() {
         review : ""
     })
     const {id} = useParams();
-    const {courseID} = useParams();
     const [error, setError] = useState(false);
     async function rateCourse(){
         if(data.review && data.rate) {
@@ -28,7 +27,7 @@ function Ratecourse() {
               });
             }
             console.log(data);
-            const res = await courseService.rateCourse(data.review,data.rate,courseID);
+            const res = await courseService.rateCourse(data.review,data.rate,id);
             setDone(true);
           });
         }

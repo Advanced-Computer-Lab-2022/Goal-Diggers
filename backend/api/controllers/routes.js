@@ -20,7 +20,7 @@ router.post('/save-progress', controller.saveProgress);
 router.post('/rate-instructor/:id', controller.addInstructorRate);
 router.post('/rate-course/:id', controller.addCourseRate);
 router.get('/reviews-ratings', controller.getReviewsAndRatings);
-router.post('/change-password/:id', controller.ChangePassword);
+router.post('/change-password', controller.ChangePassword);
 router.post('/change-email-biography', controller.changeEmailorBiography);
 //////////////////////////////////////////////
 //////////3bto/////////

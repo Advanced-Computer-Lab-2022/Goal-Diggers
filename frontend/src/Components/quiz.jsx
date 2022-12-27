@@ -7,6 +7,7 @@ import CourseService from '../courseContainer';
 import { Link, useParams } from 'react-router-dom';
 import Sidebar from './sidebar';
 import courseService from '../courseContainer';
+import ReactLoading from 'react-loading';
 
 const Quiz = () => {
     const [quiz, setQuiz] = useState({});
@@ -192,22 +193,8 @@ const Quiz = () => {
                     </React.Fragment>
                 }
             {!ready && 
-                <div  className="container text-center" style={{marginBottom: '300px'}}>
-                    <div className="container">
-                        <div className="row">
-                            <div id="loader">
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="loading"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center', height : '500px'}}>
+                    <ReactLoading type={"bars"} color={'#a00407'} height={'5%'} width={'5%'} />
                 </div>
             }
         </React.Fragment>

@@ -9,6 +9,7 @@ import {Rating} from "@mui/material";
 import ReactLoading from 'react-loading';
 const stripePromise = loadStripe('pk_test_51MEsfyD8LuqksnQUO6qc7l2lB5YoBz9uvf6SFWpOOiRseylY3iSMb1wluYxopjRnMOnBotK5jXsNlLgC1aK9qdBl00QSBEA4r9');
 
+
 const PayCourse = () => (
   <Elements stripe={stripePromise}>
     <Child  />
@@ -30,11 +31,12 @@ const Child = () => {
     useEffect(() => {
         const fetchClientSecret = async () => {
         let res = await courseService.getCourse(id);
-        if(res.discount && new Date(res.discount.date) >= Date.now()) {
-            res.price -= res.price * res.discount.promotion;
+        if(res.course.discount && new Date(res.course.discount.date) >= Date.now()) {
+            res.course.price -= res.course.price * res.course.discount.promotion;
         }
-        setCourse(res);
-        const secret = await courseService.getClientSecret(res.price);
+        setCourse(res.course);
+        console.log(res);
+        const secret = await courseService.getClientSecret(res.course.price);
         console.log("clientSecret is >>>>", secret);
         setClientSecret(secret);
         setReady(true);
@@ -117,22 +119,8 @@ const Child = () => {
                 </React.Fragment>
             }
             {!ready && 
-                <div  className="container text-center" style={{marginBottom: '300px'}}>
-                    <div className="container">
-                        <div className="row">
-                            <div id="loader">
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="loading"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center', height : '500px'}}>
+                    <ReactLoading type={"bars"} color={'#a00407'} height={'5%'} width={'5%'} />
                 </div>
             }
         </React.Fragment>

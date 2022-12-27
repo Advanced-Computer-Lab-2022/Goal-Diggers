@@ -1,21 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import courseService from '../courseContainer';
 import ReactLoading from 'react-loading';
+import AuthContext, { AuthContextProvider } from"../context/AuthContext";
 
 
 const Certificate = () => {
+    const {loggedIn,lastname,username ,email,firstname}=useContext(AuthContext);
+    console.log(username);
     const [ready, setReady] = useState(false);
     const [loading, setLoading] = useState(false);
     const [course, setCourse] = useState({});
+    const [Nusername, setusername] = useState(username);
     const {id} = useParams();
     const navigate = useNavigate();
     useEffect(() => {
         const getCourse = async ()=>{
+            let usernameT = username; 
+            if (firstname && lastname)
+                usernameT = firstname + " " + lastname;
+            setusername(usernameT);
             const res = await courseService.getRegisteredCourse(id);
-            // if(res.totalItems > res.completedVideos.length + res.completedQuizs) {
-            //     navigate('/not-found');
-            // }
+            if(res.totalItems > res.completedVideos.length + res.completedQuizs) {
+                navigate('/not-found');
+            }
             setCourse(res);
             setReady(true);
         }
@@ -23,7 +31,7 @@ const Certificate = () => {
     }, [])
     const download = async()=>{
         setLoading(true);
-        await courseService.createAndDownloadCertificate(course.title, course.createdByName);
+        await courseService.createAndDownloadCertificate(course.title, Nusername ,course.createdByName);
         setLoading(false);
     }
     return ( 
@@ -57,7 +65,7 @@ const Certificate = () => {
                                 </div>
 
                                 <div class="person">
-                                    {'Mahmoud Sayed'}
+                                    {Nusername}
                                 </div>
 
                                 <div class="reason">
@@ -73,22 +81,8 @@ const Certificate = () => {
             }
 
             {!ready && 
-                <div  className="container text-center" style={{marginBottom: '300px'}}>
-                    <div className="container">
-                        <div className="row">
-                            <div id="loader">
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="loading"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center', height : '500px'}}>
+                    <ReactLoading type={"bars"} color={'#a00407'} height={'5%'} width={'5%'} />
                 </div>
             }
         </React.Fragment>

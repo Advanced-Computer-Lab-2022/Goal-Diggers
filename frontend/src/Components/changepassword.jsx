@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import swal from 'sweetalert';
+import courseService from '../courseContainer';
 <link rel="stylesheet" href="edituserproile.css" />
 
 function Changepassword(props) {
@@ -10,6 +11,7 @@ function Changepassword(props) {
     const [confirmnewpassworderror , setconfirmnewpassworderror] = useState("");
     const [repeaterror , setrepeaterror] = useState("");
     const [matcherror , setmatcherror] = useState("");
+    const [error, seterror] = useState(false)
 
     const [data , setdata] = useState({
         oldpassword : "",
@@ -57,11 +59,16 @@ function Changepassword(props) {
                     buttons: true,
                     dangerMode: true,
                   })
-                  .then((willDelete) => {
-                    if (willDelete) {
+                  .then(async (willDelete) => {
+                    const res = await courseService.changePassword(data);
+                    console.log(res);
+                    if (!res.error) {
                       swal("Your password has been updated", {
                         icon: "success",
                       });
+                    }
+                    else {
+                        seterror(true);
                     }
                   });
             }
@@ -70,59 +77,55 @@ function Changepassword(props) {
    const handleChange = (e, type)=>{
     let temp = {... data};
     temp[type] = e.target.value;
-    if(type === 'oldpassowrd')
+    if(type === 'oldpassword'){
       setoldpassworderror(false);
-    if(type === 'newpassowrd')
+      seterror(false);
+    }
+    if(type === 'newpassword')
       setnewpassworderror(false);
     if(type === 'confirmnewpassword')
       setconfirmnewpassworderror(false);
+    console.log(temp);
     setdata(temp);
 }
 
   return (
-    <div className="login-box mt-5">
+    <div className="card bg-light p-4 mt-5">
         <h2>Change Password</h2>
-        <form>
-            <div className="user-box ">
-                <input type="password" name="" required="" onChange={(e)=>{handleChange(e,'oldpassword')}}/>
-                <label>Old Password</label>
+            {error && <div className='alert alert-danger'>Incorrect Password.</div>}
+            <div className="form-floating mb-3">
+                <input type="password" className="form-control" placeholder='Old Password' onChange={(e)=>{handleChange(e,'oldpassword')}}/>
+                <label htmlFor='floatingInput'>Old Password</label>
             </div>
             <div>
-                {oldpassworderror && <label className = "l1">Old Password field required</label>}
+                {oldpassworderror && <label className = "l1">Old Password field required</label> }
                 <div className="form-floating mb-3" />
             </div>
-            <div className="user-box ">
-                <input type="password" name="" required="" onChange={(e)=>{handleChange(e,'newpassword')}}/>
-                <label>New Password</label>
+            <div className="form-floating mb-3">
+                <input type="password" className="form-control" placeholder='New Password' onChange={(e)=>{handleChange(e,'newpassword')}}/>
+                <label htmlFor='floatingInput'>New Password</label>
             </div>
             <div>
                 {newpassworderror && <label className = "l1">New Password field required</label> }
                 <div className="form-floating mb-3" />
             </div>
-            <div className="user-box ">
-                <input type="password" name="" required="" onChange={(e)=>{handleChange(e,'confirmnewpassword')}}/>
-                <label>Confirm New Password</label>
+            <div className="form-floating mb-3">
+                <input type="password" name="" required="" className="form-control" placeholder='Confirm New Password' onChange={(e)=>{handleChange(e,'confirmnewpassword')}}/>
+                <label htmlFor='floatingInput'>Confirm New Password</label>
             </div>
             <div>
                 {confirmnewpassworderror && <label className = "l1">Confirm New Password field required</label> }
-                <div className="form-floating mb-3" />
+                
             </div>
             <div>
                 {repeaterror && <label className = "l1">Old pw and New pw are the same</label> }
-                <div className="form-floating mb-3" />
+                
             </div>
             <div>
                 {matcherror && <label className = "l1">Two new passwords do not match</label> }
-                <div className="form-floating mb-3" />
             </div>
-            <a href="#" onClick={(e)=>submit()}>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-                Submit
-            </a>
-        </form>
+            <button className='btn btn-primary' onClick={(e)=>submit()}>Save</button>
+        
     </div>
   )
 }

@@ -8,6 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import ReactLoading from 'react-loading';
 
 const Wallet = () => {
     const [wallet, setWallet] = useState({});
@@ -56,23 +57,9 @@ const Wallet = () => {
                     </div>
             }
             {!ready && 
-                <div  className="container text-center" style={{marginBottom: '300px'}}>
-                    <div className="container">
-                        <div className="row">
-                            <div id="loader">
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="loading"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center', height : '500px'}}>
+                <ReactLoading type={"bars"} color={'#a00407'} height={'5%'} width={'5%'} />
+            </div>
             }
         </React.Fragment>
      );

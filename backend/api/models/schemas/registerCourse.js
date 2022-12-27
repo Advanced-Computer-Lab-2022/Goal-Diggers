@@ -29,7 +29,8 @@ const registerCourseSchema = new Schema({
         summary : String, 
         title : String,
         notes : [Object],
-        overviewVideo : videoSchema,
+        pending : Boolean,
+        overviewvideo : videoSchema,
         examsId : [Object],
         subtitles : [Object]
 }, {timestamps : true});

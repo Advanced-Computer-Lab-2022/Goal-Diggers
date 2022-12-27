@@ -22,7 +22,6 @@ const stripe = require("stripe")(
 // url : api/payment/create" Create client secret  
 module.exports.createPayment =  async (req, res) => {
   const total = req.body.price;
-  console.log(total);
   console.log("Payment Request recieved for this ruppess", total);
   const payment = await stripe.paymentIntents.create({
     amount: total * 100 ,
@@ -36,41 +35,52 @@ module.exports.createPayment =  async (req, res) => {
 //POST 
 // url : api/buy-course/ user buy the course need to student id
 module.exports.buyCourse =  async (req, res) => {
-  let course = req.body.course;
-  course.registers ++;
-  Course.updateOne({_id : course._id}, course).then();
-  course.attemptedQuizs = [];
-  course.completedQuizs = 0;
-  course.completedVideos = [];
-  course.notes = [];
-  course.courseID = course._id;
-  course = _.omit(course, '_id');
-  RegisterCourse.create(course).then(
-    result => {
-      Wallet.findOne({instructorID : ObjectId(course.createdById)}).then(
-        wallet =>{
-          if(wallet) {
-            wallet.total += course.price*0.7;
-            let exist = false;
-            wallet.details.forEach((month, index) => {
-                if(new Date(month.month).getMonth() === new Date().getMonth() && new Date(month.month).getFullYear() === new Date().getFullYear()) {
-                  wallet.details[index].total += course.price*0.7;
-                  exist = true;
-                }
-            });
-            if(!exist)
-                wallet.details.push({month: `${new Date().getMonth() + 1}-1-${new Date().getFullYear()}`, total : course.price*0.7});
-            Wallet.updateOne({_id : wallet._id}, wallet).then();
-          }
-          else {
-            let wallet = {instructorID : ObjectId(course.createdById), total : course.price*0.7, details : [{month: `${new Date().getMonth() + 1}-1-${new Date().getFullYear()}`, total : course.price*0.7}]};
-            Wallet.create(wallet).then()
-          }
-        }
-      )
-      return res.status(200).json({});
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
     }
-  )
+    const verified=jwt.verify(token,process.env.JWT_SECRET);
+    let course = req.body.course;
+    course.registers ++;
+    Course.updateOne({_id : course._id}, course).then();
+    course.attemptedQuizs = [];
+    course.completedQuizs = 0;
+    course.completedVideos = [];
+    course.notes = [];
+    course.courseID = ObjectId(course._id);
+    course.studentID = ObjectId(verified.user);
+    course = _.omit(course, '_id');
+    RegisterCourse.create(course).then(
+      result => {
+        Wallet.findOne({instructorID : ObjectId(course.createdById)}).then(
+          wallet =>{
+            if(wallet) {
+              wallet.total += course.price*0.7;
+              let exist = false;
+              wallet.details.forEach((month, index) => {
+                  if(new Date(month.month).getMonth() === new Date().getMonth() && new Date(month.month).getFullYear() === new Date().getFullYear()) {
+                    wallet.details[index].total += course.price*0.7;
+                    exist = true;
+                  }
+              });
+              if(!exist)
+                  wallet.details.push({month: `${new Date().getMonth() + 1}-1-${new Date().getFullYear()}`, total : course.price*0.7});
+              Wallet.updateOne({_id : wallet._id}, wallet).then();
+            }
+            else {
+              let wallet = {instructorID : ObjectId(course.createdById), total : course.price*0.7, details : [{month: `${new Date().getMonth() + 1}-1-${new Date().getFullYear()}`, total : course.price*0.7}]};
+              Wallet.create(wallet).then()
+            }
+          }
+        )
+        return res.status(200).json({});
+      }
+    )    
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 };
 
 //GET
@@ -87,11 +97,21 @@ module.exports.getQuiz = async (req,res)=>{
 //GET
 // url : /api/wallet -> to get wallet // need updates
 module.exports.getWallet = async (req,res)=>{
-    Wallet.findOne({}).then(
-      wallet => {
-        return res.status(200).json({wallet});
-      }
-    )
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
+    }
+    const verified=jwt.verify(token,process.env.JWT_SECRET);   
+    Wallet.findOne({instructorID : ObjectId(verified.user)}).then(
+        wallet => {
+          return res.status(200).json({wallet});
+        }
+      )
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 }
 
 //POST
@@ -156,6 +176,12 @@ module.exports.addCourse = async (req, res) => {
 //POST
 //url : /api/rate-course/12 -> rate to course
 module.exports.addCourseRate = async (req, res) => {
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
+    }
+    const verified=jwt.verify(token,process.env.JWT_SECRET);
     const courseID = ObjectId(req.params.id);
     const courseRate = Number(req.body.rate);
     const courseReview = req.body.review;
@@ -165,17 +191,27 @@ module.exports.addCourseRate = async (req, res) => {
             course.numberofrates ++;
             course.ratedetails[courseRate] ++;
             // later we add user details for the review
-            course.reviews.push(courseReview);
+            course.reviews.push({text : courseReview, rate : courseRate, username : verified.username});
             Course.findByIdAndUpdate(courseID,course).then(
                 result => {res.status(200).json({})}
             );
         }
     );
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 };
 
 //POST
 //url : /api/rate-instructor/12 -> rate to instructor
 module.exports.addInstructorRate = async (req, res) => {
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
+    }
+    const verified=jwt.verify(token,process.env.JWT_SECRET);
     const instructorID = ObjectId(req.params.id);
     const instructorRate = Number(req.body.rate);
     const instructorReview = req.body.review;
@@ -184,12 +220,17 @@ module.exports.addInstructorRate = async (req, res) => {
             instructor.rate += instructorRate;
             instructor.numberofrates ++;
             instructor.ratedetails[instructorRate] ++;
-            instructor.reviews.push(instructorReview);
+            instructor.reviews.push({text : instructorReview, rate : instructorRate, username : verified.username});
             Instructor.findByIdAndUpdate(instructorID,instructor).then(
                 result => {res.status(200).json({});}
             );
         }
     );
+    
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 };
 
 //POST
@@ -297,11 +338,17 @@ module.exports.forgotPassword = async (req, res) => {
 // POST
 // url : /api/register -> to register user 
 module.exports.registerUser = async (req, res) => {
-  if(Role.findOne({ username: req.body.username }) || Instructor.findOne({ username: req.body.username })) {
+  if(await Role.findOne({ username: req.body.username })) {
+      console.log("Sdsdsd");
+      return res.status(200).json({ error: "username already exist" });
+  }
+  if(await Instructor.findOne({ username: req.body.username })) {
+      console.log("Sdsdsddsadsadasdsada");
       return res.status(200).json({ error: "username already exist" });
   }
   await User.findOne({ username: req.body.username }).then(async (result) => {
     if (result) {
+      console.log("Asda");
       return res.status(200).json({ error: "username already exist" });
     } else {
       try {
@@ -368,12 +415,13 @@ module.exports.loginUser = async (req, res) => {
       .then(async (result) => {
         console.log(result);
           if (await bcrypt.compare(user.password, result.password)) {
-            const token=jwt.sign({user:result._id},process.env.JWT_SECRET);
+            const token=jwt.sign({user:result._id, username : result.username },process.env.JWT_SECRET);
             res.cookie("token",token,{
                 httpOnly:true,
             }).send();
                     return;
             } else {
+              console.log("fdsfsdfsd");
               res.status(201);
               res.json({ error: "incorrect password" });
               return;
@@ -405,7 +453,7 @@ module.exports.loginUser = async (req, res) => {
       Role.findOne({ username: user.username })
       .then(async (result) => {
           if (await bcrypt.compare(user.password, result.password)) {
-            const token=jwt.sign({user:result._id},process.env.JWT_SECRET);
+            const token=jwt.sign({user:result._id, username : result.username },process.env.JWT_SECRET);
             res.cookie("token",token,{
                 httpOnly:true,
             }).send();
@@ -454,10 +502,9 @@ module.exports.LoggedIn=async(req,res)=>{
     //if not verified it will go to the catch and
     //if verified it will decode it and put the tooken value an an object
     //it have the user id
-    const verified=jwt.verify(token,process.env.JWT_SECRET);
-
-    if(await User.findById(verified.user)){
-      await User.findById(verified.user).then(
+    const verified= jwt.verify(token,process.env.JWT_SECRET);
+    if(await User.findById(ObjectId(verified.user))){
+      await User.findById(ObjectId(verified.user)).then(
         value => {
           user = value;
           type="student";
@@ -511,17 +558,58 @@ module.exports.AcceptTerms = async(req, res) =>{
 // POST
 //url : /api/change-password -> to change user password
 module.exports.ChangePassword =async (req, res) => {
-    let password = req.body.password;
-    let password_old = req.body.password_old;
-    if (await bcrypt.compare(password_old, req.user.password)) {
-      req.user.password = await bcrypt.hash(password, 10);
-      User.findOneAndUpdate({ _id: req.user._id }, req.user, {
-        new: true,
-      }).then();
-      res.status(200).json({});
-    } else {
-      res.status(200).json({ error: "incorrect password" });
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
     }
+    const verified=jwt.verify(token,process.env.JWT_SECRET);
+    let password = req.body.newpassword;
+    let password_old = req.body.oldpassword;
+    if(await User.findById(ObjectId(verified.user))) {
+      await User.findById(ObjectId(verified.user)).then(
+        async user => {
+          console.log(verified.user);
+          if (await bcrypt.compare(password_old, user.password)) {
+            let passwordn = await bcrypt.hash(password, 10);
+            User.findOneAndUpdate({ _id: ObjectId(verified.user) }, {password : passwordn}).then();
+            res.status(200).json({});
+          } else {
+            res.status(200).json({ error: "incorrect password" });
+          }
+        }
+      )
+    } else if(await Instructor.findById(ObjectId(verified.user))) {
+      await Instructor.findById(ObjectId(verified.user)).then(
+        async user => {
+          console.log(user);
+          if (await bcrypt.compare(password_old, user.password)) {
+            let passwordn = await bcrypt.hash(password, 10);
+            Instructor.findOneAndUpdate({ _id: ObjectId(verified.user) }, {password : passwordn}).then();
+            res.status(200).json({});
+          } else {
+            res.status(200).json({ error: "incorrect password" });
+          }
+        }
+      )
+    } else if(await Role.findById(ObjectId(verified.user))) {
+      await Role.findById(ObjectId(verified.user)).then(
+        async user => {
+          console.log(verified.user);
+          if (await bcrypt.compare(password_old, user.password)) {
+            let passwordn = await bcrypt.hash(password, 10);
+            Role.findOneAndUpdate({ _id: ObjectId(verified.user) }, {password : passwordn}).then();
+            res.status(200).json({});
+          } else {
+            res.status(200).json({ error: "incorrect password" });
+          }
+        }
+      )
+    }
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 };
   
 /// need edits
@@ -629,14 +717,44 @@ module.exports.getSearchCourses = async (req, res) => {
 
 // GET url : api/course/:id need some edits
 module.exports.getCourse = async (req,res) => {
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
+    }
+    const verified=jwt.verify(token,process.env.JWT_SECRET);   
     const id = req.params.id;
     await Course.findById(id).then(
-        course => {
-            if(course)
-                return res.status(200).json({course});
-            return res.status(404).json({error : "Course Not Found"});
+        async course => {
+            if(course){
+                course.views++;
+                course.save();
+                if(await RegisterCourse.findOne({courseID : id, studentID : verified.user})){
+                    await RegisterCourse.findOne({courseID : id, studentID : verified.user}).then(
+                      co =>{
+                        if(co.pending){
+                          return res.status(200).json({course, pending : true});
+                        }
+                        else {
+                          return res.status(200).json({course, register : true});
+                        }
+                      }
+                    )
+                }
+                else if (await CourseRequest.findOne({courseID : id, studentID : verified.user}))
+                  return res.status(200).json({course, requested : true});
+                else
+                  return res.status(200).json({course, register : false});
+            } else {
+
+              return res.status(404).json({error : "Course Not Found"});
+            }
         }
     )
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 }
 
 //POST url : api/save-progress/ save course progress
@@ -649,12 +767,19 @@ module.exports.saveProgress = async (req, res) =>{
 }
 
 module.exports.saveQuiz = async (req, res) => {
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
+    }
+    const verified=jwt.verify(token,process.env.JWT_SECRET);  
     const grade = Number(req.body.grade);
-    const courseID = ObjectId(req.params.courseID);
+    const courseID = req.params.courseID;
     const quizID = req.params.id;
-    RegisterCourse.findOne({_id:courseID}).then(
+    RegisterCourse.findOne({courseID :courseID, studentID: verified.user}).then(
       course => {
         let exist = false;
+        console.log(course);
         for (let index = 0; index < course.attemptedQuizs.length; index++) {
             if((course.attemptedQuizs[index].id) === quizID){
               exist = true;
@@ -675,22 +800,38 @@ module.exports.saveQuiz = async (req, res) => {
         )
       }
     )
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 };
 
 //GET url : api/get-registercourses/12 get specific course // need auth
 module.exports.getRegisterCourse = async (req, res) =>{
-   // get student id from jwt
-   const courseID = ObjectId(req.params.id);
-   RegisterCourse.findOne({_id : courseID}).then(
-    course => {
-      if(course){
-        res.status(200).json({course});
-      }
-      else {
-        res.status(404).json({error : "YOU DID NOT REGISTER IN THIS COURSE"});
-      }
+   try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
     }
-   )
+    const verified=jwt.verify(token,process.env.JWT_SECRET);   
+    const courseID = req.params.id;
+    console.log(ObjectId(verified.user));
+    console.log(ObjectId(courseID));
+    RegisterCourse.findOne({courseID : courseID, studentID : verified.user}).then(
+      course => {
+        console.log(course);
+        if(course){
+          res.status(200).json({course});
+        }
+        else {
+          res.status(404).json({error : "YOU DID NOT REGISTER IN THIS COURSE"});
+        }
+      }
+    )
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 }
 
 //GET
@@ -818,18 +959,36 @@ module.exports.AdminRevokeAccess = async (req, res) =>{
 //GET 
 // url : api/inprogress-courses/ student get in progress courses // need auth
 module.exports.getInProgressCourses = async(req,res) =>{
-    RegisterCourse.find({}).then(
+  try {
+    const token=req.cookies.token;
+    console.log(token);
+    if(!token){
+        return res.json(false);
+    }
+    const verified= jwt.verify(token,process.env.JWT_SECRET);
+    RegisterCourse.find({studentID : verified.user}).then(
         courses =>{
           let result = courses.filter(course=>{return course.totalItems > (course.completedQuizs + course.completedVideos.length)});
           res.status(200).json({courses : result})
         }
-    )
+    ) 
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 } 
 
 //GET 
 // url : api/completed-courses/ student get completed courses // need auth
 module.exports.getCompletedCourses = async(req,res) =>{
-    RegisterCourse.find({}).then(
+  try {
+    const token=req.cookies.token;
+    console.log(token);
+    if(!token){
+        return res.json(false);
+    }
+    const verified= jwt.verify(token,process.env.JWT_SECRET);
+    RegisterCourse.find({studentID : verified.user}).then(
         courses =>{
           let result = courses.filter(course=>{
             return course.totalItems === (course.completedQuizs + course.completedVideos.length);
@@ -837,16 +996,20 @@ module.exports.getCompletedCourses = async(req,res) =>{
           res.status(200).json({courses : result})
         }
     )
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 }
 
 // used to create Certificate pdf
 module.exports.createCertificate = (req,res) =>{
-  pdf.create(certificateTemplate(req.body.title,"Mahmoud Sayed",req.body.instructor), {}).toFile(`${__dirname}/PDFs/certificate.pdf`, (err) => {
-    if(err) {
-        res.send(Promise.reject());
-    }
-    res.send(Promise.resolve());
-});
+     pdf.create(certificateTemplate(req.body.title,req.body.username ,req.body.instructor), {}).toFile(`${__dirname}/PDFs/certificate.pdf`, (err) => {
+       if(err) {
+           res.send(Promise.reject());
+       }
+       res.send(Promise.resolve());
+     });
 };
 
 // used to download the Certificate pdf

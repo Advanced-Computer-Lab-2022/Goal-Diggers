@@ -4,11 +4,12 @@ import Sidebar from './sidebar';
 import ReactPlayer from 'react-player/youtube';
 import ProgressBar from "@ramonak/react-progress-bar";
 import WelcomeQuiz from './welcome-quiz';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import courseService from '../courseContainer';
 import swal from 'sweetalert';
 import {useFloating} from '@floating-ui/react';
 import ViewNotes from './viewNotes';
+import ReactLoading from 'react-loading';
 // import Refundcourse from './refundcourse';
 // import Showpreviousproblems from './showpreviousproblems';
 
@@ -31,6 +32,7 @@ const TakeCourse = () => {
     const [showNotes, setShowNotes] = useState(false);
     const [open, setOpen] = useState(false);
     const [note, setNote] = useState({title : "", note:""});
+    const navigate = useNavigate();
     
 
     const handle = (e)=>{
@@ -154,6 +156,7 @@ const TakeCourse = () => {
     useEffect(() => {
         const getCourse = async () => {
             const course = await courseService.getRegisteredCourse(id);
+            console.log(course);
             setCourse(course);
             setTitle(course.overviewvideo.title);
             setDiscription(course.overviewvideo.descriprion);
@@ -165,7 +168,20 @@ const TakeCourse = () => {
             }
         }
         getCourse();
-    }, [])
+    }, []);
+    const rateInstructor = async () => {
+        console.log("CALLLLLLLL");
+        course.rateInstructor = true;
+        await courseService.saveProgress(course);
+        navigate(`/rateinstructor/${course.courseID}/${course.createdById}`);
+    };
+
+    const rateCourse = async () => {
+        course.rateCourse = true;
+        await courseService.saveProgress(course);
+        navigate(`/rateCourse/${course.courseID}`);
+    };
+
     return (
         <React.Fragment>
             {ready ?
@@ -176,19 +192,29 @@ const TakeCourse = () => {
                     <div className="col-sm-1 bg-light">
                     </div>
                     <div className="col-sm-8 px-2 bg-light">
-                        {(((course.completedVideos.length + course.completedQuizs) / course.totalItems) * 100) == 100 &&
+                        {(((course.completedVideos.length + course.completedQuizs) / course.totalItems) * 100) == 100 && !course.rateCourse && !course.rateCourse &&
                             <div className='alert alert-success row col-sm-10'>
-                                <div className='col-sm-6'>
+                                <div className='col-sm-5'>
+                                    <i style={{ color: 'green' }} className="fa fa-check-circle" aria-hidden="true"></i> Kindly rate your instructor and the course
+                                </div>
+                                <div className='col-sm-7' style={{ textAlign: 'right' }}>
+                                    {!course.rateInstructor && <button onClick={()=>rateInstructor()} style={{ borderRadius: '25px' }} className='btn mx-2 btn-primary'>Rate Instructor <i className="fa fa-smile-o" aria-hidden="true"></i></button>}
+                                    {!course.rateCourse && <button onClick={()=>rateCourse()} style={{ borderRadius: '25px' }} className='btn btn-primary'>Rate Course <i className="fa fa-smile-o" aria-hidden="true"></i></button>}
+                                </div>
+                            </div>
+                        }
+                        {(((course.completedVideos.length + course.completedQuizs) / course.totalItems) * 100) == 100 && 
+                            <div className='alert alert-success row col-sm-10'>
+                                <div className='col-sm-8'>
                                     <i style={{ color: 'green' }} className="fa fa-check-circle" aria-hidden="true"></i> Congratulations You have finished the course
                                 </div>
-                                <div className='col-sm-6' style={{ textAlign: 'right' }}>
-                                    {!course.rateInstructor && <Link to={`/rateinstructor/${course._id}/638cbacd72d0b673c0e33e9a`} style={{ borderRadius: '25px' }} className='btn mx-2 btn-primary'>Rate Instructor <i className="fa fa-smile-o" aria-hidden="true"></i></Link>}
-                                    {!course.rateCourse && <Link to={`/rateinstructor/${course._id}/6387c9ccf97dac90e3fa395c`} style={{ borderRadius: '25px' }} className='btn btn-primary'>Rate Course <i className="fa fa-smile-o" aria-hidden="true"></i></Link>}
+                                <div className='col-sm-4' style={{ textAlign: 'right' }}>
+                                    <Link to={`/certificate/${course.courseID}`} style={{ borderRadius: '25px' }} className='btn mx-2 btn-primary'>View Certificate <i className="fa fa-smile-o" aria-hidden="true"></i></Link>
                                 </div>
                             </div>
                         }
                         {quizStart ?
-                            <WelcomeQuiz courseID={course._id} id={quizId} grade={quizGrade} />
+                            <WelcomeQuiz courseID={course.courseID} id={quizId} grade={quizGrade} />
                             : (viewrefund ?
                                 refundcourse ()
                                 : ( report ?
@@ -242,22 +268,8 @@ const TakeCourse = () => {
                     </div>
                 </div>
                 : (
-                    <div className="container text-center" style={{ marginBottom: '300px' }}>
-                        <div className="container">
-                            <div className="row">
-                                <div id="loader">
-                                    <div className="dot"></div>
-                                    <div className="dot"></div>
-                                    <div className="dot"></div>
-                                    <div className="dot"></div>
-                                    <div className="dot"></div>
-                                    <div className="dot"></div>
-                                    <div className="dot"></div>
-                                    <div className="dot"></div>
-                                    <div className="loading"></div>
-                                </div>
-                            </div>
-                        </div>
+                    <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center', height : '500px'}}>
+                        <ReactLoading type={"bars"} color={'#a00407'} height={'5%'} width={'5%'} />
                     </div>
                 )
             }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import courseService from '../courseContainer';
 import {Link} from 'react-router-dom'
+import ReactLoading from 'react-loading';
 
 const InprogressCourses = () => {
     const [ready, setReady] = useState(false);
@@ -19,6 +20,7 @@ const InprogressCourses = () => {
         {ready && 
             <React.Fragment>
             <span>Total {courses.length} courses</span>
+            <div className="container mt-3">
             {courses.length == 0 ? <React.Fragment>
                     <img src="./folder.png" alt="" className='mt-5' width={'300px'}/>
                 </React.Fragment>
@@ -34,32 +36,19 @@ const InprogressCourses = () => {
                             <span style={{fontWeight:"bolder"}}> Instructor  : </span> {course.createdByName}
                         </div>
                         <div className="col-sm-2 pt-2">
-                            <Link to={`/take-course/${course._id}`} className='btn btn-primary' style={{borderRadius : '25px'}}>View</Link>
+                            <Link to={`/take-course/${course.courseID}`} className='btn btn-primary' style={{borderRadius : '25px'}}>View</Link>
                         </div>
                     </div>
                 </div>
             }))
             }
+            </div>
             </React.Fragment>
         }
         {!ready && 
-                <div  className="container text-center" style={{marginBottom: '300px'}}>
-                    <div className="container">
-                        <div className="row">
-                            <div id="loader">
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="loading"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center', height : '500px'}}>
+                <ReactLoading type={"bars"} color={'#a00407'} height={'5%'} width={'5%'} />
+            </div>
             }
         </React.Fragment>
      );

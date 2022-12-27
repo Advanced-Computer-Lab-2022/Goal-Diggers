@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import courseService from '../courseContainer';
 import swal from 'sweetalert';
 import {Rating, ThemeProvider} from "@mui/material";
+import ReactLoading from 'react-loading';
 
 const SetPromotions = () => {
     const [ready, setReady] = useState(false);
@@ -152,23 +153,9 @@ const SetPromotions = () => {
             </React.Fragment>
         }
         {!ready && 
-                <div  className="container text-center" style={{marginBottom: '300px'}}>
-                    <div className="container">
-                        <div className="row">
-                            <div id="loader">
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="loading"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center', height : '500px'}}>
+                <ReactLoading type={"bars"} color={'#a00407'} height={'5%'} width={'5%'} />
+            </div>
             }
         </React.Fragment>
      );

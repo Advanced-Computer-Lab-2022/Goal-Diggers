@@ -8,7 +8,7 @@ let courseService = {}
 courseService.getCourse = async(id) => {
     console.log(id);
     const {data} = await http.get(apiUrl + 'course/' + id);
-    return data.course;
+    return data;
 }
 
 courseService.getAllCourses = async() => {
@@ -62,8 +62,9 @@ courseService.getRatingsAndReviews = async() => {
 }
 
 //need update in sprint 3
-courseService.changePassword = async(id, passwords) => {
-    const {data} = await http.post(apiUrl + 'change-password/' + id, passwords);
+courseService.changePassword = async(passwords) => {
+    const {data} = await http.post(apiUrl + 'change-password', passwords);
+    console.log(data);
     return data;
 }
 
@@ -160,6 +161,7 @@ courseService.getCompletedCourses= async() => {
 ///////////////////////////////////////////////////////
 // fetch the client secret to pay 
 courseService.getClientSecret= async(price) => {
+    console.log(price);
     const data = await http.post(apiUrl + "payment/create", {price});
     return data.data.clientSecret;
 }
@@ -192,8 +194,8 @@ courseService.createAndDownloadPdf = async(title, notes) => {
     })
 }
 
-courseService.createAndDownloadCertificate = async(title, instructor) => {
-    await http.post(apiUrl+'create-certificate', {title, instructor})
+courseService.createAndDownloadCertificate = async(title, username,instructor) => {
+    await http.post(apiUrl+'create-certificate', {title, username,instructor})
     .then(() => http.get(apiUrl+'fetch-certificate', { responseType: 'blob' }))
     .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
