@@ -13,6 +13,6 @@ export default function LogoutBtn() {
     
     }
   return (
-    <button className='btn btn-primary' onClick={Logout}>logout</button>
+    <button className='logoutbuttoon' onClick={Logout}>logout</button>
   )
 }

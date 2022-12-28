@@ -123,7 +123,7 @@ function Register() {
           </div>
           <div>
           <input type="checkbox" id="agree" onChange={checkboxHandler} />
-          <label htmlFor="agree"> I agree to <a href='/termsandconditions' className='me-4 text-reset'> terms and conditions</a></label>
+          <label style={{color:"#a00407"}} htmlFor="agree"> I agree to <a style={{color:"#a00407"}} href='/termsandconditions' className='me-4 text-reset'> terms and conditions</a></label>
         </div>
           <button  disabled={!agree} type="submit"  className={agree?"buttoon pt-2":"buttoon2"}> Sign Up </button>
         </form>

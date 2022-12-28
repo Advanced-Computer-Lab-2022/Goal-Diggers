@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { useState } from 'react'
 import axios from 'axios';
 import AuthContext from '../../context/AuthContext';
-import  { useNavigate }from 'react-router-dom';
+import  { Link, useNavigate }from 'react-router-dom';
 //first we need to take the values from the input fields using use state
 export default function Login() {
     const[username,setUserName]=useState("");
@@ -57,6 +57,7 @@ export default function Login() {
             </input>
             <label className="labell">Password</label>
         </div>
+        <Link style={{color:'#a00407'}} to='/forget-password'>forget your password?</Link>
         </div>
         <button className='buttoon pt-2'>login</button>
     </form>

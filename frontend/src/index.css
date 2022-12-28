@@ -209,7 +209,7 @@ code {
 }
 #button1{
 
-  background-color:#E26868 ; 
+  background-color:#a00407 ; 
   color: white; 
   font-size: 14px !important;
   
@@ -404,6 +404,7 @@ form .button input:hover {
   border-radius: 10px;
   box-shadow: inset 0 0 0 0 #a00407;
 
+
   width: 220px;
 }
 
@@ -544,4 +545,93 @@ form .category label .dot {
 }
 #terms{
   margin: 5%;
+}
+
+.viewbuttoon {
+  
+  display: inline-block;
+  margin: 10px;
+  padding: 9px 15px;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: #a00407;
+  background: transparent;
+  cursor: pointer;
+  transition: ease-out 0.5s;
+  border: 2px solid #a00407;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 0 #a00407;
+
+
+ 
+}
+
+.viewbuttoon:hover {
+  color: white;
+  box-shadow: inset 0 -100px 0 0 #a00407;
+}
+
+.viewbuttoon:active {
+  transform: scale(0.9);
+}
+.logoutbuttoon {
+  
+  display: inline-block;
+
+  padding: 7px 9px;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: #a00407;
+  background: transparent;
+  cursor: pointer;
+  transition: ease-out 0.5s;
+  border: 2px solid #a00407;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 0 #a00407;
+
+
+ 
+}
+
+.logoutbuttoon:hover {
+  color: white;
+  box-shadow: inset 0 -100px 0 0 #a00407;
+}
+
+.logoutbuttoon:active {
+  transform: scale(0.9);
+}
+
+.savebuttoon {
+  
+  display: inline-block;
+  margin: 10px;
+  padding: 9px 15px;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: #a00407;
+  background: transparent;
+  cursor: pointer;
+  transition: ease-out 0.5s;
+  border: 2px solid #a00407;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 0 #a00407;
+
+
+ 
+}
+
+.savebuttoon:hover {
+  color: white;
+  box-shadow: inset 0 -100px 0 0 #a00407;
+}
+
+.savebuttoon:active {
+  transform: scale(0.9);
 }

@@ -20,7 +20,7 @@ const CourseCard = ({course, priceRate, currency}) => {
                     {course.price > 0 && <p>Price : {Math.round((course.price * priceRate) * 100) / 100} {currency ? currency : "USD" }</p> }
                     </>
                     }
-                    <a href={`course/${course._id}`} style={{borderRadius : '25px', width : '150px'}} className="btn btn-primary">view <i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <a href={`course/${course._id}`} style={{borderRadius : '25px', width : '150px'}} className="viewbuttoon">view <i class="fa fa-eye" aria-hidden="true"></i></a>
                 </div>
             </div>
     );

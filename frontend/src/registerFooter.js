@@ -2,7 +2,7 @@ import React,{ useContext }  from "react";
 import { Link } from "react-router-dom";
 import AuthContext, { AuthContextProvider } from "./context/AuthContext";
 function RegisterFooter(){
-    const {loggedIn,id,type}=useContext(AuthContext);
+    const {loggedIn,id,type}= useContext(AuthContext);
     return(
        <div>{ !loggedIn&&<>   <div id="footerSign">
     
