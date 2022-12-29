@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import swal from 'sweetalert';
-<link rel="stylesheet" href="edituserproile.css" />
+
 
 function Changepassword(props) {
 
@@ -81,40 +81,8 @@ function Changepassword(props) {
 
   return (
     <div className="login-box mt-5">
-        <h2>Change Password</h2>
+
         <form>
-            <div className="user-box ">
-                <input type="password" name="" required="" onChange={(e)=>{handleChange(e,'oldpassword')}}/>
-                <label>Old Password</label>
-            </div>
-            <div>
-                {oldpassworderror && <label className = "l1">Old Password field required</label>}
-                <div className="form-floating mb-3" />
-            </div>
-            <div className="user-box ">
-                <input type="password" name="" required="" onChange={(e)=>{handleChange(e,'newpassword')}}/>
-                <label>New Password</label>
-            </div>
-            <div>
-                {newpassworderror && <label className = "l1">New Password field required</label> }
-                <div className="form-floating mb-3" />
-            </div>
-            <div className="user-box ">
-                <input type="password" name="" required="" onChange={(e)=>{handleChange(e,'confirmnewpassword')}}/>
-                <label>Confirm New Password</label>
-            </div>
-            <div>
-                {confirmnewpassworderror && <label className = "l1">Confirm New Password field required</label> }
-                <div className="form-floating mb-3" />
-            </div>
-            <div>
-                {repeaterror && <label className = "l1">Old pw and New pw are the same</label> }
-                <div className="form-floating mb-3" />
-            </div>
-            <div>
-                {matcherror && <label className = "l1">Two new passwords do not match</label> }
-                <div className="form-floating mb-3" />
-            </div>
             <a href="#" onClick={(e)=>submit()}>
               <span></span>
               <span></span>

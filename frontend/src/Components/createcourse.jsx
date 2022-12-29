@@ -1,10 +1,43 @@
-import React from 'react';
-import courseService from '../courseContainer';
-import { useState } from 'react';
+import React from 'react'
 import { Link } from "react-router-dom";
+
+
+import { useState } from 'react'
+import courseService from '../courseContainer';
+import "./editprofile.css"
+import main from "../assets1/course.mp4";
+import OwlCarousel from 'react-owl-carousel';
+import { useParams } from 'react-router-dom';
+
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import { FormControl,Select,InputLabel,MenuItem} from "@mui/material";
+import coun_curr_code from '../coun-curr-code';
+
+import "./default-css.css";
+import "./font-awesome.min.css";
+import "./magnific-popup.css";
+import "./owl.carousel.css";
+import "./owl.carousel.min.css";
+import "./owl.theme.default.css";
+import "./owl.theme.default.min.css";
+import "./owl.theme.green.css";
+import "./owl.theme.green.min.css";
+import "./responsive.css";
+import "./slicknav.min.css";
+import "./styles.css";
+import "./templatemo-style2.css";
+import "./typography.css";
+import "./owl.css";
+import "./templatemo-edu-meeting.css";
 <link rel="stylesheet" href="index.css" />
 
-function Createcourse(props) {
+function Createcourse(props,handleCountry) {
     const [totalhours, sethours] = useState("");
     const [done, setdone] = useState(false);
     const [titleofsubtitle, settitle] = useState("");
@@ -13,18 +46,18 @@ function Createcourse(props) {
     const [videotitle, setvideotitle] = useState("");
     const [boolquiz, setboolquiz] = useState(true);
     const [texterror, settexterror] = useState("");
-    const [titleerror, settitleerror] = useState("");
+    const [titlerror, settitlerror] = useState("");
     const [videoerror, setvideoerror] = useState("");
     const [quizID, setquizID] = useState(null);
 
     const [data, setdata] = useState({
         subject: "",
         totalHours: "",
-        titlee: "",
+        title: "",
         price: "",
-        summaryy: "",
+        summary: "",
         image: "",
-        overviewVideo:"",
+        overviewvideo:"",
         subtitles: []
     })
 
@@ -104,9 +137,9 @@ function Createcourse(props) {
     async function submit() {
         //e.preventdefault(e);
         if (data.totalHours.length === 0 || data.subject.length === 0 || 
-            data.titlee.length === 0 || data.price.length === 0 || 
-            data.summaryy.length === 0 || data.image.length === 0 || 
-            data.overviewVideo.length==0) settexterror(true)
+            data.title.length === 0 || data.price.length === 0 || 
+            data.summary.length === 0 || data.image.length === 0 || 
+            data.overviewvideo.length==0) settexterror(true)
 
         else {
             settexterror(false);
@@ -128,11 +161,11 @@ function Createcourse(props) {
         let section = { total: totalhours, title: titleofsubtitle, summary: summaryofsubtitle, videos: videos ,quizs: quizID }
 
         if (totalhours === 0 || titleofsubtitle.length === 0 || summaryofsubtitle.length === null) {
-            settitleerror(true);
+            settitlerror(true);
         }
         else {
             subtitles.push(section)
-            settitleerror(false);
+            settitlerror(false);
             sethours("");
             settitle("");
             setsummary("");
@@ -194,11 +227,127 @@ function Createcourse(props) {
     if(boolquiz){
     return (
         <React.Fragment>
-            {!done ? <div className="row">
-            <div className="col-sm-3">
+            <div>
+            <header id="header">
+
+<div class="header-top">
+    <div class="container">
+        <div class="row d-flex flex-center">
+            <div class="col-sm-8">
+                <div class="ht-address">
+                    <ul>
+                        <li><i class="fa fa-phone"></i>Phone: +201001004070</li>
+                        <li><i class="fa fa-envelope"></i>Email: info@cancham.org.eg</li>
+                    </ul>
+                </div>
             </div>
-            <div className="col-sm-6">
+            <div class="col-sm-4">
+                <div class="ht-social">
+                    <ul>
+                    <li><a href="https://youtu.be/z4tOlwuHEZI"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://youtu.be/kXhBKjDKF84"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://youtu.be/BG9HSntowA8"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="https://youtu.be/aiRY36TPVo8"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="header-bottom">
+    <div class="container">
+        <div class="header-bottom-inner">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-sm-9">
+                    <div class="logo">
+                        <img src="/assets2/images/icon/logo.png" alt="logo"/>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-lg-7 d-none d-lg-block">
+                    <div class="main-menu">
+                        <nav>
+                            <ul id="m_menu_active">
+                            <li ><a href="/homepage2">Home</a></li>
+                            <li class = "active"><a href="/newcourses">Courses</a></li>
+                            <li><a href="/membership">MemberShip</a></li>
+                            <li><a href="/blog">Blogs</a></li>
+                            <li><a href="/event">Events</a></li>
+                            <li ><a href="/contact">Contact</a></li>
+                            <li><a href="/userprofile" class="avatar1"><img id='sidebar' src="r9.jpg" /></a>
+                                <ul class="submenu mr-12">
+                                    <li><a href="/userprofile" >View Profile</a><h1 class="fa fa-user dropdown" aria-hidden="true"></h1></li>
+                                    <li><a href="/mycourses">My Courses</a><i class="fa fa-book dropdown"></i></li>
+                                    <li><a href="/settings">Settings</a><i class="fa fa-cog dropdown"></i></li>
+                                    <li class = "active"><a href="/help">Help</a><h1 class="fa fa-question-circle dropdown"></h1></li>
+                                    <li><a href="index3.html">Log Out</a><h1 class="fa fa-sign-out dropdown"></h1></li>
+                                </ul>
+                            </li>
+                            <li >
+                                <FormControl class= "mt-50 w-20 cc fa fa-globe" >
+    <InputLabel class=""  ></InputLabel>
+    <Select 
+        defaultValue=""
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        onChange={ (e) => {handleCountry(e.target.value) ; console.log("NAV " +e.target.value);} }
+        >
+        {coun_curr_code.map(country => <MenuItem key={country.country} value={country.currency_code}>{country.country}</MenuItem>)}
+    </Select>
+  </FormControl>
+                            </li>
+                            </ul>       
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-xl-1 col-lg-2 col-sm-3">
+                    <div class="hb-right">
+                        <ul> 
+                            <li class="search_btn ml-5"><i class="fa fa-search"></i></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12 d-block d-lg-none">
+                    <div id="mobile_menu"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+</header>
+
+<div class="offset-search">
+<form action="#">
+    <input type="text" name="search" placeholder="Search here..."/>
+    <button type="submit"><i class="fa fa-search"></i></button>
+</form>
+</div>
+
+<div class="body_overlay"></div>
+
+    <div class="crumbs-area">
+        <div class="container">
+            <div class="crumb-content">
+                <h4 class="crumb-title"><span>Create Course</span></h4>
+            </div>
+        </div>
+    </div>
+            </div>
+      
+
+            {!done ? 
+            <div>
+               
+            <div className="row mt-5">
+                
+            <div className="col-sm-1">
+            </div>
+            <div className="col-sm-10">
                 <div className='text-center p-2 my-2 bg-light' style={{ border: '1px solid black', borderRadius: '15px' }}>
+                <h4 style={{fontFamily : 'cursive' , color: 'red'}}>Add Course</h4>
                     <div className="form-floating mb-3">
                         <input onChange={(e) => handle(e)} id="subject" value={data.subject} type="text" className="form-control" placeholder="Subject" />
                         <label htmlFor="floatingInput">Subject</label>
@@ -208,7 +357,7 @@ function Createcourse(props) {
                         <div className="form-floating mb-3" />
                     </div>
                     <div className="form-floating mb-3">
-                        <input onChange={(e) => handle(e)} id="titlee" value={data.titlee} type="text" className="form-control" placeholder="Title" />
+                        <input onChange={(e) => handle(e)} id="title" value={data.title} type="text" className="form-control" placeholder="Title" />
                         <label htmlFor="floatingInput">Title</label>
                     </div>
                     <div>
@@ -232,8 +381,8 @@ function Createcourse(props) {
                         <div className="form-floating mb-3" />
                     </div>
                     <div className="form-floating mb-3">
-                        <textarea onChange={(e) => handle(e)} value={data.summaryy} name="summary" id="summaryy" className="form-control" placeholder="Leave a comment here" style={{ height: '100px' }}></textarea>
-                        <label htmlFor="floatingTextarea2">Summry</label>
+                        <textarea onChange={(e) => handle(e)} value={data.summary} name="summary" id="summary" className="form-control" placeholder="Leave a comment here" style={{ height: '100px' }}></textarea>
+                        <label htmlFor="floatingTextarea2">Summary</label>
                     </div>
                     <div>
                         {texterror ? <label className="l1">You must fill it</label> : ""}
@@ -249,22 +398,55 @@ function Createcourse(props) {
                         <div className="form-floating mb-3" />
                     </div>
                     <div className="form-floating mb-3">
-                        <input onChange={(e) => handle(e) } id="overviewVideo" value={data.overviewVideo} type="text" className="form-control" placeholder="image" />
-                        <label htmlFor="img">overviewVideo Link</label>
+                        <input onChange={(e) => handle(e) } id="overviewvideo" value={data.overviewvideo} type="text" className="form-control" placeholder="image" />
+                        <label htmlFor="img">overviewvideo Link</label>
                     </div>
                     <div>
                         {texterror ? <label className="l1">You must fill it</label> : ""}
                         <div className="form-floating mb-3" />
                     </div>
+                    <div className="p-3 m-3" style={{borderRadius : '25px', border :'1px solid black'}}>
+                        Subtitle {subtitles.length + 1}
                     <div className="form-floating mb-3" />
                     <div className="form-floating mb-3">
                         <input onChange={(e) => { settitle(e.target.value) }} id="titleofsubtitle" value={titleofsubtitle} type="text" className="form-control" placeholder="Subtitle" />
-                        <label htmlFor="floatingInput">Subtitle {subtitles.length + 1}</label>
+                        <label htmlFor="floatingInput">Title</label>
                     </div>
                     <div>
-                        {titleerror ? <label className="l1">You must fill it</label> : ""}
+                        {titlerror ? <label className="l1">You must fill it</label> : ""}
                         <div className="form-floating mb-3" />
                     </div>
+                    <div className="form-floating mb-3">
+                        <input onChange={(e) => { sethours(e.target.value) }} id="totalhours" value={totalhours} type="number" className="form-control" min={0} placeholder="Totalhours" />
+                        <label htmlFor="price">Totalhours</label>
+                    </div>
+                    <div>
+                        {titlerror ? <label className="l1">You must fill it</label> : ""}
+                        <div className="form-floating mb-3" />
+                    </div>
+                    <div className="form-floating mb-3">
+                        <textarea onChange={(e) => { setsummary(e.target.value) }} id="summaryofsubtitle" value={summaryofsubtitle} className="form-control" placeholder="Leave a comment here" style={{ height: '100px' }}></textarea>
+                        <label htmlFor="floatingTextarea2">Summary of Subtitle</label>
+                    </div>
+                    <div>
+                        {titlerror ? <label className="l1">You must fill it</label> : ""}
+                        <div className="form-floating mb-3" />
+                    </div>
+                    <button className='abdo btn-primary ' onClick={(e) => addquiz()}>Add Quiz</button>
+                    {/* <div className="login-box">
+                                            <form>
+                                                <a href="pruchercourse" onClick={(e) => addquiz()}>
+                                                Add Quiz
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+
+                                                </a>
+                                            </form>
+                                        </div> */}
+                    <div className="bg-light p-3 m-3" style={{borderRadius : '25px', border:'1px solid black'}}>
+                    <h6>Video {videos.length + 1} for Subtitle {subtitles.length + 1}</h6>
                     <div className="form-floating mb-3">
                         <input onChange={(e) => { setvideotitle(e.target.value) }} id="videotitle" value={videotitle} type="text" className="form-control" placeholder="Video Title" />
                         <label htmlFor="floatingInput">Video Title {videos.length + 1} for section {subtitles.length + 1}</label>
@@ -281,35 +463,15 @@ function Createcourse(props) {
                         {videoerror ? <label className="l1">You must fill it</label> : ""}
                         <div className="form-floating mb-3" />
                     </div>
-                    <button className='btn btn-primary' onClick={() => addvideo()}>Add Video</button>
-                    <br></br>
-                    <br></br>
-                    
-                    <button className='btn btn-primary' onClick={(e) => addquiz()}>Add Quiz</button>
-                    <div className="form-floating mb-3" />
-                    <div className="form-floating mb-3">
-                        <input onChange={(e) => { sethours(e.target.value) }} id="totalhours" value={totalhours} type="number" className="form-control" min={0} placeholder="Totalhours" />
-                        <label htmlFor="price">Totalhours</label>
+                    <button className='abdo btn-primary' onClick={() => addvideo()}>Add Video</button>
                     </div>
-                    <div>
-                        {titleerror ? <label className="l1">You must fill it</label> : ""}
-                        <div className="form-floating mb-3" />
+                    <button className='abdo btn-primary' onClick={() => addtitle()}>Add Subtitle</button>
                     </div>
-                    <div className="form-floating mb-3">
-                        <textarea onChange={(e) => { setsummary(e.target.value) }} id="summaryofsubtitle" value={summaryofsubtitle} className="form-control" placeholder="Leave a comment here" style={{ height: '100px' }}></textarea>
-                        <label htmlFor="floatingTextarea2">Summry of Subtitle</label>
-                    </div>
-                    <div>
-                        {titleerror ? <label className="l1">You must fill it</label> : ""}
-                        <div className="form-floating mb-3" />
-                    </div>
-                    <button className='btn btn-primary' onClick={() => addtitle()}>Add Subtitle</button>
-                    <div className="form-floating mb-3" />
-                    <div className="form-floating mb-3" />
 
-                    <button className='btn btn-primary' onClick={(e) => submit()}>Create Course</button>
+                    <button className='abdo btn-primary' onClick={(e) => submit()}>Create Course</button>
                 </div>
             </div>
+        </div>
         </div>
         :(
             <React.Fragment>
@@ -376,8 +538,7 @@ function Createcourse(props) {
                 </div>
                 <div className="text-center"><button className="btn btn-primary" onClick={() => addquestion()} type="submit" style={{ borderRadius: '25px' }}>Go To next Question <i
                     className="fa fa-step-htmlForward" aria-hidden="true"></i></button></div>
-                <div className="text-center" ><button
-                    className="btn btn-primary" style={{ borderRadius: '25px' }} onClick={() => submitquiz()}>Save the Quiz <i className="fa fa-floppy-o"
+                <div className="text-center" ><button className="btn btn-primary" style={{ borderRadius: '25px' }} onClick={() => submitquiz()}>Save the Quiz <i className="fa fa-floppy-o"
                         aria-hidden="true"></i></button></div>
             </div>
         </div>

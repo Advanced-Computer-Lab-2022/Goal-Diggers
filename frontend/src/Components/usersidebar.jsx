@@ -61,8 +61,32 @@ function Usersidebar() {
                 </li>
                 <li>
                     <a href="#">
+                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                        <span className="item">Wallet</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                        <span className="item">Refund</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
                         <span className="icon"><i class="fa fa-sliders" aria-hidden="true"></i></span>
                         <span className="item">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                        <span className="item">Privacy&Policy</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                        <span className="item">Help</span>
                     </a>
                 </li>
                 <li>

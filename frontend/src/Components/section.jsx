@@ -32,12 +32,11 @@ const Sections = ({section,count}) => {
                     </div>
 
                     <Collapse in={flag}>
-                <div id="example-collapse-text">
-                    {section.videos.map(video => 
-                        {return <p>title : {video.title}</p>})}
-                    
-                </div>
-            </Collapse>
+                        <div id="example-collapse-text">
+                            {section.videos.map(video => 
+                                {return <p>title : {video.title}</p>})}
+                        </div>
+                    </Collapse>
                 </div>
 
             </div>

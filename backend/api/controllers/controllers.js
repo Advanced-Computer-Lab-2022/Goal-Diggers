@@ -1,8 +1,13 @@
-const { User, Role, Exam, Course, Note, Instructor, RegisterCourse } = require('../models/db');
+const { User, Role, Exam, Course, Instructor, RegisterCourse, CourseRequest, Wallet} = require('../models/db');
 const bcrypt = require("bcrypt");
 const _ = require('lodash');
 const {ObjectId} = require('mongodb');
+const pdf = require('html-pdf');
+const {pdfTemplate, certificateTemplate} = require('./generatePDF');
 require('dotenv').config();
+const stripe = require("stripe")(
+  "sk_test_51MEsfyD8LuqksnQUfvq6KNmUnIpERtruMHXIKHHnc7EOy51ZdpuYFZ4VlfaIbztSjh7kRZM3OSR0gVIifQjmmhZ1008I0rGA9q"
+);
 
 // const transporter = nodemailer.createTransport({
 //     service: "Gmail",
@@ -11,7 +16,92 @@ require('dotenv').config();
 //       pass: process.env.password, // generated ethereal password
 //     },
 //   });
-   
+
+//POST 
+// url : api/payment/create" Create client secret  
+
+
+module.exports.createPayment =  async (req, res) => {
+  const total = req.body.price;
+  console.log(total);
+  console.log("Payment Request recieved for this ruppess", total);
+  const payment = await stripe.paymentIntents.create({
+    amount: total * 100 ,
+    currency: "usd",
+  });
+  res.status(200).json({
+    clientSecret: payment.client_secret,
+  });
+};
+
+//POST 
+// url : api/buy-course/ user buy the course need to student id
+module.exports.buyCourse =  async (req, res) => {
+  let course = req.body.course;
+  course.registers ++;
+  Course.updateOne({_id : course._id}, course).then();
+  course.attemptedQuizs = [];
+  course.completedQuizs = 0;
+  course.completedVideos = [];
+  course.notes = [];
+  course.courseID = course._id;
+  course = _.omit(course, '_id');
+  RegisterCourse.create(course).then(
+    result => {
+      Wallet.findOne({instructorID : ObjectId(course.createdById)}).then(
+        wallet =>{
+          if(wallet) {
+            wallet.total += course.price*0.7;
+            let exist = false;
+            wallet.details.forEach((month, index) => {
+                if(new Date(month.month).getMonth() === new Date().getMonth() && new Date(month.month).getFullYear() === new Date().getFullYear()) {
+                  wallet.details[index].total += course.price*0.7;
+                  exist = true;
+                }
+            });
+            if(!exist)
+                wallet.details.push({month: `${new Date().getMonth() + 1}-1-${new Date().getFullYear()}`, total : course.price*0.7});
+            Wallet.updateOne({_id : wallet._id}, wallet).then();
+          }
+          else {
+            let wallet = {instructorID : ObjectId(course.createdById), total : course.price*0.7, details : [{month: `${new Date().getMonth() + 1}-1-${new Date().getFullYear()}`, total : course.price*0.7}]};
+            Wallet.create(wallet).then()
+          }
+        }
+      )
+      return res.status(200).json({});
+    }
+  )
+};
+// url : api/getinstructor
+
+module.exports.getInstructor = async (req,res) => {
+  console.log(req.params.id);
+  const id = ObjectId(req.params.id);
+  await Instructor.findById(id).then(
+      instructor => {
+          if(instructor)
+              return res.status(200).json({instructor});
+          return res.status(404).json({error : "instructor Not Found"});
+      }
+  )
+}
+
+
+/////GET Num of users
+module.exports.getnumusers = async (req,res) => {
+  console.log("abdo");
+ let users=[0,0,0,0];
+ console.log(await Instructor.find({}).count());
+ users[0]=await Instructor.find({}).count();
+  users[1]=await User.find({}).count();
+  users[2]=await Role.find({"role" : "corporatetrainees "}).count();
+  users[3]=await Course.find({}).count();
+ console.log(users);
+ return res.status(200).json({users}); 
+}
+
+
 //GET
 // url : /api/get-quiz/12 -> to get quiz
 module.exports.getQuiz = async (req,res)=>{
@@ -21,6 +111,16 @@ module.exports.getQuiz = async (req,res)=>{
                   res.status(200).json({quiz})
         }
     );
+}
+
+//GET
+// url : /api/wallet -> to get wallet // need updates
+module.exports.getWallet = async (req,res)=>{
+    Wallet.findOne({}).then(
+      wallet => {
+        return res.status(200).json({wallet});
+      }
+    )
 }
 
 //POST
@@ -62,6 +162,8 @@ module.exports.addCourse = async (req, res) => {
   course.ratedetails = [0,0,0,0,0,0];
   course.reviews = [];
   course.numberofrates = 0;
+  course.registers = 0;
+  course.viewers = 0;
   course.overviewVideo = {title : "Welcome video", url : course.overviewVideo, description : course.summary};
   Course.create(course).then(
     result => {return res.status(200).json({result});}
@@ -79,7 +181,6 @@ module.exports.addCourseRate = async (req, res) => {
             course.rate += courseRate;
             course.numberofrates ++;
             course.ratedetails[courseRate] ++;
-            course.rateCourse = true;
             // later we add user details for the review
             course.reviews.push(courseReview);
             Course.findByIdAndUpdate(courseID,course).then(
@@ -130,7 +231,16 @@ module.exports.getReviewsAndRatings = async (req, res) => {
         }
     )
 };
-
+//GET
+//url : /api/reviews-ratings/-> course get reviews and ratings
+module.exports.getCourseReviewsAndRatings = async (req, res) => {
+  const id = ObjectId(req.params.id);
+  Course.findById(id).then(
+      course => {
+          res.status(200).json({reviews : course.reviews, rate : course.rate, numberofrates : course.numberofrates, ratedetails : course.ratedetails});
+      }
+  )
+};
 //POST
 //url : /api/add-quiz/12 -> add quiz to course
 module.exports.addQuiz = async (req, res) => {
@@ -163,7 +273,6 @@ module.exports.Linkverify = async (req, res) => {
     }
   };
   
-
 //POST
 //url : /api/forgot-password -> verify user email and send reset password link
 module.exports.forgotPassword = async (req, res) => {
@@ -315,28 +424,21 @@ module.exports.loginUser = async (req, res) => {
   
 // POST
 //url : /api/change-password -> to change user password
-module.exports.ChangePassword = (req, res) => {
-    const id = ObjectId(req.params.id)
+module.exports.ChangePassword =async (req, res) => {
     let password = req.body.password;
     let password_old = req.body.password_old;
-    User.findById(req.user._id).then(async (user) => {
-      if (!user) {
-        res.status(403);
-        res.json({ error: "YOU MUST LOGIN" });
-      } else {
-        if (await bcrypt.compare(password_old, user.password)) {
-          user.password = await bcrypt.hash(password, 10);
-          User.findOneAndUpdate({ _id: req.user._id }, user, {
-            new: true,
-          }).then();
-          res.status(200).json({});
-        } else {
-          res.status(200).json({ error: "incorrect password" });
-        }
-      }
-    });
-  };
+    if (await bcrypt.compare(password_old, req.user.password)) {
+      req.user.password = await bcrypt.hash(password, 10);
+      User.findOneAndUpdate({ _id: req.user._id }, req.user, {
+        new: true,
+      }).then();
+      res.status(200).json({});
+    } else {
+      res.status(200).json({ error: "incorrect password" });
+    }
+};
   
+/// need edits
 module.exports.changeEmailorBiography = async(req,res)=>{
   const id = ObjectId(req.params.id);
   const data = req.body;
@@ -391,13 +493,12 @@ module.exports.addUser = async (req, res) => {
 module.exports.getAllCourses = async (req, res) => {
     await Course.find({}).then(
         courses => {
-            console.log(courses);
             return res.status(200).json({courses});
         }
     )
 }
 
-// GET url : /api/instructor-courses
+// GET url : /api/instructor-courses //need edits
 module.exports.getInstructorCourses = async (req, res) => {
     await Course.find({}).then(
         courses => {return res.status(200).json({courses});}
@@ -415,11 +516,20 @@ module.exports.getSearchCourses = async (req, res) => {
     );
 }
 
-// GET url : api/course/:id
+// GET url : api/course/:id need some edits
 module.exports.getCourse = async (req,res) => {
-    const id = req.params.id;
+    console.log("req.params.id");
+    console.log(req.params.id);
+    console.log("req.params.id");
+    const id = ObjectId(req.params.id);
     await Course.findById(id).then(
         course => {
+          if(course.views) {
+            course.views++;
+          }
+          else
+            course.views = 1;
+          course.save();
             if(course)
                 return res.status(200).json({course});
             return res.status(404).json({error : "Course Not Found"});
@@ -430,8 +540,6 @@ module.exports.getCourse = async (req,res) => {
 //POST url : api/save-progress/ save course progress
 module.exports.saveProgress = async (req, res) =>{
   const course = req.body.course;
-  console.log(course);
-  console.log("course");
   RegisterCourse.findByIdAndUpdate(course._id, course).then(
     result  => {
                 return res.status(200).json({result})}
@@ -461,14 +569,13 @@ module.exports.saveQuiz = async (req, res) => {
         }
         let id = course._id
         RegisterCourse.updateOne({_id : id}, course, {new : true}).then(
-          result => {console.log(result);
-                    res.status(200).json({});}
+          result => { return res.status(200).json({});}
         )
       }
     )
 };
 
-//GET url : api/get-registercourses/12 get specific course
+//GET url : api/get-registercourses/12 get specific course // need auth
 module.exports.getRegisterCourse = async (req, res) =>{
    // get student id from jwt
    const courseID = ObjectId(req.params.id);
@@ -482,5 +589,65 @@ module.exports.getRegisterCourse = async (req, res) =>{
       }
     }
    )
+}
+
+
+module.exports.getNumberOFTrainees = async (req, res) =>{
+  try{
+    const num = await Role.countDocuments({})
+    res.status(200).json({num})
+  }
+  catch(error){
+    res.status(401).json({error})
+  }
+}
+
+//GET 
+// url : api/inprogress-courses/ student get in progress courses // need auth
+module.exports.getInProgressCourses = async(req,res) =>{
+  RegisterCourse.find({}).then(
+      courses =>{
+        let result = courses.filter(course=>{return course.totalItems > (course.completedQuizs + course.completedVideos.length)});
+        res.status(200).json({courses : result})
+      }
+  )
+};
+
+//GET 
+// url : api/completed-courses/ student get completed courses // need auth
+module.exports.getCompletedCourses = async(req,res) =>{
+  RegisterCourse.find({}).then(
+      courses =>{
+        let result = courses.filter(course=>{
+          return course.totalItems === (course.completedQuizs + course.completedVideos.length);
+        });
+        res.status(200).json({courses : result})
+      }
+  )
+};
+
+module.exports.getMyCourses = async (req, res) =>{
+  try{
+    const id = req.params.id;
+    const courses = await RegisterCourse.find({studentID:id},{price:0}) // '-price'
+    res.status(200).json(courses)
+  }
+  catch(error){
+    res.status(401).json({error})
+  }
+}
+module.exports.getmostviewedcourses = async (req, res) => {
+  console.log("mostviewd");
+  let mvp=[];
+  await Course.find({}).sort({price:-1}).limit(6).then(
+      courses => {
+          mvp = courses;
+      }
+  )
+  await Course.find({}).sort({price:-1}).limit(6).then(
+      courses => {
+          return res.status(200).json({courses, mvp});
+      }
+  )
 }
 

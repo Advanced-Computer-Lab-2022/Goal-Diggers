@@ -1,0 +1,358 @@
+import React from 'react'
+import { useState } from 'react'
+import courseService from '../courseContainer';
+import "./editprofile.css"
+import main from "../assets1/course.mp4";
+import OwlCarousel from 'react-owl-carousel';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import ReactLoading from 'react-loading';
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+
+import { FormControl,Select,InputLabel,MenuItem} from "@mui/material";
+import coun_curr_code from '../coun-curr-code';
+
+
+
+import { styled, useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import MuiDrawer from '@mui/material/Drawer';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import CssBaseline from '@mui/material/CssBaseline';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
+import WalletIcon from '@mui/icons-material/Wallet';
+import PaidIcon from '@mui/icons-material/Paid';
+import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
+import HelpIcon from '@mui/icons-material/Help';
+import InfoIcon from '@mui/icons-material/Info';
+import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+
+import "./default-css.css";
+import "./font-awesome.min.css";
+import "./magnific-popup.css";
+import "./owl.carousel.css";
+import "./owl.carousel.min.css";
+import "./owl.theme.default.css";
+import "./owl.theme.default.min.css";
+import "./owl.theme.green.css";
+import "./owl.theme.green.min.css";
+import "./responsive.css";
+import "./slicknav.min.css";
+import "./styles.css";
+import "./templatemo-style2.css";
+import "./typography.css";
+import "./owl.css";
+import "./templatemo-edu-meeting.css";
+import CourseCard from './courseCard';
+import axios from 'axios';
+
+
+const drawerWidth = 240;
+
+function Mycourses() {
+    const [myCourses,setMyCourses] = useState([]);
+    const [inprogress,setinprogress] = useState([]);
+    const [completed,setcompleted] = useState([]);
+    const [choose,setchoose]=useState({all:true});
+    const [ready, setReady] = useState(false);
+    const [country, setCountry] = useState(false);
+    const config = { headers: { "apikey": "mg9jAAsEOiyrDEq4mw4wBarbgswdtryW" } };
+
+
+    useEffect(()=>{
+        const getCourses = async () => {
+            const data = await courseService.getAllCourses();
+            const c1 = await courseService.getInprogressCourses();
+            const c2 = await courseService.getCompletedCourses();
+            setMyCourses(data);
+            setinprogress(c1);
+            setcompleted(c2);
+            setReady(true);
+
+            console.log(data);
+            console.log(c1);
+            console.log(c2);
+        }
+        getCourses()
+    },[country]);
+    const handleCountry = async (e) => {
+      let result = 1;
+      const ConversionAPI = `https://api.apilayer.com/exchangerates_data/convert?to=${e}&from=USD&amount=1`;
+      const { data } = await axios.get(ConversionAPI, config);
+      result = data.info.rate;
+      localStorage.setItem("country", e);
+      localStorage.setItem("rate", result);
+      setCountry(!country);
+  }
+
+
+  return (
+    <div>
+
+<header id="header">
+
+<div class="header-top">
+    <div class="container">
+        <div class="row d-flex flex-center">
+            <div class="col-sm-8">
+                <div class="ht-address">
+                    <ul>
+                        <li><i class="fa fa-phone"></i>Phone: +201001004070</li>
+                        <li><i class="fa fa-envelope"></i>Email: info@cancham.org.eg</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ht-social">
+                    <ul>
+                    <li><a href="https://youtu.be/z4tOlwuHEZI"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://youtu.be/kXhBKjDKF84"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://youtu.be/BG9HSntowA8"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="https://youtu.be/aiRY36TPVo8"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="header-bottom">
+    <div class="container">
+        <div class="header-bottom-inner">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-sm-9">
+                    <div class="logo">
+                        <img src="/assets2/images/icon/logo.png" alt="logo"/>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-lg-7 d-none d-lg-block">
+                    <div class="main-menu">
+                        <nav>
+                            <ul id="m_menu_active">
+                            <li ><a href="/homepage2">Home</a></li>
+                            <li ><a href="/newcourses">Courses</a></li>
+                            <li><a href="/membership">MemberShip</a></li>
+                            <li><a href="/blog">Blogs</a></li>
+                            <li><a href="/event">Events</a></li>
+                            <li ><a href="/contact">Contact</a></li>
+                            <li><a href="/userprofile" class="avatar1"><img id='sidebar' src="r9.jpg" /></a>
+                                <ul class="submenu mr-12">
+                                    <li><a href="/userprofile" >View Profile</a><h1 class="fa fa-user dropdown" aria-hidden="true"></h1></li>
+                                    <li class = "active"><a href="/mycourses">My Courses</a><i class="fa fa-book dropdown"></i></li>
+                                    <li><a href="/settings">Settings</a><i class="fa fa-cog dropdown"></i></li>
+                                    <li ><a href="/help">Help</a><h1 class="fa fa-question-circle dropdown"></h1></li>
+                                    <li><a href="index3.html">Log Out</a><h1 class="fa fa-sign-out dropdown"></h1></li>
+                                </ul>
+                            </li>
+                            <li >
+                                <FormControl class= "mt-50 w-20 cc fa fa-globe" >
+    <InputLabel class=""  ></InputLabel>
+    <Select 
+        defaultValue=""
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        onChange={ (e) => {handleCountry(e.target.value) ; console.log("NAV " +e.target.value);} }
+        >
+        {coun_curr_code.map(country => <MenuItem key={country.country} value={country.currency_code}>{country.country}</MenuItem>)}
+    </Select>
+  </FormControl>
+                            </li>
+                            </ul>       
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-12 d-block d-lg-none">
+                    <div id="mobile_menu"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+</header>
+
+        <div class="crumbs-area">
+        <div class="container">
+                <div class="crumb-content">
+                <fieldset class="field-container mb-5">
+                    <form action="/search">
+                        <input type="text" name='keyword' placeholder="Search For Courses" class="field" />
+                        <div class="icons-container">
+                            <div class="icon-search"></div>
+                            <div class="icon-close">
+                            <div class="x-up"></div>
+                            <div class="x-down"></div>
+                            </div>
+                        </div>
+                    </form>
+                </fieldset>
+                    <h4 class="crumb-title"><span>My Courses</span></h4>
+                </div>
+            </div>
+        </div>
+
+        <div className="wrapper">
+        <div className="sidebar">
+            <div className="profile2">
+                <img src="./r9.jpg" alt="profile_picture" />
+                <h3>Mahmoud Yassen</h3>
+                <p>Software Developer</p>
+            </div>
+            <ul>
+                <li>
+                    <a href="/userprofile" className="active">
+                        <span className="icon"><i className="fa fa-home"></i></span>
+                        <span className="item">Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/mycourses">
+                        <span className="icon"><i class="fa fa-book" aria-hidden="true"></i></span>
+                        <span className="item">My Courses</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/wallet">
+                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                        <span className="item">Wallet</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                        <span className="item">Refund</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span className="icon"><i class="fa fa-sliders" aria-hidden="true"></i></span>
+                        <span className="item">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                        <span className="item">Privacy&Policy</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/help">
+                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                        <span className="item">Help</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                        <span className="item">LogOut</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+
+        <div class="btn-group">
+
+  <button onClick={()=>{setchoose({all:true})}} className='allcourses'>All Courses</button>
+  <button onClick={()=>{setchoose({inprogress:true})}} className='Inprogress'>Inprogress Courses</button>
+  <button onClick={()=>{setchoose({completed:true})}} className='Completed'>Completed Courses</button>
+
+</div>
+
+{
+    ready && <React.Fragment>
+
+        <div class="course-area  pt--120 pb--70">
+        <div class="container">
+            <div class="row">  
+                { choose.all && 
+                <React.Fragment>
+                    {myCourses.map((course) => {
+                            return (<React.Fragment>
+
+                                <div class="col-lg-4 col-md-6">
+                                <CourseCard course={course}></CourseCard>
+
+                                </div>
+                            </React.Fragment>)
+                        })}
+
+
+                </React.Fragment>
+                }
+
+{ choose.inprogress && 
+                <React.Fragment>
+                    {inprogress.map((course) => {
+                            return (<React.Fragment>
+
+                                <div class="col-lg-4 col-md-6">
+                                    <CourseCard course={course}></CourseCard>
+                                </div>
+                            </React.Fragment>)
+                        })}
+
+
+                </React.Fragment>
+                }
+
+{ choose.completed && 
+                <React.Fragment>
+                    {completed.map((course) => {
+                            return (<React.Fragment>
+
+                                <div class="col-lg-4 col-md-6">
+                                <CourseCard course={course}></CourseCard>
+
+                                </div>
+                            </React.Fragment>)
+                        })}
+
+
+                </React.Fragment>
+                }
+              
+            </div>
+        </div>
+    </div>
+    </React.Fragment>
+}
+
+{
+    !ready && <React.Fragment>
+
+<div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center', height : '500px'}}>
+        <ReactLoading type={"bars"} color={'#a00407'} height={'5%'} width={'5%'} />
+    </div>
+
+    </React.Fragment>
+}
+   
+    </div>
+  )
+}
+
+export default Mycourses

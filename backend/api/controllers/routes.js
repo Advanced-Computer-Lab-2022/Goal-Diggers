@@ -27,8 +27,13 @@ router.post('/change-email-biography/:id', controller.changeEmailorBiography);
 router.post('/add-quiz', controller.addQuiz);
 router.post('/add-course', controller.addCourse);
 /////////////////
-
-
-
+router.get('/getNumberOFTrainees',controller.getNumberOFTrainees)
+router.get('/getMyCourses/:id',controller.getMyCourses)
+router.get('/getCourseReviewsAndRatings/:id',controller.getCourseReviewsAndRatings)
+router.get('/instructor/:id', controller.getInstructor);
+router.get('/getnumberofusers', controller.getnumusers);
+router.get('/getmostviewedcourses', controller.getmostviewedcourses);
+router.get('/inprogress-courses', controller.getInProgressCourses);
+router.get('/completed-courses', controller.getCompletedCourses);
 
 module.exports = router;
