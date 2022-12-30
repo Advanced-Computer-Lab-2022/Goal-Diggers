@@ -44,6 +44,15 @@ import Adduser from './Components/adduser';
 import CoursesRequests from './Components/coursesRequests';
 import SetPromotions from './Components/setPromotions';
 import Problems from './Components/problems';
+import Login from './Components/Auth/Login';
+import Register from './Components/Auth/Register';
+import axios from "axios";
+import RegisterFooter from './registerFooter';
+import AuthContext, { AuthContextProvider } from "./context/AuthContext";
+import TermsAndConditions from './Components/termsandconditions';
+import ResetPassword from './Components/ResetPassword';
+import ForgetPassword from './Components/ForgetPassword'
+axios.defaults.withCredentials=true;
 function App() {
   const [currency, setCurrency] = useState('');
   const handleCountry = (curr) => {
@@ -51,7 +60,7 @@ function App() {
   }
   return (
     <React.Fragment>
-
+<AuthContextProvider>
       <Routes>
       <Route path='/search'element={<SearchResult/> } />
       <Route path='/instructorprofile' element={<Instructorprofile />} />
@@ -82,15 +91,13 @@ function App() {
       <Route path='/viewNotes' element={<ViewNotes />} />
       <Route path='/adminview' element={<AdminView />} />
       <Route path='/takeCourse' element={<TakeCourse />} />
-      <Route path='/temp1' element={<Temp1 />} />
-      <Route path='/adduser' element={<Adduser />} />
-      <Route path='/coursesRequests' element={<CoursesRequests />} />
-      <Route path='/setPromotions' element={<SetPromotions />} />
-      <Route path='/problems' element={<Problems />} />
+
 
 
       </Routes>
+      <RegisterFooter></RegisterFooter>
 <Footer></Footer>
+</AuthContextProvider>
     </React.Fragment>
   );
 }
