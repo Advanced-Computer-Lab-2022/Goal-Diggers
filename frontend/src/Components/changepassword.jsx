@@ -124,7 +124,7 @@ function Changepassword(props) {
             <div>
                 {matcherror && <label className = "l1">Two new passwords do not match</label> }
             </div>
-            <button className='btn btn-primary' onClick={(e)=>submit()}>Save</button>
+            <button className='savebuttoon' onClick={(e)=>submit()}>Save</button>
         
     </div>
   )

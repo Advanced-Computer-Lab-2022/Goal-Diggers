@@ -29,6 +29,8 @@ import axios from "axios";
 import RegisterFooter from './registerFooter';
 import Footer from './Components/footer';
 import TermsAndConditions from './Components/termsandconditions';
+import ResetPassword from './Components/ResetPassword';
+import ForgetPassword from './Components/ForgetPassword'
 axios.defaults.withCredentials=true;
 
 
@@ -65,6 +67,8 @@ function App() {
         <Route path='/' exact element={<CourseContainer currency={currency} type="all"/>} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/forget-password' element={<ForgetPassword />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='*' element={<NotFound/>} />
         <Route path='/termsandconditions' element={<TermsAndConditions />} />
       </Routes>
