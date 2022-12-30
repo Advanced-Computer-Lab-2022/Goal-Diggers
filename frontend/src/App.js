@@ -49,7 +49,15 @@ import ViewNotes from './Components/viewNotes';
 import NestedList from './Components/test';
 import FreeSoloCreateOptionDialog from './Components/test';
 import AdminView from './Components/adminView';
-
+import Login from './Components/Auth/Login';
+import Register from './Components/Auth/Register';
+import axios from "axios";
+import RegisterFooter from './registerFooter';
+import AuthContext, { AuthContextProvider } from "./context/AuthContext";
+import TermsAndConditions from './Components/termsandconditions';
+import ResetPassword from './Components/ResetPassword';
+import ForgetPassword from './Components/ForgetPassword'
+axios.defaults.withCredentials=true;
 function App() {
   const [currency, setCurrency] = useState('');
   const handleCountry = (curr) => {
@@ -57,7 +65,7 @@ function App() {
   }
   return (
     <React.Fragment>
-
+<AuthContextProvider>
       <Routes>
       <Route path='/search'element={<SearchResult/> } />
       <Route path='/instructorprofile' element={<Instructorprofile />} />
@@ -96,11 +104,17 @@ function App() {
       <Route path='/test' element={<FreeSoloCreateOptionDialog />} />
       <Route path='/adminview' element={<AdminView />} />
       <Route path='/takeCourse' element={<TakeCourse />} />
-
+      <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/forget-password' element={<ForgetPassword />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
+        <Route path='/termsandconditions' element={<TermsAndConditions />} />
 
 
       </Routes>
+      <RegisterFooter></RegisterFooter>
 <Footer></Footer>
+</AuthContextProvider>
     </React.Fragment>
   );
 }

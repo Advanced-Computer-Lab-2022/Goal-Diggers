@@ -36,6 +36,7 @@ import "./templatemo-edu-meeting.css";
 import "./search.scss";
 import CourseCard from './courseCard';
 import axios from 'axios';
+import Logout from './Auth/LogoutBtn';
 
 
 function Homepage2({}) {
@@ -94,24 +95,24 @@ function Homepage2({}) {
 
     <header id="header">
 
-<div class="header-top">
-    <div class="container">
-        <div class="row d-flex flex-center">
-            <div class="col-sm-8">
-                <div class="ht-address">
+<div className="header-top">
+    <div className="container">
+        <div className="row d-flex flex-center">
+            <div className="col-sm-8">
+                <div className="ht-address">
                     <ul>
-                        <li><i class="fa fa-phone"></i>Phone: +201001004070</li>
-                        <li><i class="fa fa-envelope"></i>Email: info@cancham.org.eg</li>
+                        <li><i className="fa fa-phone"></i>Phone: +201001004070</li>
+                        <li><i className="fa fa-envelope"></i>Email: info@cancham.org.eg</li>
                     </ul>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="ht-social">
+            <div className="col-sm-4">
+                <div className="ht-social">
                     <ul>
-                    <li><a href="https://youtu.be/z4tOlwuHEZI"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="https://youtu.be/kXhBKjDKF84"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="https://youtu.be/BG9HSntowA8"><i class="fa fa-dribbble"></i></a></li>
-                        <li><a href="https://youtu.be/aiRY36TPVo8"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://youtu.be/z4tOlwuHEZI"><i className="fa fa-facebook"></i></a></li>
+                        <li><a href="https://youtu.be/kXhBKjDKF84"><i className="fa fa-twitter"></i></a></li>
+                        <li><a href="https://youtu.be/BG9HSntowA8"><i className="fa fa-dribbble"></i></a></li>
+                        <li><a href="https://youtu.be/aiRY36TPVo8"><i className="fa fa-instagram"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -119,37 +120,37 @@ function Homepage2({}) {
     </div>
 </div>
 
-<div class="header-bottom">
-    <div class="container">
-        <div class="header-bottom-inner">
-            <div class="row align-items-center">
-                <div class="col-lg-3 col-sm-9">
-                    <div class="logo">
+<div className="header-bottom">
+    <div className="container">
+        <div className="header-bottom-inner">
+            <div className="row align-items-center">
+                <div className="col-lg-3 col-sm-9">
+                    <div className="logo">
                         <img src="/assets2/images/icon/logo.png" alt="logo"/>
                     </div>
                 </div>
-                <div class="col-xl-8 col-lg-7 d-none d-lg-block">
-                    <div class="main-menu">
+                <div className="col-xl-8 col-lg-7 d-none d-lg-block">
+                    <div className="main-menu">
                         <nav>
                             <ul id="m_menu_active">
-                            <li class="active"><a href="/homepage2">Home</a></li>
+                            <li className="active"><a href="/homepage2">Home</a></li>
                             <li><a href="/newcourses">Courses</a></li>
                             <li><a href="/membership">MemberShip</a></li>
                             <li><a href="/blog">Blogs</a></li>
                             <li><a href="/event">Events</a></li>
                             <li ><a href="/contact">Contact</a></li>
-                            <li><a href="/userprofile" class="avatar1"><img id='sidebar' src="/r9.jpg" /></a>
-                                <ul class="submenu mr-12">
-                                    <li><a href="/userprofile" >View Profile</a><h1 class="fa fa-user dropdown" aria-hidden="true"></h1></li>
-                                    <li><a href="/mycourses">My Courses</a><i class="fa fa-book dropdown"></i></li>
-                                    <li><a href="/settings">Settings</a><i class="fa fa-cog dropdown"></i></li>
-                                    <li><a href="/help">Help</a><h1 class="fa fa-question-circle dropdown"></h1></li>
-                                    <li><a href="/index3.html">Log Out</a><h1 class="fa fa-sign-out dropdown"></h1></li>
+                            <li><a href="/userprofile" className="avatar1"><img id='sidebar' src="/r9.jpg" /></a>
+                                <ul className="submenu mr-12">
+                                    <li><a href="/userprofile" >View Profile</a><h1 className="fa fa-user dropdown" aria-hidden="true"></h1></li>
+                                    <li><a href="/mycourses">My Courses</a><i className="fa fa-book dropdown"></i></li>
+                                    <li><a href="/settings">Settings</a><i className="fa fa-cog dropdown"></i></li>
+                                    <li><a href="/help">Help</a><h1 className="fa fa-question-circle dropdown"></h1></li>
+                                    <li><a href="/homepage2"><Logout></Logout></a><h1 className="fa fa-sign-out dropdown"></h1></li>
                                 </ul>
                             </li>
                             <li >
-                                <FormControl class= "mt-50 w-20 cc fa fa-globe" >
-    <InputLabel class=""  ></InputLabel>
+                                <FormControl className= "mt-50 w-20 cc fa fa-globe" >
+    <InputLabel className=""  ></InputLabel>
     <Select 
         defaultValue=""
         labelId="demo-simple-select-label"
@@ -164,7 +165,7 @@ function Homepage2({}) {
                         </nav>
                     </div>
                 </div>
-                <div class="col-12 d-block d-lg-none">
+                <div className="col-12 d-block d-lg-none">
                     <div id="mobile_menu"></div>
                 </div>
             </div>
@@ -179,27 +180,27 @@ function Homepage2({}) {
 
 
 <div>
-    <section class="section main-banner" id="top" data-section="section1">
+    <section className="section main-banner" id="top" data-section="section1">
         
       <video src={main} autoPlay muted loop id="bg-video">
         
       </video>
       
-      <div class="video-overlay header-text">
-          <div class="container">
-            <div class="row">
+      <div className="video-overlay header-text">
+          <div className="container">
+            <div className="row">
                 
               <div>
               
-                <div class="caption">
-                <fieldset class="field-container">
+                <div className="caption">
+                <fieldset className="field-container">
                     <form action="/search">
-                        <input type="text" name='keyword' placeholder="Search For Courses" class="field" />
-                        <div class="icons-container">
-                            <div class="icon-search"></div>
-                            <div class="icon-close">
-                            <div class="x-up"></div>
-                            <div class="x-down"></div>
+                        <input type="text" name='keyword' placeholder="Search For Courses" className="field" />
+                        <div className="icons-container">
+                            <div className="icon-search"></div>
+                            <div className="icon-close">
+                            <div className="x-up"></div>
+                            <div className="x-down"></div>
                             </div>
                         </div>
                     </form>
@@ -231,26 +232,26 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
   </div>
   
 
-  <div class="divider">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-4 col-sm-6">
-				<div class="divider-wrapper divider-one">
-					<i class="fa fa-laptop"></i>
+  <div className="divider">
+	<div className="container">
+		<div className="row">
+			<div className="col-md-4 col-sm-6">
+				<div className="divider-wrapper divider-one">
+					<i className="fa fa-laptop"></i>
 					<h2>Best Instructors</h2>
 					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</p>
 				</div>
 			</div>
-			<div class="col-md-4 col-sm-6">
-				<div class="divider-wrapper divider-two">
-					<i class="fa fa-mobile"></i>
+			<div className="col-md-4 col-sm-6">
+				<div className="divider-wrapper divider-two">
+					<i className="fa fa-mobile"></i>
 					<h2>Best Students</h2>
 					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</p>
 				</div>
 			</div>
-			<div class="col-md-4 col-sm-12">
-				<div class="divider-wrapper divider-three">
-					<i class="fa fa-life-ring"></i>
+			<div className="col-md-4 col-sm-12">
+				<div className="divider-wrapper divider-three">
+					<i className="fa fa-life-ring"></i>
 					<h2>Best Courses</h2>
 					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</p>
 				</div>
@@ -266,18 +267,18 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
 {
     ready && <React.Fragment>
 
-<div class="course-area  pt--120 pb--70">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="section-title1">
-                  <span class="text-uppercase1">Build your career</span>
+<div className="course-area  pt--120 pb--70">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-6">
+                <div className="section-title1">
+                  <span className="text-uppercase1">Build your career</span>
                   <h2>Most Viewed Courses</h2>
                 </div>
               </div>
             </div>
 
-            <div class="commn-carousel owl-carousel1 card-deck">
+            <div className="commn-carousel owl-carousel1 card-deck">
               <OwlCarousel>
                 
                 {mostvcourses.map((course) => {
@@ -299,17 +300,17 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
 
 
 
-        <div class="course-area  pt--120 pb--70">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="section-title1">
+        <div className="course-area  pt--120 pb--70">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-6">
+                <div className="section-title1">
                   <h2>Most Popular Courses</h2>
                 </div>
               </div>
             </div>
 
-            <div class="commn-carousel owl-carousel1 card-deck">
+            <div className="commn-carousel owl-carousel1 card-deck">
               <OwlCarousel>
                 
                 {mostpcourses.map((course) => {
@@ -326,28 +327,28 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
           </div>
         </div>        
 
-    <div class="feature-blog  pt--120 pb--70">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="section-title1">
-                        <span class="text-uppercase1">Events</span>
+    <div className="feature-blog  pt--120 pb--70">
+        <div className="container">
+            <div className="row">
+                <div className="col-md-6">
+                    <div className="section-title1">
+                        <span className="text-uppercase1">Events</span>
                         <h2>Upcoming Events</h2> 
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="commn-carousel owl-carousel1 card-deck">                     
-                  <OwlCarousel><div class="card mb-5">
+            <div className="row">
+                <div className="commn-carousel owl-carousel1 card-deck">                     
+                  <OwlCarousel><div className="card mb-5">
                     
-                    <img class="card-img-top" src="/assets2/images/blog/blog-thumbnail1.jpg" alt="image"/>
-                    <div class="card-body p-25"> 
-                        <ul class="list-inline primary-color2 mb-3">
-                            <li><i class="fa fa-clock-o"></i> AUGUST 6, 2023</li>
-                            <li><i class="fa fa-comments"></i> 3 Comments</li>
+                    <img className="card-img-top" src="/assets2/images/blog/blog-thumbnail1.jpg" alt="image"/>
+                    <div className="card-body p-25"> 
+                        <ul className="list-inline primary-color2 mb-3">
+                            <li><i className="fa fa-clock-o"></i> AUGUST 6, 2023</li>
+                            <li><i className="fa fa-comments"></i> 3 Comments</li>
                         </ul>
-                      <h4 class="card-title mb-4"><a href="blogdetails">The Death Of architechture</a></h4>
-                      <p class="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
+                      <h4 className="card-title mb-4"><a href="blogdetails">The Death Of architechture</a></h4>
+                      <p className="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
                       <div className="login-box">
                                 <form>
                                     <a href="coursedetails">
@@ -362,16 +363,16 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
                             </div>
                     </div>
                   </div>               
-                  <div class="card mb-5"> 
-                    <img class="card-img-top" src="/assets2/images/blog/blog-thumbnail2.jpg" alt="image"/>
-                    <div class="card-body p-25"> 
-                        <ul class="list-inline primary-color2 mb-3">
-                            <li><i class="fa fa-clock-o"></i> AUGUST 6, 2023</li>
-                            <li><i class="fa fa-comments"></i> 3 Comments</li>
+                  <div className="card mb-5"> 
+                    <img className="card-img-top" src="/assets2/images/blog/blog-thumbnail2.jpg" alt="image"/>
+                    <div className="card-body p-25"> 
+                        <ul className="list-inline primary-color2 mb-3">
+                            <li><i className="fa fa-clock-o"></i> AUGUST 6, 2023</li>
+                            <li><i className="fa fa-comments"></i> 3 Comments</li>
                         </ul>
-                      <h4 class="card-title mb-4"><a href="blogdetails">Aenean id ullamcorper</a></h4>
-                      <p class="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
-                      <div className="login-box">
+                      <h4 className="card-title mb-4"><a href="blogdetails">Aenean id ullamcorper</a></h4>
+                      <p className="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
+                      <div classNameName="login-box">
                                 <form>
                                     <a href="coursedetails">
                                     View Event
@@ -386,15 +387,15 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
                     </div>
                   </div>
        
-                  <div class="card mb-5"> 
-                    <img class="card-img-top" src="/assets2/images/blog/blog-thumbnail3.jpg" alt="image"/>
-                    <div class="card-body p-25"> 
-                        <ul class="list-inline primary-color2 mb-3">
-                            <li><i class="fa fa-clock-o"></i> AUGUST 6, 2023</li>
-                            <li><i class="fa fa-comments"></i> 3 Comments</li>
+                  <div className="card mb-5"> 
+                    <img className="card-img-top" src="/assets2/images/blog/blog-thumbnail3.jpg" alt="image"/>
+                    <div className="card-body p-25"> 
+                        <ul className="list-inline primary-color2 mb-3">
+                            <li><i className="fa fa-clock-o"></i> AUGUST 6, 2023</li>
+                            <li><i className="fa fa-comments"></i> 3 Comments</li>
                         </ul>
-                      <h4 class="card-title mb-4"><a href="blogdetails">The Death Of architechture</a></h4>
-                      <p class="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
+                      <h4 className="card-title mb-4"><a href="blogdetails">The Death Of architechture</a></h4>
+                      <p className="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
                       <div className="login-box">
                                 <form>
                                     <a href="coursedetails">
@@ -409,15 +410,15 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
                             </div>
                     </div>
                   </div>       
-                  <div class="card mb-5"> 
-                    <img class="card-img-top" src="/assets2/images/blog/blog-thumbnail1.jpg" alt="image"/>
-                    <div class="card-body p-25"> 
-                        <ul class="list-inline primary-color2 mb-3">
-                            <li><i class="fa fa-clock-o"></i> AUGUST 6, 2023</li>
-                            <li><i class="fa fa-comments"></i> 3 Comments</li>
+                  <div className="card mb-5"> 
+                    <img className="card-img-top" src="/assets2/images/blog/blog-thumbnail1.jpg" alt="image"/>
+                    <div className="card-body p-25"> 
+                        <ul className="list-inline primary-color2 mb-3">
+                            <li><i className="fa fa-clock-o"></i> AUGUST 6, 2023</li>
+                            <li><i className="fa fa-comments"></i> 3 Comments</li>
                         </ul>
-                      <h4 class="card-title mb-4"><a href="blogdetails">The Death Of architechture</a></h4>
-                      <p class="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
+                      <h4 className="card-title mb-4"><a href="blogdetails">The Death Of architechture</a></h4>
+                      <p className="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
                       <div className="login-box">
                                 <form>
                                     <a href="coursedetails">
@@ -441,28 +442,28 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
 
 
 
-    <div class="feature-blog  pt--120 pb--70">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="section-title1">
-                        <span class="text-uppercase1">Top stories</span>
+    <div className="feature-blog  pt--120 pb--70">
+        <div className="container">
+            <div className="row">
+                <div className="col-md-6">
+                    <div className="section-title1">
+                        <span className="text-uppercase1">Top stories</span>
                         <h2>Blog & news</h2> 
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="commn-carousel owl-carousel1 card-deck"> 
+            <div className="row">
+                <div className="commn-carousel owl-carousel1 card-deck"> 
                 <OwlCarousel>                 
-                  <div class="card mb-5"> 
-                    <img class="card-img-top" src="/assets2/images/blog/blog-thumbnail1.jpg" alt="image"/>
-                    <div class="card-body p-25"> 
-                        <ul class="list-inline primary-color2 mb-3">
-                            <li><i class="fa fa-clock-o"></i> AUGUST 6, 2023</li>
-                            <li><i class="fa fa-comments"></i> 3 Comments</li>
+                  <div className="card mb-5"> 
+                    <img className="card-img-top" src="/assets2/images/blog/blog-thumbnail1.jpg" alt="image"/>
+                    <div className="card-body p-25"> 
+                        <ul className="list-inline primary-color2 mb-3">
+                            <li><i className="fa fa-clock-o"></i> AUGUST 6, 2023</li>
+                            <li><i className="fa fa-comments"></i> 3 Comments</li>
                         </ul>
-                      <h4 class="card-title mb-4"><a href="blogdetails">The Death Of architechture</a></h4>
-                      <p class="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
+                      <h4 className="card-title mb-4"><a href="blogdetails">The Death Of architechture</a></h4>
+                      <p className="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
                       <div className="login-box">
                                 <form>
                                     <a href="coursedetails">
@@ -476,15 +477,15 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
                             </div>
                     </div>
                   </div>               
-                  <div class="card mb-5"> 
-                    <img class="card-img-top" src="/assets2/images/blog/blog-thumbnail2.jpg" alt="image"/>
-                    <div class="card-body p-25"> 
-                        <ul class="list-inline primary-color2 mb-3">
-                            <li><i class="fa fa-clock-o"></i> AUGUST 6, 2023</li>
-                            <li><i class="fa fa-comments"></i> 3 Comments</li>
+                  <div className="card mb-5"> 
+                    <img className="card-img-top" src="/assets2/images/blog/blog-thumbnail2.jpg" alt="image"/>
+                    <div className="card-body p-25"> 
+                        <ul className="list-inline primary-color2 mb-3">
+                            <li><i className="fa fa-clock-o"></i> AUGUST 6, 2023</li>
+                            <li><i className="fa fa-comments"></i> 3 Comments</li>
                         </ul>
-                      <h4 class="card-title mb-4"><a href="blogdetails">Aenean id ullamcorper</a></h4>
-                      <p class="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
+                      <h4 className="card-title mb-4"><a href="blogdetails">Aenean id ullamcorper</a></h4>
+                      <p className="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
                       <div className="login-box">
                                 <form>
                                     <a href="coursedetails">
@@ -500,15 +501,15 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
                     </div>
                   </div>
        
-                  <div class="card mb-5"> 
-                    <img class="card-img-top" src="/assets2/images/blog/blog-thumbnail3.jpg" alt="image"/>
-                    <div class="card-body p-25"> 
-                        <ul class="list-inline primary-color2 mb-3">
-                            <li><i class="fa fa-clock-o"></i> AUGUST 6, 2023</li>
-                            <li><i class="fa fa-comments"></i> 3 Comments</li>
+                  <div className="card mb-5"> 
+                    <img className="card-img-top" src="/assets2/images/blog/blog-thumbnail3.jpg" alt="image"/>
+                    <div className="card-body p-25"> 
+                        <ul className="list-inline primary-color2 mb-3">
+                            <li><i className="fa fa-clock-o"></i> AUGUST 6, 2023</li>
+                            <li><i className="fa fa-comments"></i> 3 Comments</li>
                         </ul>
-                      <h4 class="card-title mb-4"><a href="blogdetails">The Death Of architechture</a></h4>
-                      <p class="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
+                      <h4 className="card-title mb-4"><a href="blogdetails">The Death Of architechture</a></h4>
+                      <p className="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
                       <div className="login-box">
                                 <form>
                                     <a href="coursedetails">
@@ -523,15 +524,15 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
                             </div>
                     </div>
                   </div>       
-                  <div class="card mb-5"> 
-                    <img class="card-img-top" src="/assets2/images/blog/blog-thumbnail1.jpg" alt="image"/>
-                    <div class="card-body p-25"> 
-                        <ul class="list-inline primary-color2 mb-3">
-                            <li><i class="fa fa-clock-o"></i> AUGUST 6, 2023</li>
-                            <li><i class="fa fa-comments"></i> 3 Comments</li>
+                  <div className="card mb-5"> 
+                    <img className="card-img-top" src="/assets2/images/blog/blog-thumbnail1.jpg" alt="image"/>
+                    <div className="card-body p-25"> 
+                        <ul className="list-inline primary-color2 mb-3">
+                            <li><i className="fa fa-clock-o"></i> AUGUST 6, 2023</li>
+                            <li><i className="fa fa-comments"></i> 3 Comments</li>
                         </ul>
-                      <h4 class="card-title mb-4"><a href="blogdetails">The Death Of architechture</a></h4>
-                      <p class="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
+                      <h4 className="card-title mb-4"><a href="blogdetails">The Death Of architechture</a></h4>
+                      <p className="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
                       <div className="login-box">
                                 <form>
                                     <a href="coursedetails">
@@ -552,25 +553,25 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
         </div>
     </div>
     <div>
-    <section class="section video" data-section="section5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 align-self-center">
-          <div class="left-content">
+    <section className="section video" data-section="section5">
+    <div className="container">
+      <div className="row">
+        <div className="col-md-6 align-self-center">
+          <div className="left-content">
             <span>our presentation is for you</span>
             <h4>Watch the video to learn more <em>about Our Company</em></h4>
             <span>You are NOT allowed to redistribute this template ZIP file on any template collection website. However, you can use this template to convert into a specific theme for any kind of CMS platform such as WordPress. You may <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">contact TemplateMo</a> for details.
             <br/>Suspendisse tincidunt, magna ut finibus rutrum, libero dolor euismod odio, nec interdum quam felis non ante.</span>
-            <div class="main-button"><a rel="nofollow" href="https://fb.com/templatemo" target="_parent">External URL</a></div>
+            <div className="main-button"><a rel="nofollow" href="https://fb.com/templatemo" target="_parent">External URL</a></div>
           </div>
         </div>
-        <div class="col-md-6">
-          <article class="video-item">
-            <div class="video-caption">
+        <div className="col-md-6">
+          <article className="video-item">
+            <div className="video-caption">
               <h4>Power HTML Template</h4>
             </div>
             <figure>
-              <a href="https://www.youtube.com/watch?v=r9LtOG6pNUw" class="play"><img src="/assets2/images/course/cs-img1.jpg"/></a>
+              <a href="https://www.youtube.com/watch?v=r9LtOG6pNUw" className="play"><img src="/assets2/images/course/cs-img1.jpg"/></a>
             </figure>
           </article>
         </div>
@@ -589,50 +590,50 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
 
 
     <div>
-                <section class="our-facts">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="row">
-                                    <div class="col-lg-12">
+                <section className="our-facts">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-lg-6">
+                                <div className="row">
+                                    <div className="col-lg-12">
                                         <h2>A Few Facts About Our University</h2>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="count-area-content new-students">
-                                                    <div class="count-digit">{allusers[2]}</div>
-                                                    <div class="count-title">Corporate trainee</div>
+                                    <div className="col-lg-6">
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <div className="count-area-content new-students">
+                                                    <div className="count-digit">{allusers[2]}</div>
+                                                    <div className="count-title">Corporate trainee</div>
                                                 </div>
                                             </div>
-                                            <div class="col-12">
-                                                <div class="count-area-content">
-                                                    <div class="count-digit">{allusers[0]}</div>
-                                                    <div class="count-title">Current Teachers</div>
+                                            <div className="col-12">
+                                                <div className="count-area-content">
+                                                    <div className="count-digit">{allusers[0]}</div>
+                                                    <div className="count-title">Current Teachers</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="count-area-content new-students">
-                                                    <div class="count-digit">{allusers[1]}</div>
-                                                    <div class="count-title"> Students</div>
+                                    <div className="col-lg-6">
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <div className="count-area-content new-students">
+                                                    <div className="count-digit">{allusers[1]}</div>
+                                                    <div className="count-title"> Students</div>
                                                 </div>
                                             </div>
-                                            <div class="col-12">
-                                                <div class="count-area-content">
-                                                    <div class="count-digit">{allusers[3]}</div>
-                                                    <div class="count-title">courses</div>
+                                            <div className="col-12">
+                                                <div className="count-area-content">
+                                                    <div className="count-digit">{allusers[3]}</div>
+                                                    <div className="count-title">courses</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 align-self-center">
-                                <div class="video">
+                            <div className="col-lg-6 align-self-center">
+                                <div className="video">
                                     <a href="https://www.youtube.com/watch?v=HndV87XpkWg" target="_blank"><img src="assets/images/play-icon.png" alt="" /></a>
                                 </div>
                             </div>
@@ -640,17 +641,17 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
                     </div>
                 </section>
         </div>
-    <div class="cta-area primary-bg has-color ptb--50"> 
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-9">
-                    <div class="cta-content">
-                        <p class="mb-2">Click to Join the Advance Workshop</p>
+    <div className="cta-area primary-bg has-color ptb--50"> 
+        <div className="container">
+            <div className="row align-items-center">
+                <div className="col-md-9">
+                    <div className="cta-content">
+                        <p className="mb-2">Click to Join the Advance Workshop</p>
                         <h2>Training in advance networking</h2>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="cta-btn">
+                <div className="col-md-3">
+                    <div className="cta-btn">
                     <div className="login-box">
                                 <form>
                                     <a href="coursedetails">

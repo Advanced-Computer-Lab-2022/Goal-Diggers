@@ -36,4 +36,9 @@ router.get('/getmostviewedcourses', controller.getmostviewedcourses);
 router.get('/inprogress-courses', controller.getInProgressCourses);
 router.get('/completed-courses', controller.getCompletedCourses);
 
+router.post('/register', controller.registerUser);
+router.post('/login', controller.loginUser);
+router.get('/logout', controller.Logout);
+router.get('/loggedin', controller.LoggedIn);
+
 module.exports = router;
