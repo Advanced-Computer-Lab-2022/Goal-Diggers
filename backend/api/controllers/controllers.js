@@ -43,9 +43,9 @@ module.exports.buyCourse =  async (req, res) => {
     const verified=jwt.verify(token,process.env.JWT_SECRET);
     let course = req.body.course;
     const price = req.body.price;
-    course.price = price;
     course.registers ++;
     Course.updateOne({_id : course._id}, course).then();
+    course.price = price;
     course.attemptedQuizs = [];
     course.completedQuizs = 0;
     course.completedVideos = [];
@@ -57,6 +57,7 @@ module.exports.buyCourse =  async (req, res) => {
       result => {
         Wallet.findOne({instructorID : ObjectId(course.createdById)}).then(
           wallet =>{
+            console.log(wallet);
             if(wallet) {
               wallet.total += course.price*0.7;
               let exist = false;
@@ -64,6 +65,7 @@ module.exports.buyCourse =  async (req, res) => {
                   if(new Date(month.month).getMonth() === new Date().getMonth() && new Date(month.month).getFullYear() === new Date().getFullYear()) {
                     wallet.details[index].total += course.price*0.7;
                     exist = true;
+                    console.log("EXIST");
                   }
               });
               if(!exist)
@@ -720,17 +722,19 @@ module.exports.getSearchCourses = async (req, res) => {
 // GET url : api/course/:id need some edits
 module.exports.getCourse = async (req,res) => {
   try {
-    const token=req.cookies.token;
-    if(!token){
-        return res.json(false);
-    }
-    const verified=jwt.verify(token,process.env.JWT_SECRET);   
-    const id = req.params.id;
+    const token=req.cookies.token;  
+    let verified = {};
+    if(token)
+      verified =jwt.verify(token,process.env.JWT_SECRET);
+    const id = ObjectId(req.params.id);
     await Course.findById(id).then(
         async course => {
             if(course){
                 course.views++;
                 course.save();
+                if(!token) {
+                  return res.status(200).json({course, notRegister : true});
+                }
                 if(await RegisterCourse.findOne({courseID : id, studentID : verified.user})){
                     await RegisterCourse.findOne({courseID : id, studentID : verified.user}).then(
                       co =>{

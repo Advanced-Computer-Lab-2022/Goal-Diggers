@@ -42,30 +42,30 @@ const NavBar = ({handleCountry}) => {
 
           {type=="student"&& 
             <> 
-            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/student-profile">Profile</Nav.Link>
+            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/student-profile">Profile</Nav.Link>
             </>
           }
 
             {type=="administrator"&&<> 
-            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/admin-profile">Profile</Nav.Link>
+            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/admin-profile">Profile</Nav.Link>
             </>
             }
             {type=="corporatetrainees "&&<> 
-            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/student-profile">Profile</Nav.Link>
+            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/student-profile">Profile</Nav.Link>
             </>
             }
             {type=="instructor"&&<> 
-            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-profile">Profile</Nav.Link>
-            <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">My courses</Nav.Link>
+            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-profile">Profile</Nav.Link>
+            <Nav.Link id="nav-item5" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">My courses</Nav.Link>
             </>
             }
-            {/* <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">Most Popular</Nav.Link> */}
-            {/* <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">Most Viewed</Nav.Link> */}
+            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">Most Popular</Nav.Link>
+            <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">Most Viewed</Nav.Link>
 
             
             {
               loggedIn&&<>
-            <Nav.Link id="nav-item7" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/login"> <LogoutBtn></LogoutBtn></Nav.Link>
+            <Nav.Link id="nav-item8" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/login"> <LogoutBtn></LogoutBtn></Nav.Link>
            
             </>
             }
@@ -93,7 +93,7 @@ const NavBar = ({handleCountry}) => {
           </Form>
 
       </Container>
-      <FormControl id="nav-item5" className="mx-5 pr-5" sx={{ minWidth: 120 }} size="small">
+      <FormControl id="nav-item7" className="mx-5 pr-5" sx={{ minWidth: 120 }} size="small">
             <InputLabel id="demo-simple-select-label">Country</InputLabel>
             <Select
                 defaultValue=""

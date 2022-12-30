@@ -129,37 +129,37 @@ code {
 }
 #nav-item1{
   position: absolute !important;
-  left: 750px !important;
+  left: 680px !important;
 }
 #nav-item2{
   position: absolute !important;
-  left: 850px !important;
+  left: 750px !important;
 }
 #nav-item3{
   position: absolute !important;
-  left: 970px !important;
+  left: 880px !important;
 }
 #nav-item4{
   position: absolute !important;
-  left: 1070px !important;
+  left: 1010px !important;
 }
 #nav-item5{
   position: absolute !important;
-  left: 1170px !important;
+  left: 1080px !important;
 }
 #nav-item6{
   position: absolute !important;
-  left: 400px !important;
+  left: 350px !important;
 }
 #nav-item7{
   position: absolute !important;
-  left: 1300px !important;
-  top: 10px;
+  left: 1180px !important;
+  top: 15px;
 }
 #nav-item8{
   position: absolute !important;
-  left: 1370px !important;
-  top: 10px;
+  left: 1320px !important;
+  top: 5px;
 }
 
 #brand{
@@ -199,6 +199,33 @@ code {
   display: flex !important;
   height: 8.5%;
   
+}
+
+.primaryB {
+  display:inline-block;
+  padding:0.3em 1.2em;
+  margin:0 0.1em 0.1em 0;
+  border:0.16em solid rgba(255,255,255,0);
+  border-radius:2em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:300;
+  color:#fff;
+  background-color: rgb(155, 19, 19);
+  text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+  text-align:center;
+  transition: all 0.2s;
+};
+.primaryB:hover{
+  background-color: rgba(255,255,255);
+  color:#d42020;
+};
+@media all and (max-width:30em){
+  .primaryB{
+  display:block;
+  margin:0.2em auto;
+  }
 }
 
 #footerButtons{

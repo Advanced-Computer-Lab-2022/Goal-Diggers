@@ -13,6 +13,7 @@ export default function LogoutBtn() {
     
     }
   return (
-    <button className='btn btn-primary' onClick={Logout}>logout</button>
+    <button className='btn btn-light' style={{backgroundColor : '#c00407', borderRadius : '25px',
+     color : '#fff',border : '1px solid #555'}} onClick={Logout}>Logout</button>
   )
 }
