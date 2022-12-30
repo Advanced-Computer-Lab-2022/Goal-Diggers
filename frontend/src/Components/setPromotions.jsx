@@ -103,7 +103,17 @@ const SetPromotions = () => {
                             <label htmlFor="date">When will it expire ?</label>
                         </div>
                         <div className="form-floating col-sm-4 pt-2">
-                            <button onClick={()=>submit()} className='btn btn-primary' style={{borderRadius : '25px'}}>Add Promotion</button>
+                        <div className="login-box">
+                                <form>
+                                    <a href="/blogdetails"onClick={()=>submit()}>
+                                    Add Promotion
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </a>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

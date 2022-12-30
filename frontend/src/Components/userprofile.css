@@ -1,13 +1,13 @@
 .wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50vh;
+
+    height: 40.5vh;
+    margin-bottom: 330px;
+    margin-top: 50px;
+    margin-right: 50px;
 }
 .profile {
-    position: relative;
     width: 300px;
-    height: 350px;
+    height: 300px;
     background:url("r11.jpg");
     background-size: cover;
     cursor: pointer;

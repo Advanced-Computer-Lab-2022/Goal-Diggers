@@ -105,65 +105,50 @@ const AdminView = () => {
             </div>
         </div>
     </div>
-            <div className="row mt-3">
-                <div className="col-sm-1"></div>
-                <div className="col-sm-3 text-center">
-                    <img src="./admin.png" width={'80px'} style={{borderRadius:'30px'}} alt="" />
-                    <h6 className='m-2'>Mahmoud Sayed</h6>
-                    <Navigation
-                        activeItemId={"add user"}
-                        onSelect={({itemId}) => {
-                            chooseItem(itemId);
-                        }}
-                        items={[
-                            {title : "Add User",
-                            itemId : "add user"
-                            },
-                            {title : "Add Promotion",
-                            itemId : "add promotion"
-                            },
-                            {title : "Refund Requests",
-                            itemId : "refund"
-                            },
-                            {title : "Courses Requests",
-                            itemId : "requests",
-                            subNav : [
-                                {title : "Pending Requests",
-                                itemId : "pending",
-                                },
-                                {title : "Approved Requests",
-                                itemId : "approved",
-                                },
-                                {title : "Rejected Requests",
-                                itemId : "rejected",
-                                },
-                            ]
-                            },
-                            {title : "Courses Problems",
-                            subNav : [
-                                {title : "Unseen problems",
-                                itemId : "unseen",
-                                },
-                                {title : "Pending problems",
-                                itemId : "pendingpro",
-                                },
-                                {title : "Resolved problems",
-                                itemId : "resolved",
-                                },
-                            ]
-                            },
-                        ]}
-                    />
-                </div>
-                <div className="col-sm-7 text-center">
-                    {view.requests && <CoursesRequests status={status}/>}
-                    {view.problems && <Problems status={status}/>}
-                    {view.addpromo && <SetPromotions role={'admin'}/> }
-                    {view.adduser && <Adduser /> }
-                    {/* {view.refund && <RefundRequests /> } */}
-                </div>
-                <div className="col-sm-1"></div>
+
+    <div className="wrapper">
+        <div className="sidebar">
+            <div className="profile2">
+                <img src="./r9.jpg" alt="profile_picture" />
+                <h3>Mahmoud Yassen</h3>
+                <p>Software Developer</p>
             </div>
+            <ul>
+                <li>
+                    <a href="/adduser">
+                        <span className="icon"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
+                        <span className="item">Add User</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="coursesRequests">
+                        <span className="icon"><i class="fa fa-book" aria-hidden="true"></i></span>
+                        <span className="item">Course Request</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="setPromotions">
+                        <span className="icon"><i class="fa fa-usd" aria-hidden="true"></i></span>
+                        <span className="item">Set Promotions</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span className="icon"><i class="fa fa-usd" aria-hidden="true"></i></span>
+                        <span className="item">Refund Request</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/problems">
+                        <span className="icon"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
+                        <span className="item">Problems</span>
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+        </div>
+
         </React.Fragment>
      );
 }

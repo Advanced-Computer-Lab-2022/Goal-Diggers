@@ -15,39 +15,12 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
-import { FormControl,Select,InputLabel,MenuItem} from "@mui/material";
+import { FormControl,Select,InputLabel,MenuItem, Divider} from "@mui/material";
 import coun_curr_code from '../coun-curr-code';
 
-
-
-import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import ImportContactsIcon from '@mui/icons-material/ImportContacts';
-import WalletIcon from '@mui/icons-material/Wallet';
-import PaidIcon from '@mui/icons-material/Paid';
-import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
-import HelpIcon from '@mui/icons-material/Help';
-import InfoIcon from '@mui/icons-material/Info';
-import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 import "./default-css.css";
 import "./font-awesome.min.css";
@@ -80,6 +53,11 @@ function Mycourses() {
     const [country, setCountry] = useState(false);
     const config = { headers: { "apikey": "mg9jAAsEOiyrDEq4mw4wBarbgswdtryW" } };
 
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+    setValue(newValue);
+    };
 
     useEffect(()=>{
         const getCourses = async () => {
@@ -213,79 +191,22 @@ function Mycourses() {
                 </div>
             </div>
         </div>
-
-        <div className="wrapper">
-        <div className="sidebar">
-            <div className="profile2">
-                <img src="./r9.jpg" alt="profile_picture" />
-                <h3>Mahmoud Yassen</h3>
-                <p>Software Developer</p>
-            </div>
-            <ul>
-                <li>
-                    <a href="/userprofile" className="active">
-                        <span className="icon"><i className="fa fa-home"></i></span>
-                        <span className="item">Profile</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/mycourses">
-                        <span className="icon"><i class="fa fa-book" aria-hidden="true"></i></span>
-                        <span className="item">My Courses</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/wallet">
-                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
-                        <span className="item">Wallet</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
-                        <span className="item">Refund</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span className="icon"><i class="fa fa-sliders" aria-hidden="true"></i></span>
-                        <span className="item">Settings</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
-                        <span className="item">Privacy&Policy</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/help">
-                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
-                        <span className="item">Help</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
-                        <span className="item">LogOut</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        </div>
-
-        <div class="btn-group">
-
-  <button onClick={()=>{setchoose({all:true})}} className='allcourses'>All Courses</button>
-  <button onClick={()=>{setchoose({inprogress:true})}} className='Inprogress'>Inprogress Courses</button>
-  <button onClick={()=>{setchoose({completed:true})}} className='Completed'>Completed Courses</button>
-
-</div>
+        
+        <Box sx={{ width: '100%', bgcolor: 'background.red' }}>
+            <Divider></Divider>
+      <Tabs value={value} onChange={handleChange} centered>
+        
+        <Tab label="All Courses" />
+        <Tab label="In Progress" />
+        <Tab label="Completed" />
+        
+      </Tabs><Divider></Divider>
+    </Box>
 
 {
     ready && <React.Fragment>
 
-        <div class="course-area  pt--120 pb--70">
+        <div class="course-area  pt--120 pb--70 col-8">
         <div class="container">
             <div class="row">  
                 { choose.all && 

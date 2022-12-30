@@ -230,6 +230,64 @@ a:focus,
   margin-top: -10px;
 }
 
+/* llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll */
+.posi{
+  margin-left: 600px;
+}
+.selbox{
+  margin-left: 293px;
+  
+}
+.ip{
+  position: relative;
+  width: 250px;
+}
+.ip .gzz{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgb(151, 35, 0);
+  background: rgb(255, 255, 255);
+  border-radius: 30px;
+  outline: none;
+  color: rgb(34, 0, 255);
+  font-size: 1em;
+}
+
+.ip .w8{
+  position: absolute;
+  left: 0;
+  padding: 10px;
+  pointer-events: none;
+  font-size: 1em;
+  color: #a30506;
+  text-transform: uppercase;
+  transition: 0.5s;
+}
+
+.ip .gzz:valid ~ .w8,
+.ip .gzz:focus ~ .w8{
+  color: #fff;
+  transform: translateX(10px) translateY(-7px);
+  font-size: 0.65em;
+  padding: 0 10px;
+  background: #a30506;
+  border-left: 1px solid #00dfc4;
+  border-right: 1px solid #00dfc4;
+  letter-spacing: 0.2em;
+}
+
+.avatar1{
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+}
+
+.ip .gzz:valid , 
+.ip .gzz:focus {
+  border: 1px solid #00dfc4;
+}
+/* ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss */
+
 /*============================================
     END Header Top
 *=============================================*/

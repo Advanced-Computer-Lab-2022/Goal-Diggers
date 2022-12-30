@@ -6,7 +6,7 @@
   height: 42px;
   /* background: rgb(255, 255, 255); */
   box-sizing: border-box;
-  box-shadow: 0px 1px 6px rgb(255, 0, 0);
+  box-shadow: 0px 1px 6px #a30506;
   border-radius: 30px;
 }
 
@@ -15,7 +15,7 @@
   display: inline-block;
   padding: 10px 21px;
   color: #ffffff;
-  background-color: #ff0000;
+  background-color: #a30506;
   font-size: 16px;
   text-decoration: none;
 
@@ -31,11 +31,11 @@
   background: #fefefe;
   width: 210;
   border-radius: 45px;
-  color: rgb(255, 0, 0);
-  box-shadow: 0 0 0 #ff0000,
-  0 0 2px #ff0000,
-  0 0 2px #ff0000,
-  0 0 2px #ff0000;
+  color: #a30506;
+  box-shadow: 0 0 0 #a30506,
+  0 0 2px #a30506,
+  0 0 2px #a30506,
+  0 0 2px #a30506;
  
 }
 
@@ -49,7 +49,7 @@
   left: -100%;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #ff0000);
+  background: linear-gradient(90deg, transparent, #a30506);
   animation: btn-anim1 2s linear infinite;
   animation-delay: 0.5s
 }
@@ -68,7 +68,7 @@
   right: 0;
   width: 3px;
   height: 100%;
-  background: linear-gradient(180deg, transparent, #ff0000);
+  background: linear-gradient(180deg, transparent, #a30506);
   animation: btn-anim2 1s linear infinite;
   animation-delay: 0.5s
   
@@ -88,7 +88,7 @@
   right: -100%;
   width: 100%;
   height: 3px;
-  background: linear-gradient(270deg, transparent, #ff0000);
+  background: linear-gradient(270deg, transparent, #a30506);
   animation: btn-anim3 2s linear infinite;
   animation-delay: 0.5s
 }
@@ -107,7 +107,7 @@
   left: 0;
   width: 3px;
   height: 100%;
-  background: linear-gradient(360deg, transparent, #ff0000);
+  background: linear-gradient(360deg, transparent, #a30506);
   animation: btn-anim4 1s linear infinite;
   animation-delay: 0.5s
 }

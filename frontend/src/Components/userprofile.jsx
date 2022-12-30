@@ -156,32 +156,20 @@ function Userprofile(handleCountry) {
             </div>
             <ul>
                 <li>
-                    <a href="/userprofile" className="active">
-                        <span className="icon"><i className="fa fa-home"></i></span>
-                        <span className="item">Profile</span>
-                    </a>
-                </li>
-                <li>
                     <a href="/mycourses">
                         <span className="icon"><i class="fa fa-book" aria-hidden="true"></i></span>
                         <span className="item">My Courses</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/wallet">
-                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
-                        <span className="item">Wallet</span>
-                    </a>
-                </li>
-                <li>
                     <a href="#">
-                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                        <span className="icon"><i class="fa fa-usd" aria-hidden="true"></i></span>
                         <span className="item">Refund</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <span className="icon"><i class="fa fa-sliders" aria-hidden="true"></i></span>
+                        <span className="icon"><i class="fa fa-cog" aria-hidden="true"></i></span>
                         <span className="item">Settings</span>
                     </a>
                 </li>
@@ -193,7 +181,7 @@ function Userprofile(handleCountry) {
                 </li>
                 <li>
                     <a href="/help">
-                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                        <span className="icon"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
                         <span className="item">Help</span>
                     </a>
                 </li>
@@ -206,22 +194,6 @@ function Userprofile(handleCountry) {
             </ul>
         </div>
         </div>
-
-    <div className="wrapper">
-        <div className="profile">
-            <div className="overlay">
-                <div className="about d-flex flex-column">
-                    <h4>Mahmoud Yassen</h4> <span>Software Developer</span>
-                </div>
-                <ul className="social-icons">
-                <li ><a href="https://m.facebook.com/100010673135930/" className="fa fa-facebook"></a></li>
-                <li><a href="https://youtu.be/s7-GTShjcqY" className="fa fa-linkedin"></a></li>
-                <li><a href="https://youtu.be/2uaqdHx22hk" className="fa fa-twitter"></a></li>
-                <li><a href="https://youtu.be/pvhwrBoCFyM" className="fa fa-instagram"></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
 
     </div>
   )

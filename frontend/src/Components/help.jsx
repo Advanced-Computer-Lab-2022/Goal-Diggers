@@ -32,6 +32,7 @@ import "./templatemo-style2.css";
 import "./typography.css";
 import "./owl.css";
 import "./templatemo-edu-meeting.css";
+import "./userprofile.css";
 
 function Help(handleCountry) {
   return (
@@ -144,7 +145,53 @@ function Help(handleCountry) {
 </div>
 </div>
 
-
+<div className="wrapper">
+        <div className="sidebar">
+            <div className="profile2">
+                <img src="./r9.jpg" alt="profile_picture" />
+                <h3>Mahmoud Yassen</h3>
+                <p>Software Developer</p>
+            </div>
+            <ul>
+                <li>
+                    <a href="/mycourses">
+                        <span className="icon"><i class="fa fa-book" aria-hidden="true"></i></span>
+                        <span className="item">My Courses</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span className="icon"><i class="fa fa-usd" aria-hidden="true"></i></span>
+                        <span className="item">Refund</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span className="icon"><i class="fa fa-cog" aria-hidden="true"></i></span>
+                        <span className="item">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                        <span className="item">Privacy&Policy</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/help">
+                        <span className="icon"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                        <span className="item">Help</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span className="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                        <span className="item">LogOut</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
 
 <div class="contact-form-area">
         <div class="container">
