@@ -1079,27 +1079,48 @@ module.exports.AdminGrantAccess = async (req, res) =>{
 //-------------------------------------------------------------------------------------//
 // getproblem
 module.exports.getproblem = async (req,res)=>{
-  const id = ObjectId(req.params.id); 
-  console.log(id); 
-  console.log("odasd"); 
-  Problem.find({courseID : id}).then(
-      problems => {
-          console.log(problems);
-                return res.status(200).json({problems});
-      }
-  );
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
+    }
+    const verified= jwt.verify(token,process.env.JWT_SECRET);
+    const id = ObjectId(req.params.id); 
+    Problem.find({courseID : id, writerId : verified.user}).then(
+        problems => {
+            console.log(problems);
+                  return res.status(200).json({problems});
+        }
+    );
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 }
 
 // add problem
 module.exports.addproblem = async (req,res)=>{
-  const problem = req.body.problem;
-  problem.courseID = ObjectId(problem.courseID);
-  problem.status = "unseen";
-  Problem.create(problem).then(
-      problem => {
-                return res.status(200).json({});
-      }
-  );
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
+    }
+    const verified= jwt.verify(token,process.env.JWT_SECRET);
+    const problem = req.body.problem;
+    problem.courseID = ObjectId(problem.courseID);
+    problem.status = "unseen";
+    problem.writerId = verified.user;
+    problem.writerName = verified.username;
+    console.log(problem);
+    Problem.create(problem).then(
+        problem => {
+                  return res.status(200).json({});
+        }
+    );
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
 }
 
 

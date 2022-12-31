@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const problemSchema = new Schema({
         answer : String,
-        writer : Object,
+        writerId : Object,
+        writerName : Object,
         followups : [Object],
         status : String,
         type : String,
