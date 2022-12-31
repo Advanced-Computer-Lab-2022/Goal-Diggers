@@ -129,37 +129,34 @@ code {
 }
 #nav-item1{
   position: absolute !important;
-  left: 680px !important;
+  left: 450px !important;
+  width: 400px;
 }
 #nav-item2{
   position: absolute !important;
-  left: 750px !important;
+  left: 950px !important;
 }
 #nav-item3{
   position: absolute !important;
-  left: 880px !important;
+  left: 1250px !important;
+  bottom: 5px;
 }
-#nav-item4{
-  position: absolute !important;
-  left: 1010px !important;
+
+.cs-price {
+  position: absolute;
+  right: -10px;
+  top: 23px;
+  color: #fff;
+  padding: 6px 12px;
+  background: #a30506;
 }
-#nav-item5{
-  position: absolute !important;
-  left: 1080px !important;
-}
-#nav-item6{
-  position: absolute !important;
-  left: 350px !important;
-}
-#nav-item7{
-  position: absolute !important;
-  left: 1180px !important;
-  top: 15px;
-}
-#nav-item8{
-  position: absolute !important;
-  left: 1320px !important;
-  top: 5px;
+.cs-price:before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -9px;
+  border-left: 10px solid #a30506;
+  border-top: 9px solid transparent;
 }
 
 #brand{
@@ -201,31 +198,39 @@ code {
   
 }
 
-.primaryB {
-  display:inline-block;
-  padding:0.3em 1.2em;
-  margin:0 0.1em 0.1em 0;
-  border:0.16em solid rgba(255,255,255,0);
-  border-radius:2em;
-  box-sizing: border-box;
-  text-decoration:none;
-  font-family:'Roboto',sans-serif;
-  font-weight:300;
-  color:#fff;
-  background-color: rgb(155, 19, 19);
-  text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
-  text-align:center;
-  transition: all 0.2s;
-};
-.primaryB:hover{
-  background-color: rgba(255,255,255);
-  color:#d42020;
-};
-@media all and (max-width:30em){
-  .primaryB{
-  display:block;
-  margin:0.2em auto;
-  }
+.submenu {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 99;
+  width: 300px;
+  margin-left: -52px;
+  background-color: #fff;
+  text-align:justify;
+  -webkit-transform: scaley(0);
+  -ms-transform: scaley(0);
+  -o-transform: scaley(0);
+  transform: scaley(0);
+  transform-origin: top;
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+li:hover > .submenu {
+  -webkit-transform: scaley(1);
+  -ms-transform: scaley(1);
+  -o-transform: scaley(1);
+  transform: scaley(1);
+
+}
+.submenu  {
+  display: block;
+}
+
+.submenu li a {
+  color: #222;
+  padding: 16px 15px;
+  border-bottom: 1px solid #f1ebeb;
 }
 
 #footerButtons{

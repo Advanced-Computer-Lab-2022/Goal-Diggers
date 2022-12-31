@@ -10,9 +10,12 @@ import { Link } from "react-router-dom";
 import AuthContext, { AuthContextProvider } from"../context/AuthContext";
 import LogoutBtn from "./Auth/LogoutBtn";
 import img from './logo.png';
+import imgS from './graduating-student.png';
+import imgA from './admin.png';
+import imgI from './instructor.png';
 
 const NavBar = ({handleCountry}) => {
-  const {loggedIn,id,type}=useContext(AuthContext);
+  const {loggedIn,id,type, username}=useContext(AuthContext);
     return (  
       <div>
       {/* conditionally rendering */}
@@ -38,39 +41,35 @@ const NavBar = ({handleCountry}) => {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-          <Nav.Link id="nav-item1" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/">Home</Nav.Link>
 
-          {type=="student"&& 
-            <> 
-            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/student-profile">Profile</Nav.Link>
-            </>
+          {(type=="student" || type=="corporatetrainees " )&& 
+            <li id="nav-item3" className=""><a href="/student-profile" class=""><img id='sidebar' src={imgS} /></a> <span>{username}</span>
+              <ul  class="submenu">
+                  <li><Link to={"/student-profile"} >View Profile</Link><h1 className="fa fa-user dropdown" aria-hidden="true"></h1></li>
+                  <li><Link to={'/student-courses'}>My Courses</Link><i className="fa fa-book dropdown"></i></li>
+                  <li><LogoutBtn></LogoutBtn></li>
+              </ul>
+            </li>
           }
 
             {type=="administrator"&&<> 
-            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/admin-profile">Profile</Nav.Link>
+            <li id="nav-item3" className=""><a href="/admin-profile" class=""><img id='sidebar' src={imgA} /></a> <span>{username}</span>
+              <ul>
+                <li><LogoutBtn></LogoutBtn></li>
+              </ul>
+            </li>          
             </>
             }
-            {type=="corporatetrainees "&&<> 
-            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/student-profile">Profile</Nav.Link>
-            </>
-            }
-            {type=="instructor"&&<> 
-            <Nav.Link id="nav-item4" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-profile">Profile</Nav.Link>
-            <Nav.Link id="nav-item5" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">My courses</Nav.Link>
-            </>
-            }
-            <Nav.Link id="nav-item2" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">Most Popular</Nav.Link>
-            <Nav.Link id="nav-item3" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/instructor-courses">Most Viewed</Nav.Link>
-
-            
-            {
-              loggedIn&&<>
-            <Nav.Link id="nav-item8" style={{color:'#252525',fontWeight : 'bolder'}} className='nav-links' href="/login"> <LogoutBtn></LogoutBtn></Nav.Link>
-           
-            </>
-            }
-
-        
+            {type=="instructor"&&
+             <li id="nav-item3" className=""><a href="/student-profile" class=""><img id='sidebar' src={imgI} /></a> <span>{username}</span>
+             <ul  class="submenu">
+                 <li><a href={"/instructor-profile"} >View Profile</a><h1 className="fa fa-user dropdown" aria-hidden="true"></h1></li>
+                 <li><a href={'/instructor-courses'}>My Courses</a><i className="fa fa-book dropdown"></i></li>
+                 <li><a href={'/instructor-add'}>Add Course/Promotion</a><i className="fa fa-book dropdown"></i></li>
+                 <li><LogoutBtn></LogoutBtn></li>
+             </ul>
+           </li>
+            }        
           </Nav>
         
         
@@ -81,7 +80,7 @@ const NavBar = ({handleCountry}) => {
       
     
         </Navbar.Collapse>
-        <Form id="nav-item6" className="d-flex mx-5 pr-5" action="/search" method="GET">
+        <Form id="nav-item1" className="d-flex mx-5 pr-5" action="/search" method="GET">
             <Form.Control
               type="search"
               placeholder="Search"
@@ -89,11 +88,12 @@ const NavBar = ({handleCountry}) => {
               aria-label="Search"
               style={{borderRadius : '15px'}}
               name='keyword'
+              sx={{minWidth: '600px'}}
             />
           </Form>
 
       </Container>
-      <FormControl id="nav-item7" className="mx-5 pr-5" sx={{ minWidth: 120 }} size="small">
+      <FormControl id="nav-item2" className="mx-5 pr-5" sx={{ minWidth: 120 }} size="small">
             <InputLabel id="demo-simple-select-label">Country</InputLabel>
             <Select
                 defaultValue=""

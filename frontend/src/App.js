@@ -53,11 +53,13 @@ function App() {
         <Route path='/reviewsoninstructor' element={<Reviewsoninstructor />} />
         <Route path='/reviewsoncourse' element={<Reviewsoncourse />} />
         <Route path='/instructor-courses' element={<CourseContainer currency={currency} type="instructor"/>} />
+        <Route path='/student-courses' element={<CourseContainer currency={currency} type="student"/>} />
         <Route path='/search' element={<SearchResult currency={currency}/>} />
         <Route path='/create-course' element={<Createcourse />} />
         <Route path='/admin-profile' element={<AdminView />} />
         <Route path='/student-profile' element={<ProfileView />} />
-        <Route path='/instructor-profile' element={<InstructorView />} />
+        <Route path='/instructor-profile' element={<InstructorView type={'profile'} />} />
+        <Route path='/instructor-add' element={<InstructorView type={'add'} />} />
          {/* for getting sepcific course */}
         <Route path='/course/:id' element={<CourseOverview currency={currency}/>} />
         <Route path='/take-course/:id' element={<TakeCourse />} />
@@ -68,9 +70,9 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/forget-password' element={<ForgetPassword />} />
-        <Route path='/reset-password' element={<ResetPassword />} />
-        <Route path='*' element={<NotFound/>} />
+        <Route path='/reset-password/:token' element={<ResetPassword />} />
         <Route path='/termsandconditions' element={<TermsAndConditions />} />
+        <Route path='*' element={<NotFound/>} />
       </Routes>
       <RegisterFooter></RegisterFooter>
       <Footer></Footer>

@@ -6,52 +6,33 @@ import StudentProfile from './studentProfile';
 import InprogressCourses from './inprogress';
 import CompletedCourses from './completed';
 import AuthContext, { AuthContextProvider } from"../context/AuthContext";
+import StudentWallet from './studentWallet';
 
 const ProfileView = () => {
-    const [view, setView] = useState({});
+    const [view, setView] = useState({profile : true});
     const [active, seTactive] = useState("");
     const [items, setItems] = useState({});
-    const {loggedIn,id,type, username}=useContext(AuthContext);
+    const {loggedIn,id,type, username,wallet}=useContext(AuthContext);
     const chooseItem = (item) => {
         if(item === 'profile') 
             setView({profile : true});
-        else if(item === 'progress') 
-            setView({inprogress:true});
-        else if(item === 'completed') 
-            setView({completed : true});
+        else if(item === 'wallet') 
+            setView({wallet:true});
         else if(item === 'password') 
             setView({changepassword : true,});
         else if(item === 'information') 
             setView({changeinfo : true});
-        else if(item === 'card') 
-            setView({pcard : true});
     };
     useEffect (()=>{
         let itemTemp = [];
-        console.log(username);
-        if(type !="corporatetrainees "){
-            console.log(type);
-            seTactive("profile");
-            setView({profile : true});
-            itemTemp.push({title : "Profile",
-            itemId : "profile"
+        itemTemp.push({title : "Profile",
+        itemId : "profile"
+        });
+        if(type != "corporateterainees "){
+            itemTemp.push({title : "My Wallet",
+            itemId : "wallet"
             });
         }
-        if(type == "corporatetrainees "){
-            setView({inprogress:true});
-            seTactive("progress");
-        }
-        itemTemp.push({title : "My Courses",
-        subNav : [
-            {title : "In Progress",
-            itemId : "progress",
-            },
-            {title : "Completed",
-            itemId : "completed",
-            }
-        ],
-        itemId : "My Courses"
-        });
         itemTemp.push({title : "Settings",
         subNav : [
             {title : "Change my Password",
@@ -82,8 +63,7 @@ const ProfileView = () => {
             <div className="col-sm-7 text-center">
                 {view.changepassword && <Changepassword />}
                 {view.profile && <StudentProfile />}
-                {view.inprogress && <InprogressCourses />}
-                {view.completed && <CompletedCourses />}
+                {view.wallet && <StudentWallet wallet={wallet}/>}
             </div>
             <div className="col-sm-1"></div>
         </div>

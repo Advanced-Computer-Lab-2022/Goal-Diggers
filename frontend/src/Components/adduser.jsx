@@ -14,17 +14,24 @@ function Adduser(props) {
     const [data , setdata] = useState({
         username : "",
         password : "",
-        role : ""
+        role : "",
+        corporate : "",
     });
 
     
 
     async function submit(){
         //e.exporddefault();
-        if(data.username.length === 0 || data.password.length ===0 || !data.role)settexterror(true)
+        if(data.role == 'corporatetrainees ' && !data.corporate){
+            seterror("you must fill all fields");
+        }
+        else if(data.username.length === 0 || data.password.length ===0 || !data.role)
+            seterror("you must fill all fields");
 
         else{
             settexterror(false);
+            console.log("data");
+            console.log(data);
             const res = await courseService.addUser(data);
             console.log(res);
             if(res.error){
@@ -78,6 +85,15 @@ function Adduser(props) {
                 </select>
                 {texterror?<label className = "l1">You must fill it</label>:""}
             </div>
+            {data.role == 'corporatetrainees ' && <div className="form-floating">
+                <select onChange={(e)=>handle(e)} id = "corporate" value={data.corporate} className='form-control my-1' placeholder = 'role'>
+                    <option  value="">Select Corporate</option>
+                    <option value="GUC">GUC</option>
+                    <option value="AUC">AUC</option>
+                    <option value="BUE ">BUE</option>
+                </select>
+                {texterror?<label className = "l1">You must fill it</label>:""}
+            </div>}
         <button className='btn btn-primary mt-3' style={{borderRadius : '25px'}} onClick={()=>submit()}>Submit</button>
     </div>
   )

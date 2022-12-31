@@ -13,6 +13,6 @@ export default function LogoutBtn() {
     
     }
   return (
-    <button className='logoutbuttoon' onClick={Logout}>logout</button>
+    <React.Fragment><a className='' onClick={Logout}>logout</a><h1 className="fa fa-sign-out dropdown"></h1></React.Fragment>
   )
 }

@@ -15,6 +15,15 @@ courseService.getAllCourses = async() => {
     const {data} = await http.get(apiUrl + 'all-courses');
     return data.courses;
 }
+courseService.getAllCoursesViews = async() => {
+    const {data} = await http.get(apiUrl + 'all-courses-views');
+    return data.courses;
+}
+courseService.getAllCoursesPopular = async() => {
+    const {data} = await http.get(apiUrl + 'all-courses-popular');
+    return data.courses;
+}
+
 
 courseService.getSearchCourses = async(keyword) => {
     if(!keyword) {
@@ -33,6 +42,7 @@ courseService.getInstructorCourses = async() => {
 }
 
 courseService.addUser = async(user) => {
+    console.log(user);
     const {data} = await http.post(apiUrl + 'add-user', user);
     return data;
 }
@@ -158,6 +168,11 @@ courseService.getCompletedCourses= async() => {
     return data.courses;
 }
 
+courseService.getStudentCourses= async() => {
+    const {data} = await http.get(apiUrl + 'student-courses');
+    return data.courses;
+}
+
 ///////////////////////////////////////////////////////
 // fetch the client secret to pay 
 courseService.getClientSecret= async(price) => {
@@ -228,14 +243,37 @@ courseService.addproblems = async(problem) => {
 courseService.refundcourse = async(id) => {
     const {data} = await http.post(apiUrl + 'refund-course/'+ id);
     return data;
-}
+};
+
 courseService.AdminRefundCourse = async(course) => {
     const {data} = await http.post(apiUrl + 'refund', {course});
     return data;
-}
+};
+
 courseService.getRefundRequests = async() => {
     const {data} = await http.get(apiUrl + 'refund-requests');
     return data.courses;
+};
+
+courseService.ForgtetPassword = async(body) => {
+    const {data} = await http.post(apiUrl + 'forget-password',body);
+    return data.courses;
+}
+courseService.ResetPassword = async(body) => {
+    const {data} = await http.post(apiUrl + 'reset-password',body);
+    return data.courses;
+}
+courseService.VerifyLink = async(body) => {
+    const {data} = await http.post(apiUrl + 'verify-link',body);
+    return data;
+}
+courseService.SendCertificate = async(body) => {
+    const {data} = await http.post(apiUrl + 'send-certificate',body);
+    return data;
+}
+courseService.SaveData = async(body) => {
+    const {data} = await http.post(apiUrl + 'save-data',body);
+    return data;
 }
 
 export default courseService;

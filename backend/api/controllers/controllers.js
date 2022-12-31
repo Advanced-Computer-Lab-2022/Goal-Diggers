@@ -5,18 +5,19 @@ const {ObjectId} = require('mongodb');
 const pdf = require('html-pdf');
 const {pdfTemplate, certificateTemplate} = require('./generatePDF');
 const jwt =require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 require('dotenv').config();
 const stripe = require("stripe")(
   "sk_test_51MEsfyD8LuqksnQUfvq6KNmUnIpERtruMHXIKHHnc7EOy51ZdpuYFZ4VlfaIbztSjh7kRZM3OSR0gVIifQjmmhZ1008I0rGA9q"
 );
 
-// const transporter = nodemailer.createTransport({
-//     service: "Gmail",
-//     auth: {
-//       user: process.env.username, // generated ethereal user
-//       pass: process.env.password, // generated ethereal password
-//     },
-//   });
+const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: process.env.Email, // generated ethereal user
+      pass: process.env.password, // generated ethereal password
+    },
+  });
 
 //POST 
 // url : api/payment/create" Create client secret  
@@ -117,37 +118,6 @@ module.exports.getWallet = async (req,res)=>{
       res.json(false);
   }
 }
-
-//POST
-//url : /api/uploadvideos/12 -> to upload the course subtitles
-module.exports.uploadVideos = async (req, res) => {
-    const courseID = ObjectId(req.params.id);
-    const subtitles = req.body; 
-    Course.findById(courseID).then(
-        course => {
-            course.subtitles = subtitles;
-            Course.findByIdAndUpdate(courseID, course).then(
-                result => {res.status(200).json({})}
-            )
-        }
-    );
-};
-
-//POST
-//url : /api/uploadpreviewvideo/12 
-module.exports.uploadPreviewVideo = async (req, res) => {
-    const courseID = req.params.id;
-    const video = req.body; 
-    Course.findById(courseID).then(
-        course => {
-            course.overviewVideo = video;
-            Course.findByIdAndUpdate(courseID, course).then(
-                result => {res.status(200).json({})}
-            )
-        }
-    );
-};
-
 
 //POST 
 // url : api/add-course/ 
@@ -282,26 +252,67 @@ module.exports.addQuiz = async (req, res) => {
     );
 };
 
-//GET
+//POST
+//url /api/reset-password to reset password
+module.exports.ResetPassword = async(req,res) =>{
+  const newpassword = req.body.newpassword;
+  const id = ObjectId(req.body.id);
+  const type = req.body.type;
+  if(type == 'student') {
+    const password = await bcrypt.hash(newpassword,10);
+    User.findByIdAndUpdate(id, {password : password}).then(
+      result => {return res.status(200).json({});}
+    )
+  } else if(type == 'instructor') {
+    const password = await bcrypt.hash(newpassword,10);
+    Instructor.findByIdAndUpdate(id, {password : password}).then(
+      result => {return res.status(200).json({});}
+    )
+  } else if(type == 'corp') {
+    const password = await bcrypt.hash(newpassword,10);
+    Role.findByIdAndUpdate(id, {password : password}).then(
+      result => {return res.status(200).json({});}
+    )
+  }
+};
+
+//POST
 //url : /api//verify/12 -> to verify the sent link
 module.exports.Linkverify = async (req, res) => {
     try {
-      let token = req.params.id;    
-      jwt.verify(token, process.env.secretKey, (error, dataLoaded) => {
+      let token = req.body.token;    
+      jwt.verify(token, process.env.JWT_SECRET, (error, dataLoaded) => {
         if (error) {
-          res.status(404).json({});
+          res.status(200).json({error});
         } else {
-          User.findById(dataLoaded._id).then((user) => {
-            if (user) {
-              res.status(200).json({});
-            } else {
-              res.status(404).json({});
-            }
-          });
+          if(dataLoaded.type == 'student')
+            User.findById(dataLoaded._id).then((user) => {
+              if (user) {
+                res.status(200).json({_id : dataLoaded._id,type : dataLoaded.type});
+              } else {
+                res.status(200).json({error :"not found"});
+              }
+            });
+          else if(dataLoaded.type == 'instructor')
+            Instructor.findById(dataLoaded._id).then((user) => {
+              if (user) {
+                res.status(200).json({_id : dataLoaded._id,type : dataLoaded.type});
+              } else {
+                res.status(200).json({error :"not found"});
+              }
+            });
+          else if(dataLoaded.type == 'corp')
+            Role.findById(dataLoaded._id).then((user) => {
+              if (user) {
+                res.status(200).json({_id : dataLoaded._id,type : dataLoaded.type});
+              } else {
+                res.status(200).json({error :"not found"});
+              }
+            });
         }
       });
     } catch (error) {
-      res.status(404).json({});
+      res.status(200).json({error : "not found"});
     }
   };
   
@@ -309,50 +320,104 @@ module.exports.Linkverify = async (req, res) => {
 //url : /api/forgot-password -> verify user email and send reset password link
 module.exports.forgotPassword = async (req, res) => {
     let username = req.body.username;
-    User.findOne({ username: username }).then(async (user) => {
-      if (user) {
-        jwt.sign({ _id: user._id }, process.env.secretKey, async (error, token) => {
-          if (error) {
-            res.status(404).json({});
-          } else {
-            const url = `http://localhost:3001/reset-password/${token}`;
-            await transporter.sendMail(
-              {
-                from: "examtaking.ms@gmail.com",
-                to: user.email,
-                subject: "Reset my Password",
-                html: `Please click this Link to reset your password <a href="${url}">${url}</a>`,
-              },
-              (error, info) => {
-                if (error) {
-                  return res.status(500).json({ error });
-                } else {
-                  return res.status(200).json({});
-                }
+    console.log(username);
+    if(await User.findOne({ username: username })){
+        User.findOne({ username: username }).then(async (user) => {
+            jwt.sign({ _id: user._id, type : "student" }, process.env.JWT_SECRET, async (error, token) => {
+              if (error) {
+                res.status(404).json({});
+              } else {
+                const url = `http://localhost:3001/reset-password/${token}`;
+                await transporter.sendMail(
+                  {
+                    from: "goal.diggers.acl@gmail.com",
+                    to: user.email,
+                    subject: "Reset my Password",
+                    html: `Please click this Link to reset your password <a href="${url}">${url}</a>`,
+                  },
+                  (error, info) => {
+                    if (error) {
+                      return res.status(500).json({ error });
+                    } else {
+                      return res.status(200).json({});
+                    }
+                  }
+                );
               }
-            );
-          }
+            });
         });
-      } else {
-        res.status(404).json({ error: "email not found" });
-      }
-    });
+    }
+    else if(await Instructor.findOne({ username: username })){
+        Instructor.findOne({ username: username }).then(async (user) => {
+            jwt.sign({ _id: user._id,type : "instructor" }, process.env.JWT_SECRET, async (error, token) => {
+              if (error) {
+                res.status(404).json({});
+              } else {
+                const url = `http://localhost:3001/reset-password/${token}`;
+                await transporter.sendMail(
+                  {
+                    from: "goal.diggers.acl@gmail.com",
+                    to: user.email,
+                    subject: "Reset my Password",
+                    html: `Please click this Link to reset your password <a href="${url}">${url}</a>`,
+                  },
+                  (error, info) => {
+                    if (error) {
+                      return res.status(500).json({ error });
+                    } else {
+                      return res.status(200).json({});
+                    }
+                  }
+                );
+              }
+            });     
+        });
+    }
+    else if(await Role.findOne({ username: username })){
+        Role.findOne({ username: username }).then(async (user) => {
+            if(user.role == 'administrator'){
+              res.status(200).json({ error: "username not found" });
+            }
+            jwt.sign({ _id: user._id, type:"corp" }, process.env.JWT_SECRET, async (error, token) => {
+              if (error) {
+                res.status(404).json({});
+              } else {
+                const url = `http://localhost:3001/reset-password/${token}`;
+                await transporter.sendMail(
+                  {
+                    from: "goal.diggers.acl@gmail.com",
+                    to: user.email,
+                    subject: "Reset my Password",
+                    html: `Please click this Link to reset your password <a href="${url}">${url}</a>`,
+                  },
+                  (error, info) => {
+                    if (error) {
+                      return res.status(500).json({ error });
+                    } else {
+                      return res.status(200).json({});
+                    }
+                  }
+                );
+              }
+            });   
+        });
+    }
+    else {
+      return res.status(200).json({ error: "username not found" });
+    }
   };
 
 // POST
 // url : /api/register -> to register user 
 module.exports.registerUser = async (req, res) => {
   if(await Role.findOne({ username: req.body.username })) {
-      console.log("Sdsdsd");
       return res.status(200).json({ error: "username already exist" });
   }
   if(await Instructor.findOne({ username: req.body.username })) {
-      console.log("Sdsdsddsadsadasdsada");
       return res.status(200).json({ error: "username already exist" });
   }
   await User.findOne({ username: req.body.username }).then(async (result) => {
     if (result) {
-      console.log("Asda");
       return res.status(200).json({ error: "username already exist" });
     } else {
       try {
@@ -405,7 +470,7 @@ module.exports.confirmUser = async (req, res) => {
     } catch (error) {
       res.status(404).json({});
     }
-  };
+};
   
 
 //POST
@@ -432,6 +497,8 @@ module.exports.loginUser = async (req, res) => {
         }
       })
       .catch((error) => {
+        console.log(error);
+        console.log("error1");
         res.status(500).json({error});
       });
     }else if(await Instructor.findOne({ username: user.username })){
@@ -441,27 +508,34 @@ module.exports.loginUser = async (req, res) => {
             const token=jwt.sign({user:result._id, username : result.username},process.env.JWT_SECRET);
             res.cookie("token",token,{
                 httpOnly:true,
-            }).send();
-            return;
+            });
+            return res.status(200).json({firstlogin : result.firstlogin});;
           } else {
             res.status(201);
+            console.log("incorrect password");
             res.json({ error: "incorrect password" });
             return;
           }
       })
       .catch((error) => {
+        console.log(error);
+        console.log("error2");
         res.status(500).json({error});
       });
 
-    }else if(Role.findOne({ username: user.username })){
+    }else if(await Role.findOne({ username: user.username })){
       Role.findOne({ username: user.username })
       .then(async (result) => {
           if (await bcrypt.compare(user.password, result.password)) {
             const token=jwt.sign({user:result._id, username : result.username },process.env.JWT_SECRET);
             res.cookie("token",token,{
                 httpOnly:true,
-            }).send();
-            return;
+            });
+            if(result.role === 'corporatetrainees ')
+              return res.status(200).json({firstlogin : result.firstlogin});
+            else  
+              return res.status(200).json({});
+
           } else {
             res.status(201);
             res.json({ error: "incorrect password" });
@@ -469,6 +543,8 @@ module.exports.loginUser = async (req, res) => {
           }
       })
       .catch((error) => {
+        console.log(error);
+        console.log("error3");
         res.status(500).json({error});
       });
     } else {
@@ -481,6 +557,23 @@ module.exports.loginUser = async (req, res) => {
     res.status(500).json({error});
   }
 };
+
+//POST
+//URL api/save-data to updata new user data
+module.exports.SaveData = async (req, res) =>{
+  let userdata = req.body;
+  userdata.firstlogin = false;
+  userdata.password = await bcrypt.hash(userdata.password, 10);
+  if(await Instructor.findOne({username:userdata.username})){
+      Instructor.findOneAndUpdate({username:userdata.username}, userdata).then(
+        result => {return res.status(200).json({});}
+      )
+  } else if(await Role.findOne({username:userdata.username})){
+    Role.findOneAndUpdate({username:userdata.username}, userdata).then(
+      result => {return res.status(200).json({});}
+    )
+}
+}
 
 //logout
 module.exports.Logout=async(req,res)=>{
@@ -544,8 +637,6 @@ module.exports.LoggedIn=async(req,res)=>{
 module.exports.AcceptTerms = async(req, res) =>{
   try {
     const token=req.cookies.token;
-    let user = {};
-    console.log(token);
     if(!token){
         return res.json(false);
     }
@@ -646,7 +737,7 @@ module.exports.changeEmailorBiography = async(req,res)=>{
 
 //POST /api/add-user
 module.exports.addUser = async (req, res) => {
-    const new_user = _.pick(req.body, ['username', 'password', 'role']);
+    const new_user = req.body;
     // let exist = false;
     if(await User.findOne({username : new_user.username}))
       return res.status(200).json({error : "Username Already exist"});
@@ -658,6 +749,7 @@ module.exports.addUser = async (req, res) => {
         await Role.findOne({username : new_user.username}).then(
             async user => { 
                     new_user.password = await bcrypt.hash(new_user.password, 10);
+                    console.log(new_user);
                     await Role.create(new_user).then(
                         user =>  {return res.status(200).json({user});}
                     )
@@ -688,6 +780,23 @@ module.exports.getAllCourses = async (req, res) => {
             return res.status(200).json({courses});
         }
     )
+}
+// GET url : /api/all-courses
+module.exports.getAllCoursesPopular = async (req, res) => {
+    await Course.find({$sort : {registers : -1}}).limit(5).then(
+        courses => {
+          return res.status(200).json({courses});
+        }
+    )
+}
+// GET url : /api/all-courses
+module.exports.getAllCoursesViews = async (req, res) => {
+    await Course.find({$sort : {views : -1}}).limit(5).then(
+        courses => {
+          return res.status(200).json({courses});
+        }
+    )
+
 }
 
 // GET url : /api/instructor-courses //need edits
@@ -1020,6 +1129,25 @@ module.exports.AdminRevokeAccess = async (req, res) =>{
 } 
 
 //GET 
+// url : api/student-courses/ student get in progress courses // need auth
+module.exports.getStudentCourses = async(req,res) =>{
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
+    }
+    const verified= jwt.verify(token,process.env.JWT_SECRET);
+    RegisterCourse.find({studentID : verified.user, pending : false}).then(
+        courses =>{
+          res.status(200).json({courses})
+        }
+    ) 
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
+} 
+//GET 
 // url : api/inprogress-courses/ student get in progress courses // need auth
 module.exports.getInProgressCourses = async(req,res) =>{
   try {
@@ -1073,6 +1201,43 @@ module.exports.createCertificate = (req,res) =>{
        }
        res.send(Promise.resolve());
      });
+};
+//POST
+// url : /api/send-certificate used to send Certificate as pdf via email
+module.exports.sendMail = async (req,res) =>{
+    pdf.create(certificateTemplate(req.body.title,req.body.username ,req.body.instructor), {}).toFile(`${__dirname}/PDFs/${req.body.title}_${req.body.username}.pdf`, async (err) => {
+      if(err) {
+          res.send(Promise.reject());
+      }
+      console.log("SDASDA");
+      await transporter.sendMail(
+      {
+         from: "goal.diggers.acl@gmail.com",
+         to: req.body.email,
+         subject: `Fininshing ${req.body.title} Course.`,
+         html: `
+           <h4>Congratulations You have finished ${req.body.title} Course<h4/>
+           <h4>The verification link is <a>http://localhost:3001/verify-certificate/${req.body.id}</a></h4>
+           <span>find attached your certificate.</span>
+         `,
+         attachments: [{
+           filename: `${req.body.title}.pdf`,
+           path: `${__dirname}/PDFs/${req.body.title}_${req.body.username}.pdf`,
+           contentType: 'application/pdf'
+         }]
+       },
+       (error, info) => {
+         if (error) {
+            console.log("ERROR");
+           return res.status(500).json({ error });
+         } else {
+            console.log("DONE");
+           return res.status(200).json({});
+         }
+       }
+     );
+      res.send(Promise.resolve());
+    });
 };
 
 // used to download the Certificate pdf

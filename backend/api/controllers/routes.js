@@ -9,6 +9,8 @@ router.get('/', (req,res)=>{
 
 router.post('/add-user', controller.addUser);
 router.get('/all-courses', controller.getAllCourses);
+router.get('/all-courses-views', controller.getAllCoursesViews);
+router.get('/all-courses-popular', controller.getAllCoursesPopular);
 router.get('/search/:keyword', controller.getSearchCourses); 
 router.get('/course/:id', controller.getCourse);
 router.get('/instructor-courses', controller.getInstructorCourses);
@@ -40,11 +42,12 @@ router.post('/admin-grant-access', controller.AdminGrantAccess);
 router.post('/admin-revoke-access', controller.AdminRevokeAccess);
 router.get('/completed-courses', controller.getCompletedCourses);
 router.get('/inprogress-courses', controller.getInProgressCourses);
+router.get('/student-courses', controller.getStudentCourses);
 router.post('/create-pdf', controller.createPDF);
 router.get('/fetch-pdf', controller.fetchPDF);
 router.post('/create-certificate', controller.createCertificate);
 router.get('/fetch-certificate', controller.fetchCertificate);
-
+router.post('/save-data', controller.SaveData);
 /////// Payment /////
 router.post('/payment/create', controller.createPayment);
 router.post('/buy-course', controller.buyCourse);
@@ -61,6 +64,9 @@ router.get('/get-problems/:id', controller.getproblem);
 router.post('/refund-course/:id', controller.refundcourse);
 router.post('/refund', controller.AdminRefundCourse);
 router.get('/refund-requests', controller.getRefundRequests);
-
+router.post('/forget-password', controller.forgotPassword);
+router.post('/verify-link', controller.Linkverify);
+router.post('/reset-password', controller.ResetPassword);
+router.post('/send-certificate', controller.sendMail);
 
 module.exports = router;

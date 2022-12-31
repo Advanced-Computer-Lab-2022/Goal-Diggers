@@ -7,6 +7,8 @@ import ReactLoading from 'react-loading';
 
 const CourseContainer = ({type, keyword, currency}) => {
     const [coursesOriginal, setCoursesOriginal] = useState([]);
+    const [coursesOriginalV, setCoursesOriginalV] = useState([]);
+    const [coursesOriginalP, setCoursesOriginalP] = useState([]);
     const [coursesDisplayed, setCoursesDisplayed] = useState([]);
     const [price, setPrice] = useState(Infinity);
     const [subject, setSubject] = useState("");
@@ -15,6 +17,7 @@ const CourseContainer = ({type, keyword, currency}) => {
     const [ready, setReady] = useState(false);
     const config = {headers : {"apikey" : "mg9jAAsEOiyrDEq4mw4wBarbgswdtryW"}};
     const [priceRate, serPriceRate] = useState(1);
+    const [filterPage, serFilterPage] = useState("all");
 
     const handleCurrency = async (currency) => {
         let result = 1;
@@ -40,19 +43,65 @@ const CourseContainer = ({type, keyword, currency}) => {
                 const res = await courseService.getInstructorCourses();
                 setCoursesDisplayed(res);
                 setCoursesOriginal(res);
+                console.log(res);
                 serPriceRate(await handleCurrency(currency));
                 setReady(true);
             }
-            else {
-                const res = await courseService.getAllCourses();
-                setCoursesDisplayed(res);
-                setCoursesOriginal(res);
-                serPriceRate(await handleCurrency(currency));
-                setReady(true);
+            else if(type == 'student') {
+                if(filterPage == 'all') {
+                    const res = await courseService.getStudentCourses();
+                    setCoursesDisplayed(res);
+                    setCoursesOriginal(res);
+                    console.log(res);
+                    serPriceRate(await handleCurrency(currency));
+                    setReady(true);
+                }
+                else if(filterPage == 'inprogress') {
+                    const res = await courseService.getInprogressCourses();
+                    setCoursesDisplayed(res);
+                    setCoursesOriginal(res);
+                    console.log(res);
+                    serPriceRate(await handleCurrency(currency));
+                    setReady(true);
+                }
+                else if(filterPage == 'completed') {
+                    const res = await courseService.getCompletedCourses();
+                    setCoursesDisplayed(res);
+                    setCoursesOriginal(res);
+                    console.log(res);
+                    serPriceRate(await handleCurrency(currency));
+                    setReady(true);
+                }
+            }
+            else if(type == 'all') {
+                if(filterPage == 'all') {
+                    const res = await courseService.getAllCourses();
+                    setCoursesDisplayed(res);
+                    setCoursesOriginal(res);
+                    console.log(res);
+                    serPriceRate(await handleCurrency(currency));
+                    setReady(true);
+                }
+                else if(filterPage == 'views') {
+                    const res = await courseService.getAllCoursesViews();
+                    setCoursesDisplayed(res);
+                    setCoursesOriginal(res);
+                    console.log("res");
+                    serPriceRate(await handleCurrency(currency));
+                    setReady(true);
+                }
+                else if(filterPage == 'popular') {
+                    const res = await courseService.getAllCoursesPopular();
+                    setCoursesDisplayed(res);
+                    setCoursesOriginal(res);
+                    console.log(res);
+                    serPriceRate(await handleCurrency(currency));
+                    setReady(true);
+                }
             }
         };
         getCourses(type, keyword);
-    },[currency]);
+    },[currency, filterPage]);
  
     const handleChange = (filter, value) =>{
         console.log(value + filter);
@@ -119,9 +168,14 @@ const CourseContainer = ({type, keyword, currency}) => {
         )
     }
 
+    const handleRadio =(e)=>{
+        console.log(e.target.value);
+        serFilterPage(e.target.value);
+    }
+
     return ( 
         <React.Fragment>
-        <Filters handleChange={handleChange} type={type}/>
+        <Filters handleChange={handleChange} page={type} handleRadio={handleRadio}/>
         {type === 'search' && <h3 className='p-2 mb-3'>Search results for {keyword} </h3>}
         {type === 'instructor' && 
             <div className='p-3 px-5 mb-3 bg-light text-center'>

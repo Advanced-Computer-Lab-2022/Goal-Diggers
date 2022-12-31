@@ -3,13 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import courseService from '../courseContainer';
 import ReactLoading from 'react-loading';
 import AuthContext, { AuthContextProvider } from"../context/AuthContext";
-
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const Certificate = () => {
-    const {loggedIn,lastname,username ,email,firstname}=useContext(AuthContext);
+    const {loggedIn,lastname,username ,firstname}=useContext(AuthContext);
     console.log(username);
     const [ready, setReady] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [copied, setCopied] = useState(false);
     const [course, setCourse] = useState({});
     const [Nusername, setusername] = useState(username);
     const {id} = useParams();
@@ -44,7 +45,17 @@ const Certificate = () => {
                         </div>
                         <div className="pt-5" style={{  display: 'flex',justifyContent: 'center',alignItems: 'center',height:'100'}}>
                             <button className='btn btn-dark' style={{borderRadius : '25px'}} onClick={()=>{download()}}>Download <i className="fa fa-download" aria-hidden="true"></i></button>
-                            <button className='btn btn-info mx-2' style={{borderRadius : '25px'}}>Send Via Email <i className="fa fa-envelope-o" aria-hidden="true"></i></button>
+                            <CopyToClipboard text={`http://localhost:3001/verify-certificate/${course._id}`} >
+                                {!copied ?
+                                  <button onClick={()=>{setCopied(true)}} style={{borderRadius : '25px'}} className='btn btn-info'>
+                                      Copy Verification Link <i className="fa fa-files-o" aria-hidden="true"></i>
+                                </button>
+                                :(
+                                    <button style={{borderRadius : '25px'}} className='btn btn-info'>
+                                      Copied <i className="fa fa-check-circle" aria-hidden="true"></i>
+                                    </button>
+                                )}
+                            </CopyToClipboard>
                             {loading && <ReactLoading type={"bars"} color={'lightgreen'} width={'40px'}/>}
                         </div>
                     </div>

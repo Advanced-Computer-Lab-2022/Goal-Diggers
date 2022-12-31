@@ -2,9 +2,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const roleSchema = new Schema({
-        password : {type : String,  required : true ,minlength:8, maxlength:1024 },
         role : String,
-        username : {type : String,  required : true ,minlength:2, maxlength:255, unique : true,dropDups: true,},
+        email : {type : String},
+        password : {type : String,  required : true  },
+        username : {type : String,  required : true , unique : true,dropDups: true,},
+        firstname : {type : String,maxlength:255},
+        lastname : {type : String, maxlength:255},
+        gender : {type : String},
+        corporate : {type : String},
+        firstlogin : {type : Boolean, default : true},
 },{timestamps : true});
 
 module.exports = roleSchema;

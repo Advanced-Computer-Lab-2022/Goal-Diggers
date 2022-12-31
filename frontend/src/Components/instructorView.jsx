@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {Navigation} from 'react-minimal-side-navigation';
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import Changepassword from './changepassword';
@@ -10,9 +10,10 @@ import Editinstructorprofile from './editinstructorprofile';
 import AuthContext, { AuthContextProvider } from"../context/AuthContext";
 import SetPromotions from './setPromotions';
 
-const InstructorView = () => {
-    const [view, setView] = useState({profile : true,});
+const InstructorView = ({type}) => {
+    const [view, setView] = useState({});
     const {loggedIn,id,username}=useContext(AuthContext);
+    const [items, setItems] = useState([]);
     const chooseItem = (item) => {
         if(item === 'profile') 
             setView({profile : true});
@@ -28,7 +29,44 @@ const InstructorView = () => {
             setView({rate : true});
         else if(item === 'promo') 
             setView({addpromo : true});
-    }   
+    } 
+    useEffect (()=>{
+        if(type == 'profile') {
+            setView({profile : true});
+            setItems(
+                [{title : "Profile",
+                itemId : "profile"
+                },
+                {title : "Rating and Reviews",
+                itemId : "rate"
+                },
+                {title : "Settings",
+                subNav : [
+                    {title : "Change my Password",
+                    itemId : "password",
+                    },
+                    {title : "Change my Information",
+                    itemId : "information",
+                    },
+                ]
+                },
+                {title : "My Earnings",
+                itemId : "earn"
+                },]
+            )
+        } else {
+            setView({addcourse : true});
+            setItems(
+                    [{title : "Add Course",
+                    itemId : "addc"
+                    },
+                    {title : "Add Promotion",
+                    itemId : "promo"
+                },]
+            )
+
+        }
+    },[])  
     return ( 
         <React.Fragment>
             <div className="row mt-3">
@@ -41,33 +79,7 @@ const InstructorView = () => {
                         onSelect={({itemId}) => {
                             chooseItem(itemId);
                         }}
-                        items={[
-                            {title : "Profile",
-                            itemId : "profile"
-                            },
-                            {title : "Add Promotion",
-                            itemId : "promo"
-                            },
-                            {title : "Rating and Reviews",
-                            itemId : "rate"
-                            },
-                            {title : "Add Course",
-                            itemId : "addc"
-                            },
-                            {title : "Settings",
-                            subNav : [
-                                {title : "Change my Password",
-                                itemId : "password",
-                                },
-                                {title : "Change my Information",
-                                itemId : "information",
-                                },
-                            ]
-                            },
-                            {title : "My Earnings",
-                            itemId : "earn"
-                            },
-                        ]}
+                        items={items}
                     />
                 </div>
                 <div className="col-sm-7 text-center">

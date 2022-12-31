@@ -9,7 +9,7 @@ const SetPromotions = ({role}) => {
     const [coursesOriginal, setCoursesOriginal] = useState([]);
     const [coursesDisplayed, setCoursesDisplayed] = useState([]);
     const [filters, setFilters] = useState({subject:'',price:Infinity, title:''});
-    const [promotion, setPromotion] = useState({promotion: 0, date:""});
+    const [promotion, setPromotion] = useState({promotion: 0, startdate:"", enddate:''});
     const [checkall, setCheckall] = useState(false);
     const [error, setError] = useState(false);
     const [Checked, setChecked] = useState([]);
@@ -73,7 +73,8 @@ const SetPromotions = ({role}) => {
     }
 
     const submit = () => {
-        if(!promotion.date || !promotion.promotion || Checked.length === 0 || new Date(promotion.date) < Date.now())
+        console.log(promotion);
+        if(!promotion.enddate|| !promotion.startdate || !promotion.promotion || Checked.length === 0 || new Date(promotion.enddate) < Date.now()|| new Date(promotion.startdate) > new Date(promotion.enddate))
             setError(true);
         else {
             swal({
@@ -99,16 +100,20 @@ const SetPromotions = ({role}) => {
         {ready && 
             <React.Fragment>
                 {error && <div className="alert alert-danger">
-                    You Must Select at least one course and add Promotion and valid expiry date
+                    You Must Select at least one course and add Promotion and valid start and expiry date
                 </div>}
                 <div className="card bg-light">
                     <div className="row">
-                        <div className="form-floating col-sm-4">
+                        <div className="form-floating col-sm-2">
                             <input onChange={(e)=>{handlePromotion(e)}} id="promotion"  type="Number" max={100} className="form-control" placeholder="Promotion" />
                             <label htmlFor="subject">Promotion %</label>
                         </div>
-                        <div className="form-floating col-sm-4">
-                            <input onChange={(e)=>{handlePromotion(e)}} id="date"  type="date" className="form-control" placeholder="When will it expire ?" />
+                        <div className="form-floating col-sm-3">
+                            <input onChange={(e)=>{handlePromotion(e)}} id="startdate"  type="date" className="form-control" placeholder="When will it start ?" />
+                            <label htmlFor="date">When will it start ?</label>
+                        </div>
+                        <div className="form-floating col-sm-3">
+                            <input onChange={(e)=>{handlePromotion(e)}} id="enddate"  type="date" className="form-control" placeholder="When will it expire ?" />
                             <label htmlFor="date">When will it expire ?</label>
                         </div>
                         <div className="form-floating col-sm-4 pt-2">
@@ -153,7 +158,7 @@ const SetPromotions = ({role}) => {
                                 <span style={{fontWeight:"bolder"}}> Instructor  : </span> {course.createdByName}
                                 <span style={{fontWeight:"bolder"}}> Price : </span> {course.price} USD <br />
                                 <Rating name="rating" value={course.rate} readOnly/>
-                                {course.discount && new Date(course.discount.date) >= Date.now() && <span className='mx-2' style={{fontWeight:"bolder", color:'coral'}}>Already has a promotion of {course.discount.promotion}%</span>}
+                                {course.discount && new Date(course.discount.enddate) >= Date.now()&& new Date(course.discount.startdate) <= Date.now() && <span className='mx-2' style={{fontWeight:"bolder", color:'coral'}}>Already has a promotion of {course.discount.promotion}%</span>}
                             </div>
                         </div>
                     </div>

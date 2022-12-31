@@ -4,7 +4,7 @@ import axios from 'axios';
 import  { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 //first we need to take the values from the input fields using use state
-function Register() {
+function Filldata() {
     const[username,setUserName]=useState("");
     const[email,setEmail]=useState("");
     const[password,setPassword]=useState("");
@@ -13,8 +13,6 @@ function Register() {
     const[gender,setGender]=useState("");
     const {getLoggedIn}=useContext(AuthContext);
     const navigate = useNavigate();
-    const [agree, setAgree] = useState(false);
-    const [error, seterror] = useState("");
     async function register(e){
         //to prevent the page from refreshing when submit
         e.preventDefault();
@@ -27,41 +25,21 @@ function Register() {
                 lastname,
                 gender,
             }
-            if(!username || !email || !password || !firstname || !lastname || !gender) {
-              seterror("You must enter all your data");
-            }else {
-              const res = await axios.post("http://localhost:3000/api/register",registerData);
-              if(res.data.error) {
-                seterror(res.data.error);
-              }else {
-                navigate('/');
-                await getLoggedIn();
-              }
-            }
-
+            //we need also to 
+            await axios.post("http://localhost:3000/api/register",registerData);
+            await getLoggedIn();
+            navigate('/');
         } catch (error) {
             console.log(error.message);
         }
     } 
-    const checkboxHandler = () => {
-      // if agree === true, it will be set to false
-      // if agree === false, it will be set to true
-      if(agree==true){
-
-      }
-      setAgree(!agree);
-      // Don't miss the exclamation mark
-    }
 
   return (
     <div>
-    <h1 id='regtitle'>Sign up and start learning</h1>
+    <h1 id='regtitle'>Please Complete Your Data.</h1>
     <div id="registerBody">
-    
-    
     <div  id="registerContainer" >    
       <div className="content">
-      {error && <div className='alert alert-danger'>{error}</div>}
         <form action="#" onSubmit={register}>
           <div className="user-details">
           <div class="material-textfield input-box ">
@@ -94,22 +72,13 @@ function Register() {
             </div>
             <div class="material-textfield input-box ">
             <input 
-       className="inputt"
-       placeholder=" "
-         value={username}
-        onChange={(e)=>setUserName(e.target.value)}>
-        </input>
-              <label className="labell">User Name</label>
-            </div>
-            <div class="material-textfield input-box ">
-            <input 
             className="inputt"
         type="password"
         placeholder=" "
          value={password}
         onChange={(e)=>setPassword(e.target.value)}>
         </input>
-              <label className="labell">Password</label>
+              <label className="labell">Create New Password</label>
             </div>
        
           </div>
@@ -131,11 +100,7 @@ function Register() {
            
             </div>
           </div>
-          <div>
-          <input type="checkbox" id="agree" onChange={checkboxHandler} />
-          <label style={{color:"#a00407"}} htmlFor="agree"> I agree to <a style={{color:"#a00407"}} href='/termsandconditions' className='me-4 text-reset'> terms and conditions</a></label>
-        </div>
-          <button  disabled={!agree} type="submit"  className={agree?"buttoon pt-2":"buttoon2"}> Sign Up </button>
+          <button  type="submit"  className="buttoon pt-2"> Save </button>
         </form>
        
 
@@ -156,4 +121,4 @@ function Register() {
 
   );
 }
-export default Register;
+export default Filldata;

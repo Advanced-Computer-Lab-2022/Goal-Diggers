@@ -1,25 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Sidebar from './sidebar';
-// import course from '../coursesTEST';
 import ReactPlayer from 'react-player/youtube';
 import ProgressBar from "@ramonak/react-progress-bar";
 import WelcomeQuiz from './welcome-quiz';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import courseService from '../courseContainer';
-import swal from 'sweetalert';
-import {useFloating} from '@floating-ui/react';
 import ViewNotes from './viewNotes';
 import ReactLoading from 'react-loading';
 import Reportproblem from './reportproblem';
-// import Refundcourse from './refundcourse';
 import Showpreviousproblems from './showpreviousproblems';
 import Refundcourse from './refundcourse';
-// import Refundcourse from './refundcourse';
-// import Showpreviousproblems from './showpreviousproblems';
+import AuthContext, { AuthContextProvider } from"../context/AuthContext";
 
 const TakeCourse = () => {
     const [course, setCourse] = useState({});
-    const [count, setCount] = useState(0);
+    const {loggedIn,firstname, lastname, email}=useContext(AuthContext);
     const [url, setUrl] = useState();
     const [discription, setDiscription] = useState();
     const [title, setTitle] = useState();
@@ -62,7 +57,6 @@ const TakeCourse = () => {
     }
 
     const chooseVideo = async (item) => {
-        console.log(item);
         if (item.length > 1) {
             if (item[0] == "quiz") {
 
@@ -138,25 +132,19 @@ const TakeCourse = () => {
                 setTitle(item[2]);
             }
         }
+        {
+            (((course.completedVideos.length + course.completedQuizs) / course.totalItems) * 100) >= 50 &&
+            setrefund(false)
+        }
+        if(!course.sentCertificate && (((course.completedVideos.length + course.completedQuizs) / course.totalItems) * 100) == 100) {
+            course.sentCertificate = true;
+            console.log("ADFDSFSDF");
+            let body = {title :course.title, username : firstname + " " + lastname, instructor : course.createdByName, id : course._id,email}
+            await courseService.SendCertificate(body);
+        }
         await courseService.saveProgress(course);
     }
-    function refundcourse (){
-        swal({
-            title: "Do you want to refund this course?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-          })
-          .then((willDelete) => {
-            if (willDelete) {
-              
-              swal("Your refund request has been sent", {
-                icon: "success",
-              });
 
-            }
-          });
-    }
     useEffect(() => {
         const getCourse = async () => {
             const course = await courseService.getRegisteredCourse(id);
@@ -174,7 +162,6 @@ const TakeCourse = () => {
         getCourse();
     }, []);
     const rateInstructor = async () => {
-        console.log("CALLLLLLLL");
         course.rateInstructor = true;
         await courseService.saveProgress(course);
         navigate(`/rateinstructor/${course.courseID}/${course.createdById}`);

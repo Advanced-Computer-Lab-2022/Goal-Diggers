@@ -3,6 +3,8 @@ const Schema = mongoose.Schema;
 
 const problemSchema = new Schema({
         answer : String,
+        writer : Object,
+        followups : [Object],
         status : String,
         type : String,
         question : String,

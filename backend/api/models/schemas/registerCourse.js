@@ -32,6 +32,7 @@ const registerCourseSchema = new Schema({
         pending : Boolean,
         overviewvideo : Object,
         pending : {type : Boolean,default : false},
+        sentCertificate : {type : Boolean,default : false},
         examsId : [Object],
         subtitles : [Object]
 }, {timestamps : true});
