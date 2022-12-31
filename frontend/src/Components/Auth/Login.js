@@ -72,30 +72,32 @@ export default function Login() {
     <div className="user-details">
     <div class="material-textfield input-box ">
             <input 
-            className="inputt"
+            className="logininputt"
             placeholder=" "
             type="text"
             value={username}
             onChange={(e)=>setUserName(e.target.value)}>
             </input>
-            <label className="labell">Username</label>
+            <label className="loginlabell">Username</label>
         </div>
         <div class="material-textfield input-box ">
             <input 
             type="password" 
-            className='inputt'
+            className='logininputt'
             placeholder=" "
             value={password}
             onChange={(e)=>setPassword(e.target.value)}
             >
             </input>
-            <label className="labell">Password</label>
+            <label className="loginlabell">Password</label>
         </div>
         <Link style={{color:'#a00407'}} to='/forget-password'>forget your password?</Link>
         </div>
-        <button className='buttoon pt-2'>login</button>
+        
+        <button  className='loginbuttoon pt-2'>login</button>
     </form>
     </div>
+   
     <h1 id="mar2"> </h1>
     </div>}
     {fillData && <div>

@@ -118,7 +118,7 @@ code {
 
 
   Button{
-    margin-left: 50px !important;
+    margin-left: 0px !important;
     height: 40px;
    
   }
@@ -252,6 +252,7 @@ li:hover > .submenu {
   width: 90px;
   position: absolute;
   top:10px;
+  right:180px;
 
 }
 #button1:hover {
@@ -378,7 +379,8 @@ form input[type="radio"] {
 }
 form .button {
   height: 45px;
-  margin: 35px 0;
+  margin-left: 0px;
+  
 }
 form .button input {
   height: 100%;
@@ -527,6 +529,7 @@ form .category label .dot {
   position: absolute !important;
   left: 40% !important;
   top:35% !important; 
+  width: 500px;
 }
 #footer{
 
@@ -665,5 +668,76 @@ form .category label .dot {
 }
 
 .savebuttoon:active {
+  transform: scale(0.9);
+}
+
+
+
+.loginlabell {
+  position: absolute;
+  font-size: 0.9rem;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: white;
+  color: gray;
+  padding: 0 0.3rem;
+  margin: 0 0.5rem;
+  transition: .1s ease-out;
+  transform-origin: left top;
+  pointer-events: none;
+}
+.logininputt {
+  font-size: 1rem;
+  outline: none;
+  border: 1px solid gray;
+  border-radius: 5px;  
+  padding: 1rem 0.7rem;
+  color: gray;
+  transition: 0.1s ease-out;
+  width: 500px;
+
+}
+.logininputt:focus {
+  border-color: #a00407;  
+}
+.logininputt:focus + label {
+  color: #a00407;
+  top: 0;
+  transform: translateY(-50%) scale(.9);
+}
+.logininputt:not(:placeholder-shown) + label {
+  top: 0;
+  transform: translateY(-50%) scale(.9);
+}
+
+.loginbuttoon {
+
+  display: inline-block;
+  margin: 40px;
+  padding: 15px 30px;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: #a00407;
+  background: transparent;
+  cursor: pointer;
+  transition: ease-out 0.5s;
+  border: 2px solid #a00407;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 0 #a00407;
+  position: absolute !important;
+  left: 0px !important;
+
+  width: 220px;
+}
+
+.loginbuttoon:hover {
+  color: white;
+  box-shadow: inset 0 -100px 0 0 #a00407;
+}
+
+.loginbuttoon:active {
   transform: scale(0.9);
 }
