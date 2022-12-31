@@ -139,13 +139,13 @@ function Homepage2({}) {
                             <li><a href="/blog">Blogs</a></li>
                             <li><a href="/event">Events</a></li>
                             <li ><a href="/contact">Contact</a></li>
-                            <li><a href="/userprofile" ><img classNameName='avatar1' src="/r1.jpg" /></a>
+                            <li><a href="/userprofile" ><img className='avatar1' src="/r1.jpg" /></a>
                                 <ul className="submenu mr-12">
                                     <li><a href="/userprofile" >View Profile</a><h1 className="fa fa-user dropdown" aria-hidden="true"></h1></li>
                                     <li><a href="/mycourses">My Courses</a><i className="fa fa-book dropdown"></i></li>
                                     <li><a href="/settings">Settings</a><i className="fa fa-cog dropdown"></i></li>
                                     <li><a href="/help">Help</a><h1 className="fa fa-question-circle dropdown"></h1></li>
-                                    <li><a href="/homepage2"><Logout></Logout></a><h1 className="fa fa-sign-out dropdown"></h1></li>
+                                    <li><a href="/homepage2">Log Out</a><h1 className="fa fa-sign-out dropdown"></h1></li>
                                 </ul>
                             </li>
                             <li >
@@ -435,119 +435,6 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
         </div>
     </div>
 
-
-
-
-    <div class="feature-blog  pt--120 pb--70">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="section-title1">
-                        <span class="text-uppercase1">Top stories</span>
-                        <h2>Blog & news</h2> 
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="commn-carousel owl-carousel1 card-deck"> 
-                <OwlCarousel>                 
-                  <div class="card mb-5"> 
-                    <img class="card-img-top" src="/assets2/images/blog/blog-thumbnail1.jpg" alt="image"/>
-                    <div class="card-body p-25"> 
-                        <ul class="list-inline primary-color2 mb-3">
-                            <li><i class="fa fa-clock-o"></i> AUGUST 6, 2023</li>
-                            <li><i class="fa fa-comments"></i> 3 Comments</li>
-                        </ul>
-                      <h4 class="card-title mb-4"><a href="blogdetails">The Death Of architechture</a></h4>
-                      <p class="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
-                      <div className="login-box">
-                                <form>
-                                    <a href="coursedetails">
-                                    Check News
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </a>
-                                </form>
-                            </div>
-                    </div>
-                  </div>               
-                  <div class="card mb-5"> 
-                    <img class="card-img-top" src="/assets2/images/blog/blog-thumbnail2.jpg" alt="image"/>
-                    <div class="card-body p-25"> 
-                        <ul class="list-inline primary-color2 mb-3">
-                            <li><i class="fa fa-clock-o"></i> AUGUST 6, 2023</li>
-                            <li><i class="fa fa-comments"></i> 3 Comments</li>
-                        </ul>
-                      <h4 class="card-title mb-4"><a href="blogdetails">Aenean id ullamcorper</a></h4>
-                      <p class="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
-                      <div className="login-box">
-                                <form>
-                                    <a href="coursedetails">
-                                    Check News
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-
-                                    </a>
-                                </form>
-                            </div>
-                    </div>
-                  </div>
-       
-                  <div class="card mb-5"> 
-                    <img class="card-img-top" src="/assets2/images/blog/blog-thumbnail3.jpg" alt="image"/>
-                    <div class="card-body p-25"> 
-                        <ul class="list-inline primary-color2 mb-3">
-                            <li><i class="fa fa-clock-o"></i> AUGUST 6, 2023</li>
-                            <li><i class="fa fa-comments"></i> 3 Comments</li>
-                        </ul>
-                      <h4 class="card-title mb-4"><a href="blogdetails">The Death Of architechture</a></h4>
-                      <p class="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
-                      <div className="login-box">
-                                <form>
-                                    <a href="coursedetails">
-                                    Check News
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-
-                                    </a>
-                                </form>
-                            </div>
-                    </div>
-                  </div>       
-                  <div class="card mb-5"> 
-                    <img class="card-img-top" src="/assets2/images/blog/blog-thumbnail1.jpg" alt="image"/>
-                    <div class="card-body p-25"> 
-                        <ul class="list-inline primary-color2 mb-3">
-                            <li><i class="fa fa-clock-o"></i> AUGUST 6, 2023</li>
-                            <li><i class="fa fa-comments"></i> 3 Comments</li>
-                        </ul>
-                      <h4 class="card-title mb-4"><a href="blogdetails">The Death Of architechture</a></h4>
-                      <p class="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
-                      <div className="login-box">
-                                <form>
-                                    <a href="coursedetails">
-                                    Check News
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-
-                                    </a>
-                                </form>
-                            </div>
-                    </div>
-                  </div> 
-                  </OwlCarousel>   
-                </div>
-            </div>
-        </div>
-    </div>
     <div>
     <section className="section video" data-section="section5">
     <div className="container">
@@ -637,35 +524,6 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
                     </div>
                 </section>
         </div>
-    <div className="cta-area primary-bg has-color ptb--50"> 
-        <div className="container">
-            <div className="row align-items-center">
-                <div className="col-md-9">
-                    <div className="cta-content">
-                        <p className="mb-2">Click to Join the Advance Workshop</p>
-                        <h2>Training in advance networking</h2>
-                    </div>
-                </div>
-                <div className="col-md-3">
-                    <div className="cta-btn">
-                    <div className="login-box">
-                                <form>
-                                    <a href="coursedetails">
-                                    Join Us Now
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-
-                                    </a>
-                                </form>
-                            </div>{/* sign up */}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <script src="assets2/js/vendor/jquery-2.2.4.min.js"></script>
     <script src="assets2/js/bootstrap.min.js"></script>

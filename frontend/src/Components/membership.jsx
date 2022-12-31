@@ -290,7 +290,6 @@ Your course will be discoverable in our marketplace where you earn revenue from 
                                         <span></span>
                                         <span></span>
                                         <span></span>
-
                                     </a>
                                 </form>
                             </div>{/* sign up */}

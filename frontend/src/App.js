@@ -25,7 +25,6 @@ import Newcourses from './Components/newcourses';
 import Teacherdetails from './Components/teacherdetails';
 import Meetingdetails from './Components/meetingdetails';
 import Meetings from './Components/meetings';
-import Addcourse from './Components/addcourse';
 import Changepassword from './Components/changepassword';
 import Pruchercourse from './Components/pruchercourse';
 import Comingsoon from './Components/comingsoon';
@@ -78,7 +77,6 @@ function App() {
       <Route path='/meetingdetails' element={<Meetingdetails />} />
       <Route path='/meetings' element={<Meetings />} />
       <Route path='/createcourse' element={<Createcourse />} />
-      <Route path='/addcourse' element={<Addcourse />} />
       <Route path='/changepassword' element={<Changepassword />} />
       <Route path='/pruchercourse' element={<Pruchercourse />} />
       <Route path='/userprofile' element={<Userprofile />} />
@@ -91,7 +89,11 @@ function App() {
       <Route path='/viewNotes' element={<ViewNotes />} />
       <Route path='/adminview' element={<AdminView />} />
       <Route path='/takeCourse' element={<TakeCourse />} />
-
+      <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
+      <Route path='/forget-password' element={<ForgetPassword />} />
+      <Route path='/reset-password' element={<ResetPassword />} />
+      <Route path='/termsandconditions' element={<TermsAndConditions />} />
 
 
       </Routes>

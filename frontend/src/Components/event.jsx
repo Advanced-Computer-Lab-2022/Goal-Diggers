@@ -154,11 +154,11 @@ function Event(handleCountry) {
                     <li><i class="fa fa-clock-o"></i> AUGUST 6, 2017</li>
                     <li><i class="fa fa-comments"></i> 3 Comments</li>
                 </ul>
-              <h4 class="card-title mb-4"><a href="eventdetails">The Death Of architechture</a></h4>
+              <h4 class="card-title mb-4"><a href="/eventdetails">The Death Of architechture</a></h4>
               <p class="card-text">We’re a philosophical bunch here at School site and we have thought long and hard about.</p> 
               <div className="login-box">
                         <form>
-                            <a href="eventdetails">
+                            <a href="/eventdetails">
                             Check News
                                 <span></span>
                                 <span></span>
@@ -294,34 +294,6 @@ function Event(handleCountry) {
                     </div>
             </div>
           </div>    
-        </div>
-    </div>
-</div>
-</div>
-
-<div class="cta-area primary-bg has-color ptb--50"> 
-<div class="container">
-    <div class="row align-items-center">
-        <div class="col-md-9">
-            <div class="cta-content">
-                <p class="mb-2">Click to Join the Advance Workshop</p>
-                <h2>Training in advance networking</h2>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="cta-btn">
-            <div className="login-box">
-                        <form>
-                            <a href="coursedetails">
-                            Join Us Now
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </a>
-                        </form>
-                    </div>
-            </div>
         </div>
     </div>
 </div>

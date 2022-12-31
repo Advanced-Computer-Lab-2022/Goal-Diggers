@@ -287,33 +287,6 @@ function Blogdetails(handleCountry) {
             </div>
         </div>
     </div>
-  
-    <div class="cta-area primary-bg has-color ptb--50"> 
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-9">
-                    <div class="cta-content">
-                        <p class="mb-2">Click to Join the Advance Workshop</p>
-                        <h2>Training in advance networking</h2>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                <div className="login-box">
-                                <form>
-                                    <a href="coursedetails">
-                                    Join Us Now
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-
-                                    </a>
-                                </form>
-                            </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 
