@@ -64,7 +64,7 @@ function Register() {
       {error && <div className='alert alert-danger'>{error}</div>}
         <form action="#" onSubmit={register}>
           <div className="user-details">
-          <div class="material-textfield input-box ">
+          <div className="material-textfield input-box ">
           <input 
           className="inputt"
           placeholder=" "
@@ -73,7 +73,7 @@ function Register() {
         </input>
               <label className="labell">First Name</label>
             </div>
-            <div class="material-textfield input-box  ">
+            <div className="material-textfield input-box  ">
             <input 
             className="inputt"
             placeholder=" "
@@ -82,7 +82,7 @@ function Register() {
         </input>
               <label className="labell">Last Name</label>
             </div>
-            <div class="material-textfield input-box ">
+            <div className="material-textfield input-box ">
             <input 
             className="inputt"
         type="email"
@@ -92,7 +92,7 @@ function Register() {
         </input>
               <label className="labell">Email</label>
             </div>
-            <div class="material-textfield input-box ">
+            <div className="material-textfield input-box ">
             <input 
        className="inputt"
        placeholder=" "
@@ -101,7 +101,7 @@ function Register() {
         </input>
               <label className="labell">User Name</label>
             </div>
-            <div class="material-textfield input-box ">
+            <div className="material-textfield input-box ">
             <input 
             className="inputt"
         type="password"

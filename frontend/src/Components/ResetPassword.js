@@ -63,7 +63,7 @@ export default function Reset() {
                 <form onSubmit={Reset}>
                     
                 <div className="user-details">
-                <div class="material-textfield input-box ">
+                <div className="material-textfield input-box ">
                         <input 
                         className="inputt"
                         placeholder=" "
@@ -74,7 +74,7 @@ export default function Reset() {
                         </input>
                         <label className="labell">New Password</label>
                     </div>
-                    <div class="material-textfield input-box ">
+                    <div className="material-textfield input-box ">
                         <input 
                         type="password" 
                         className='inputt'

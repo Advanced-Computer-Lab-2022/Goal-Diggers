@@ -438,7 +438,7 @@ module.exports.registerUser = async (req, res) => {
         res.cookie("token",token,{
           httpOnly:true,
       }).send();
-      
+      return;
       } catch {
         res.status(500).send();
       }

@@ -70,7 +70,7 @@ export default function Login() {
     <form onSubmit={login}>
         
     <div className="user-details">
-    <div class="material-textfield input-box ">
+    <div className="material-textfield input-box ">
             <input 
             className="logininputt"
             placeholder=" "
@@ -80,7 +80,7 @@ export default function Login() {
             </input>
             <label className="loginlabell">Username</label>
         </div>
-        <div class="material-textfield input-box ">
+        <div className="material-textfield input-box ">
             <input 
             type="password" 
             className='logininputt'

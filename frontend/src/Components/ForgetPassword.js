@@ -37,7 +37,7 @@ export default function Reset() {
          <form onSubmit={handleReset}>
              
          <div className="user-details">
-         <div class="material-textfield input-box ">
+         <div className="material-textfield input-box ">
                  <input 
                  className="inputt"
                  placeholder=" "
