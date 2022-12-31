@@ -42,7 +42,7 @@ function Filldata() {
       <div className="content">
         <form action="#" onSubmit={register}>
           <div className="user-details">
-          <div class="material-textfield input-box ">
+          <div className="material-textfield input-box ">
           <input 
           className="inputt"
           placeholder=" "
@@ -51,7 +51,7 @@ function Filldata() {
         </input>
               <label className="labell">First Name</label>
             </div>
-            <div class="material-textfield input-box  ">
+            <div className="material-textfield input-box  ">
             <input 
             className="inputt"
             placeholder=" "
@@ -60,7 +60,7 @@ function Filldata() {
         </input>
               <label className="labell">Last Name</label>
             </div>
-            <div class="material-textfield input-box ">
+            <div className="material-textfield input-box ">
             <input 
             className="inputt"
         type="email"
@@ -70,7 +70,7 @@ function Filldata() {
         </input>
               <label className="labell">Email</label>
             </div>
-            <div class="material-textfield input-box ">
+            <div className="material-textfield input-box ">
             <input 
             className="inputt"
         type="password"
