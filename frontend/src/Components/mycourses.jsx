@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import { useState } from 'react'
 import courseService from '../courseContainer';
 import "./editprofile.css"
@@ -14,6 +14,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import AuthContext,{AuthContextProvider} from '../context/AuthContext';
 
 import { FormControl,Select,InputLabel,MenuItem, Divider} from "@mui/material";
 import coun_curr_code from '../coun-curr-code';
@@ -45,6 +46,7 @@ import axios from 'axios';
 const drawerWidth = 240;
 
 function Mycourses() {
+    const {loggedIn,id,type,username,lastname,firstname,email}=useContext(AuthContext);
     const [myCourses,setMyCourses] = useState([]);
     const [inprogress,setinprogress] = useState([]);
     const [completed,setcompleted] = useState([]);
@@ -61,7 +63,7 @@ function Mycourses() {
 
     useEffect(()=>{
         const getCourses = async () => {
-            const data = await courseService.getAllCourses();
+            const data = await courseService.getMyCourses(id);
             const c1 = await courseService.getInprogressCourses();
             const c2 = await courseService.getCompletedCourses();
             setMyCourses(data);

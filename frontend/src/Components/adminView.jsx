@@ -9,6 +9,9 @@ import SetPromotions from './setPromotions';
 const AdminView = () => {
     const [status, setStatus] = useState(''); 
     const [view, setView] = useState({adduser : true});
+    const [aUser,setAUser]=useState({aUser:false});
+    const [courseRequest,setCourseRequest]=useState({courseRequest:false});
+    const [addPromotions,setAddPromotions]=useState({addPromotions:false});
     const chooseItem = (item) => {
         if(['pending','approved','rejected'].includes(item)){
             setView({requests:true});
@@ -25,6 +28,21 @@ const AdminView = () => {
         else if (item === 'refund') 
             setView({refund : true});
     }   
+    function showAddUser(){
+        setAUser(true);
+        setCourseRequest(false);
+        setAddPromotions(false);
+    }
+    function handelCourseRequest(){
+        setCourseRequest(true);
+        setAUser(false);
+        setAddPromotions(false);
+    }
+    function handlePromotions(){
+        setAddPromotions(true);
+        setAUser(false);
+        setCourseRequest(false)
+    }
     return ( 
         <React.Fragment>
             <header id="header">
@@ -105,7 +123,7 @@ const AdminView = () => {
             </div>
         </div>
     </div>
-
+    <h1 className='mm'></h1>
     <div className="wrapper">
         <div className="sidebar">
             <div className="profile2">
@@ -115,19 +133,19 @@ const AdminView = () => {
             </div>
             <ul>
                 <li>
-                    <a href="/adduser">
+                    <a onClick={showAddUser}>
                         <span className="icon"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
                         <span className="item">Add User</span>
                     </a>
                 </li>
                 <li>
-                    <a href="coursesRequests">
+                    <a onClick={handelCourseRequest}>
                         <span className="icon"><i class="fa fa-book" aria-hidden="true"></i></span>
                         <span className="item">Course Request</span>
                     </a>
                 </li>
                 <li>
-                    <a href="setPromotions">
+                    <a onClick={handlePromotions}>
                         <span className="icon"><i class="fa fa-usd" aria-hidden="true"></i></span>
                         <span className="item">Set Promotions</span>
                     </a>
@@ -148,6 +166,18 @@ const AdminView = () => {
             </ul>
         </div>
         </div>
+        {(aUser==true)&&<><div className='po'>
+
+          <Adduser/>
+        </div></>}
+        {(courseRequest==true)&&<><div className='po'>
+
+         <CoursesRequests/>
+        </div></>}
+        {(addPromotions==true)&&<><div className='poo'>
+
+         <SetPromotions/>
+        </div></>}
 
         </React.Fragment>
      );

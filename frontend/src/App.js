@@ -91,7 +91,9 @@ function App() {
       <Route path='/takeCourse' element={<TakeCourse />} />
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
+      <Route path='/adduser' element={<Adduser />} />
       <Route path='/forget-password' element={<ForgetPassword />} />
+      <Route path='/setPromotions' element={<SetPromotions />} />
       <Route path='/reset-password' element={<ResetPassword />} />
       <Route path='/termsandconditions' element={<TermsAndConditions />} />
 

@@ -47,12 +47,15 @@ function Adduser(props) {
     }
 
   return (
-    <div>
+<div>
+    <div className='addUserContainer'>
+      </div>
         {error && <div className='alert alert-danger'>{error}</div>}
         {success && <div className='alert alert-success'>User added successfully</div>}
-        <div class="segment">
-            <h1>Add User</h1>
+        <div style={{}}  class="segment">
+            <h1></h1>
         </div>
+
 
         <div className='ip posi'>
             <input id='username' onChange={(e)=>handle(e)} value={data.username} className='gzz' type="text" required ></input>
@@ -77,9 +80,9 @@ function Adduser(props) {
 
         <div className="form-floating mb-3" />
 
-        <div className="col-sm-6 selbox">
+        <div   className="col-sm-6 selbox">
 
-                <select  onChange={(e)=>handle(e)} id = "role" value={data.role} className='form-control my-1 selbox' style={{width:'250px'}} placeholder = 'role'>
+                <select style={{height:"43px",width: "250px",position:"absolute",left:"70%",margin:"10px" ,border: '2px solid #a30506', borderRadius: '30px'}}  onChange={(e)=>handle(e)} id = "role" value={data.role}  placeholder = 'role'>
                     <option  value="">Select Role</option>
                     <option value="administrator">Administrator</option>
                     <option value="instructor">Instructor</option>
@@ -89,19 +92,21 @@ function Adduser(props) {
             </div>
         <div className="form-floating mb-3" />
 
-        <div className="login-box posi">
+
+
+        <div style={{position:"absolute",top:"270px",left:"0px"}} className="login-box posi">
             <form>
                 <a href="/blogdetails"onClick={()=>submit()}>
                 Add User
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                 
                 </a>
             </form>
         </div>  
         <div className="form-floating mb-3" />
+
+
     </div>
+    
   )
 }
 

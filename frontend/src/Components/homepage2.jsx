@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import { useState } from 'react'
 import "./editprofile.css"
 import main from "../assets1/course.mp4";
@@ -37,21 +37,23 @@ import "./search.scss";
 import CourseCard from './courseCard';
 import axios from 'axios';
 import Logout from './Auth/LogoutBtn';
+import AuthContext,{AuthContextProvider} from '../context/AuthContext';
 
 
 function Homepage2({}) {
-
+  const {loggedIn,id,type,username,lastname,firstname,email}=useContext(AuthContext);
     const [ready, setReady] = useState(false);
     const [allcourses, setallCourses] = useState([]);
     const [allusers, setallusers] = useState([]);
 
-    const id = useParams() // id for course used when the id is in the link
+    const idd = useParams() // id for course used when the id is in the link
   const [courseData, setCourseData] = useState(null)
   const [rate, setRate] = useState(null)
   const [mostvcourses, setmostvcourses] = useState([]);
   const [mostpcourses, setmostpcourses] = useState([]);
   const [country, setCountry] = useState(false);
   const config = { headers: { "apikey": "mg9jAAsEOiyrDEq4mw4wBarbgswdtryW" } };
+
 
 
 
@@ -145,7 +147,7 @@ function Homepage2({}) {
                                     <li><a href="/mycourses">My Courses</a><i className="fa fa-book dropdown"></i></li>
                                     <li><a href="/settings">Settings</a><i className="fa fa-cog dropdown"></i></li>
                                     <li><a href="/help">Help</a><h1 className="fa fa-question-circle dropdown"></h1></li>
-                                    <li><a href="/homepage2">Log Out</a><h1 className="fa fa-sign-out dropdown"></h1></li>
+                                    <li><a href="/homepage2"><Logout></Logout></a><h1 className="fa fa-sign-out dropdown"></h1></li>
                                 </ul>
                             </li>
                             <li >
@@ -155,6 +157,7 @@ function Homepage2({}) {
         defaultValue=""
         labelId="demo-simple-select-label"
         id="demo-simple-select"
+        className='navbarr'
         onChange={ (e) => {handleCountry(e.target.value) ; console.log("NAV " +e.target.value);} }
         >
         {coun_curr_code.map(country =><MenuItem key={country.country} value={country.currency_code}>{country.country}</MenuItem>)}
@@ -209,9 +212,10 @@ function Homepage2({}) {
               <h2>Welcome to Education</h2>
               <p>Learning that gets you
 Skills for your present (and your future).Get started with <a rel="nofollow" href="http://localhost:3000/homepage2" target="_blank">us</a>.</p>
+              {!loggedIn&&<>
               <div className="login-box">
                                 <form>
-                                    <a href="coursedetails">
+                                    <a href="/register">
                                         <span></span>
                                         <span></span>
                                         <span></span>
@@ -219,7 +223,7 @@ Skills for your present (and your future).Get started with <a rel="nofollow" hre
                                         Join Us Now
                                     </a>
                                 </form>
-                            </div>
+                            </div></>}
           </div>
               </div>
             </div>

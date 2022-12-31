@@ -13,12 +13,12 @@ const Sections = ({section,count}) => {
             <div className="row">
                 <div className="col-sm-2 pt-4">
 
-                    <p className="fst-italic  fs-4 text-center " style={{ top: '35%', padding: '5px' }}>Section : {count}</p>
+                    <p className="  fs-4 text-center " style={{ top: '35%', padding: '5px' }}>Section : {count}</p>
                 </div>
                 <div className="col-sm-6 p-5 mr-5">
-                    <p className="fst-italic  fs-6 "> title : {section.title}</p>
-                    <p className="fst-italic  fs-6 ">totalHours : {section.totalHours}</p>
-                    <p className="fst-italic  fs-6 ">Summary : {section.summary}</p>
+                    <p className=" fs-6 "> title : {section.title}</p>
+                    <p className=" fs-6 ">totalHours : {section.totalHours}</p>
+                    <p className="  fs-6 ">Summary : {section.summary}</p>
                         <div id="accordion">
                 <div className="card">
                     <div className="card-header" id="headingOne">

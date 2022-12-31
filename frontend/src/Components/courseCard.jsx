@@ -1,13 +1,15 @@
-import React from "react";
+import React,{useContext} from 'react'
 import {Rating} from '@mui/material';
 import { Link } from "react-router-dom";
+import AuthContext,{AuthContextProvider} from '../context/AuthContext';
 
 const CourseCard = ({course}) => {
+    const {loggedIn,id,type,username,lastname,firstname,email}=useContext(AuthContext);
     return ( 
       <div class="card mb-5">
       <div class="course-thumb">
           <img src={course.image} class = "piccss"  alt="image" />
-          <span class="cs-price primary-bg"> 
+          {!(type==='role')&&<> <span class="cs-price primary-bg"> 
         { (course.discount && new Date(course.discount.start) <= Date.now() && new Date(course.discount.end) >= Date.now()) ?
             <React.Fragment>
                 {localStorage.getItem('country') ? 
@@ -45,7 +47,7 @@ const CourseCard = ({course}) => {
                     <span>Free</span>
           </React.Fragment>
             }
-          </span>
+          </span></>}
       </div>
       <div class="card-body  p-25">
           <div class="course-meta-title mb-4">

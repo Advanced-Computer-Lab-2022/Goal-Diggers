@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { Rating } from "@mui/material";
 import courseService from '../courseContainer';
 import Sections from './section';
@@ -19,6 +19,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { FormControl, Select, InputLabel, MenuItem } from "@mui/material";
 import coun_curr_code from '../coun-curr-code';
 import axios from 'axios';
+import AuthContext,{AuthContextProvider} from '../context/AuthContext';
 
 import "./default-css.css";
 import "./font-awesome.min.css";
@@ -46,6 +47,7 @@ function Coursedetails() {
     const [country, setCountry] = useState(false);
     const { id } = useParams();
     const [ready, setReady] = useState(false);
+    const {loggedIn,idd,type,username,lastname,firstname,email}=useContext(AuthContext);
     const config = { headers: { "apikey": "mg9jAAsEOiyrDEq4mw4wBarbgswdtryW" } };
     const url = "https://www.youtube.com/embed/zpOULjyy-n8?rel=0";
     useEffect(() => {
@@ -193,10 +195,20 @@ function Coursedetails() {
                             <form>
                                 <a href="/coursedetails">
                                     Go to the Course
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
+                                </a>
+                            </form>
+                        </div>
+                        {type==='rule'&&<><div className="login-box">
+                            <form>
+                                <a href="/coursedetails">
+                                    Request the Course
+                                </a>
+                            </form>
+                        </div></>}
+                        <div className="login-box">
+                            <form>
+                                <a href="/coursedetails">
+                                    Buy the Course
                                 </a>
                             </form>
                         </div>
@@ -357,21 +369,7 @@ function Coursedetails() {
                                         </ul>
                                     </div>
 
-                                    <div class="leave-comment-area">
-                                        <h4 class="comment-title">Leave Your Comment</h4>
-                                        <form action="#">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <input type="text" name="Name" placeholder="Enter your name" />
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <input type="email" name="email" placeholder="Your Email" />
-                                                </div>
-                                            </div>
-                                            <textarea name="msg" id="msg" placeholder="Your message here"></textarea>
-                                            <button class="btn btn-primary btn-round" type="submit">Post Comment<i class="fa fa-long-arrow-right"></i></button>
-                                        </form>
-                                    </div>
+                                  
                                     <div className="form-floating mb-3" />
                                 </div>
 
