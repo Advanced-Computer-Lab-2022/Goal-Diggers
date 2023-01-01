@@ -208,7 +208,7 @@ const TakeCourse = () => {
                             </div>
                         }
                                                 {quizStart ?
-                            <WelcomeQuiz courseID={course._id} id={quizId} grade={quizGrade} />
+                            <WelcomeQuiz courseID={course.courseID} id={quizId} grade={quizGrade} />
                             : (viewrefund ?
                                 <Refundcourse  courseID={course._id}  /> : (report ?
                                     <div className="container p-3 justify-content-center" >

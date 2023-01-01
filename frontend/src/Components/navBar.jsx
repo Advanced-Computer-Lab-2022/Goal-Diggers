@@ -46,7 +46,7 @@ const NavBar = ({handleCountry}) => {
             <li id="nav-item3" className=""><a href="/student-profile" class=""><img id='sidebar' src={imgS} /></a> <span>{username}</span>
               <ul  class="submenu">
                   <li><Link to={"/student-profile"} >View Profile</Link><h1 className="fa fa-user dropdown" aria-hidden="true"></h1></li>
-                  <li><Link to={'/student-courses'}>My Courses</Link><i className="fa fa-book dropdown"></i></li>
+                  <li><a href={'/student-courses'}>My Courses</a><i className="fa fa-book dropdown"></i></li>
                   <li><LogoutBtn></LogoutBtn></li>
               </ul>
             </li>

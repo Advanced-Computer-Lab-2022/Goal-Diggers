@@ -849,6 +849,7 @@ module.exports.getCourse = async (req,res) => {
     if(token)
       verified =jwt.verify(token,process.env.JWT_SECRET);
     const id = ObjectId(req.params.id);
+    const courseID = req.params.id;
     await Course.findById(id).then(
         async course => {
             if(course){
@@ -857,8 +858,8 @@ module.exports.getCourse = async (req,res) => {
                 if(!token) {
                   return res.status(200).json({course, notRegister : true});
                 }
-                if(await RegisterCourse.findOne({courseID : id, studentID : verified.user})){
-                    await RegisterCourse.findOne({courseID : id, studentID : verified.user}).then(
+                if(await RegisterCourse.findOne({courseID : courseID, studentID : verified.user})){
+                    await RegisterCourse.findOne({courseID : courseID, studentID : verified.user}).then(
                       co =>{
                         if(co.pending){
                           return res.status(200).json({course, pending : true});
@@ -870,7 +871,7 @@ module.exports.getCourse = async (req,res) => {
                     )
                 }
                 else  {
-                  await CourseRequest.findOne({courseID : id, studentID : verified.user, status : 'pending'}).then(
+                  await CourseRequest.findOne({courseID : courseID, studentID : verified.user, status : 'pending'}).then(
                     request => {
                       if(request)
                         return res.status(200).json({course, requested : true});
