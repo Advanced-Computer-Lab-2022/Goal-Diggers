@@ -13,6 +13,8 @@ const registerCourseSchema = new Schema({
         createdByName : String,
         courseID : Object,
         studentID : Object,
+        studentName : String,
+        studentUsername : String,
         completedVideos : [Object],
         attemptedQuizs : [Object],
         completedQuizs : Number,

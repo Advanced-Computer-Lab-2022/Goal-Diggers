@@ -35,6 +35,9 @@ export default function Login() {
                 setFillData(true);
                 setPassword("");
             }
+            else if(res.data.type == "admin") {
+                navigate('/admin-profile');
+            }
             else {
                 navigate('/');
             }

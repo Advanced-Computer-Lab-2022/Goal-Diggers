@@ -3,16 +3,19 @@ import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import {Navigation} from 'react-minimal-side-navigation';
 import Changepassword from './changepassword';
 import StudentProfile from './studentProfile';
-import InprogressCourses from './inprogress';
-import CompletedCourses from './completed';
+import ReactLoading from 'react-loading';
 import AuthContext, { AuthContextProvider } from"../context/AuthContext";
 import StudentWallet from './studentWallet';
+import courseService from '../courseContainer';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileView = () => {
     const [view, setView] = useState({profile : true});
     const [active, seTactive] = useState("");
+    const [ready, setReady] = useState(false);
     const [items, setItems] = useState({});
     const {loggedIn,id,type, username,wallet}=useContext(AuthContext);
+    const navigate = useNavigate();
     const chooseItem = (item) => {
         if(item === 'profile') 
             setView({profile : true});
@@ -24,50 +27,66 @@ const ProfileView = () => {
             setView({changeinfo : true});
     };
     useEffect (()=>{
-        let itemTemp = [];
-        itemTemp.push({title : "Profile",
-        itemId : "profile"
-        });
-        if(type != "corporateterainees "){
-            itemTemp.push({title : "My Wallet",
-            itemId : "wallet"
-            });
-        }
-        itemTemp.push({title : "Settings",
-        subNav : [
-            {title : "Change my Password",
-            itemId : "password",
-            },
-            {title : "Change my Information",
-            itemId : "information",
-            },
-        ]
-        });
-        setItems(itemTemp);
+        const auth = async() =>{ 
+            const loggedInRes=await courseService.getLoggedIn();
+            console.log(loggedInRes.type);
+            if(loggedInRes.type === 'student' || loggedInRes.type === 'corporatetrainees '){
+                let itemTemp = [];
+                itemTemp.push({title : "Profile",
+                itemId : "profile"
+                });
+                if(type != "corporatetrainees "){
+                    itemTemp.push({title : "My Wallet",
+                    itemId : "wallet"
+                    });
+                }
+                itemTemp.push({title : "Settings",
+                subNav : [
+                    {title : "Change my Password",
+                    itemId : "password",
+                    },
+                    {title : "Change my Information",
+                    itemId : "information",
+                    },
+                ]
+                });
+                setItems(itemTemp);
+                setReady(true);
+            }
+            else 
+                navigate("/not-found");
+        };
+        auth();
+        
     },[type])
     return ( 
         <React.Fragment>
-        <div className="row mt-3">
-            <div className="col-sm-1"></div>
-            <div className="col-sm-3 text-center">
-                <img src="./graduating-student.png" width={'80px'} style={{borderRadius:'30px'}} alt="" />
-                <h6 className='m-2'> {username} </h6>
-                <Navigation
-                    activeItemId={active}
-                    onSelect={({itemId}) => {
-                        chooseItem(itemId);
-                    }}
-                    items={items}     
-                />
-            </div>
-            <div className="col-sm-7 text-center">
-                {view.changepassword && <Changepassword />}
-                {view.profile && <StudentProfile />}
-                {view.wallet && <StudentWallet wallet={wallet}/>}
-            </div>
-            <div className="col-sm-1"></div>
-        </div>
-    </React.Fragment>
+            {ready && <div className="row mt-3">
+                <div className="col-sm-1"></div>
+                <div className="col-sm-3 text-center">
+                    <img src="./graduating-student.png" width={'80px'} style={{borderRadius:'30px'}} alt="" />
+                    <h6 className='m-2'> {username} </h6>
+                    <Navigation
+                        activeItemId={active}
+                        onSelect={({itemId}) => {
+                            chooseItem(itemId);
+                        }}
+                        items={items}     
+                    />
+                </div>
+                <div className="col-sm-7 text-center">
+                    {view.changepassword && <Changepassword />}
+                    {view.profile && <StudentProfile />}
+                    {view.wallet && <StudentWallet wallet={wallet}/>}
+                </div>
+                <div className="col-sm-1"></div>
+            </div>}
+            {!ready && 
+                <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center', height : '500px'}}>
+                    <ReactLoading type={"bars"} color={'#a00407'} height={'5%'} width={'5%'} />
+                </div>
+            }
+        </React.Fragment>
      );
 }
  

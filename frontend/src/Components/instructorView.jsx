@@ -9,11 +9,16 @@ import Reviewsoninstructor from './reviewsoninstructor';
 import Editinstructorprofile from './editinstructorprofile';
 import AuthContext, { AuthContextProvider } from"../context/AuthContext";
 import SetPromotions from './setPromotions';
+import ReactLoading from 'react-loading';
+import { useNavigate } from 'react-router-dom';
+import courseService from '../courseContainer';
 
 const InstructorView = ({type}) => {
     const [view, setView] = useState({});
     const {loggedIn,id,username}=useContext(AuthContext);
     const [items, setItems] = useState([]);
+    const [ready, setReady] = useState(false);
+    const navigate = useNavigate();
     const chooseItem = (item) => {
         if(item === 'profile') 
             setView({profile : true});
@@ -31,44 +36,53 @@ const InstructorView = ({type}) => {
             setView({addpromo : true});
     } 
     useEffect (()=>{
-        if(type == 'profile') {
-            setView({profile : true});
-            setItems(
-                [{title : "Profile",
-                itemId : "profile"
-                },
-                {title : "Rating and Reviews",
-                itemId : "rate"
-                },
-                {title : "Settings",
-                subNav : [
-                    {title : "Change my Password",
-                    itemId : "password",
-                    },
-                    {title : "Change my Information",
-                    itemId : "information",
-                    },
-                ]
-                },
-                {title : "My Earnings",
-                itemId : "earn"
-                },]
-            )
-        } else {
-            setView({addcourse : true});
-            setItems(
-                    [{title : "Add Course",
-                    itemId : "addc"
-                    },
-                    {title : "Add Promotion",
-                    itemId : "promo"
-                },]
-            )
-
-        }
+        const auth = async() =>{ 
+            const loggedInRes=await courseService.getLoggedIn();
+            if(loggedInRes.type === 'instructor'){
+                if(type == 'profile') {
+                    setView({profile : true});
+                    setItems(
+                        [{title : "Profile",
+                        itemId : "profile"
+                        },
+                        {title : "Rating and Reviews",
+                        itemId : "rate"
+                        },
+                        {title : "Settings",
+                        subNav : [
+                            {title : "Change my Password",
+                            itemId : "password",
+                            },
+                            {title : "Change my Information",
+                            itemId : "information",
+                            },
+                        ]
+                        },
+                        {title : "My Earnings",
+                        itemId : "earn"
+                        },]
+                    )
+                } else {
+                    setView({addpromo : true});
+                    setItems(
+                        [
+                        {title : "Add Promotion",
+                        itemId : "promo"},
+                        {title : "Add Course",
+                        itemId : "addc"
+                        },])
+        
+                }
+                setReady(true);
+            }
+            else 
+                navigate("/not-found");
+        };
+        auth();  
     },[])  
     return ( 
         <React.Fragment>
+            {ready && 
             <div className="row mt-3">
                 <div className="col-sm-1"></div>
                 <div className="col-sm-3 text-center">
@@ -93,6 +107,12 @@ const InstructorView = ({type}) => {
                 </div>
                 <div className="col-sm-1"></div>
             </div>
+            }
+            {!ready && 
+                <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center', height : '500px'}}>
+                    <ReactLoading type={"bars"} color={'#a00407'} height={'5%'} width={'5%'} />
+                </div>
+            }
         </React.Fragment>
      );
 }

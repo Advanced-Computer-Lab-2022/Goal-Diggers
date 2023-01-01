@@ -54,7 +54,7 @@ const NavBar = ({handleCountry}) => {
 
             {type=="administrator"&&<> 
             <li id="nav-item3" className=""><a href="/admin-profile" class=""><img id='sidebar' src={imgA} /></a> <span>{username}</span>
-              <ul>
+              <ul class="submenu">
                 <li><LogoutBtn></LogoutBtn></li>
               </ul>
             </li>          

@@ -54,7 +54,9 @@ function Editinstructorprofile() {
                 <textarea onChange={(e) => handleChange(e,'minibiography')} value={data.minibiography} name="summary" id="summary" className="form-control" placeholder="Leave a comment here" style={{ height: '100px' }}></textarea>
                 <label htmlFor="floatingTextarea2">Minibiography</label>
             </div>
-            <button className="btn btn-primary" onClick={(e)=>submit()}> Save </button>
+            <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center'}}>
+                <button className="buttoon pt-2" style={{width:  '500px', margin : 0}} onClick={(e)=>submit()}> Save </button>
+            </div>
     </div>
   );
 }

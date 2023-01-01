@@ -257,7 +257,7 @@ courseService.getRefundRequests = async() => {
 
 courseService.ForgtetPassword = async(body) => {
     const {data} = await http.post(apiUrl + 'forget-password',body);
-    return data.courses;
+    return data;
 }
 courseService.ResetPassword = async(body) => {
     const {data} = await http.post(apiUrl + 'reset-password',body);
@@ -274,6 +274,18 @@ courseService.SendCertificate = async(body) => {
 courseService.SaveData = async(body) => {
     const {data} = await http.post(apiUrl + 'save-data',body);
     return data;
+}
+courseService.addFollowup = async(body) => {
+    const {data} = await http.post(apiUrl + 'add-followup',body);
+    return data;
+}
+courseService.getLoggedIn = async() => {
+    const {data} = await http.get(apiUrl + 'loggedin');
+    return data;
+}
+courseService.verifyRegisteredCourse = async(id) => {
+    const {data} = await http.get(apiUrl + 'verify-register-course/'+ id);
+    return data.course;
 }
 
 export default courseService;

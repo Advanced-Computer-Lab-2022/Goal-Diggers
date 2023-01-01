@@ -2,10 +2,11 @@ import React , {useState} from 'react';
 import swal from 'sweetalert';
 import courseService from '../courseContainer';
 import "./rate.css";
-import {Link, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 
 function Ratecourse() {
     const [done, setDone] = useState(false);
+    const navigate = useNavigate();
     const [data , setdata] = useState({
         rate :"",
         review : ""
@@ -28,6 +29,7 @@ function Ratecourse() {
             }
             console.log(data);
             const res = await courseService.rateCourse(data.review,data.rate,id);
+            navigate(`/take-course/${id}`);
             setDone(true);
           });
         }
@@ -82,9 +84,9 @@ function Ratecourse() {
 <label htmlFor="floatingTextarea2">Let Us know your opinion about the course</label>
 </div>
 <div className="form-floating mb-3" />
-   <button className='btn btn-primary' onClick={(e)=>rateCourse()}>Rate Course</button>
+   <button className='buttoon pt-2 mx-5' style={{margin:0}} onClick={(e)=>rateCourse()}>Rate Course</button>
+   {/* <button className='btn btn-primary' onClick={(e)=>skip()}>Skip Rating</button> */}
 <div className="form-floating mb-3" />
-   <button className='btn btn-primary' onClick={(e)=>skip()}>Skip Rating</button>
 </div>
    </div>
        </React.Fragment>

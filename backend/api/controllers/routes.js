@@ -60,6 +60,7 @@ router.get('/loggedin', controller.LoggedIn);
 /////////////////
 router.post('/request', controller.RequestCourse);
 router.post('/add-problem', controller.addproblem);
+router.post('/add-followup', controller.addfollow);
 router.get('/get-problems/:id', controller.getproblem);
 router.post('/refund-course/:id', controller.refundcourse);
 router.post('/refund', controller.AdminRefundCourse);
@@ -68,5 +69,6 @@ router.post('/forget-password', controller.forgotPassword);
 router.post('/verify-link', controller.Linkverify);
 router.post('/reset-password', controller.ResetPassword);
 router.post('/send-certificate', controller.sendMail);
+router.get('/verify-register-course/:id', controller.VerifyRegisterCourse);
 
 module.exports = router;

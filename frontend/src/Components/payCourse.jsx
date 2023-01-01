@@ -33,7 +33,10 @@ const Child = () => {
         const fetchClientSecret = async () => {
         let res = await courseService.getCourse(id);
         setPrice(res.course.price);
-        if(res.course.discount && new Date(res.course.discount.date) >= Date.now()) {
+        if(!res.course) {
+            navigate('/not-found');
+        }
+        if(res.course.discount && new Date(res.course.discount.enddate) >= Date.now() && new Date(res.course.discount.startdate) <= Date.now()) {
             setPrice(res.course.price - res.course.price * (res.course.discount.promotion / 100));
             console.log(price);
         }
@@ -71,24 +74,6 @@ const Child = () => {
             {ready && 
                 <React.Fragment>
                     <h2 className='text-center mt-2' style={{fontFamily:'cursive'}}>Register in {course.title} course</h2>
-                    <div className="row mt-4">
-                        <div className="col-sm-2"></div>
-                        <div className="col-sm-8">
-                            <div className="card bg-light mt-2" style={{borderRadius : '25px'}}>
-                                <div className="row">
-                                <div className="col-sm-4">
-                                    <img src={course.image} alt="" width={'200px'}/>
-                                </div>
-                                <div className="col-sm-8 pt-5">
-                                    <span>Title : {course.title}</span> <br />
-                                    <span>Subject : {course.subject}</span> <br />
-                                    <span>Price : {price} USD {'->'} {course.price}</span> <br />
-                                    <Rating name="rating" value={course.rate} readOnly/>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div className="row mt-3">
                         <div className="col-sm-2"></div>
                         <div className="col-sm-8">
@@ -104,7 +89,8 @@ const Child = () => {
                                 <CardElement onChange={()=>{setError("")}}/>
                                 </div>
                                 </PaymentContainer>
-                                {loading && <div className="row">
+                                {loading && 
+                                <div className="row">
                                     <div className="col-sm-5"></div>
                                     <div className="col-sm-6">
                                     <ReactLoading type={"bars"} color={'lightgreen'} width={'50px'}/>
@@ -113,12 +99,38 @@ const Child = () => {
                                 <div className="row">
                                     <div className="col-sm-3"></div>
                                     <div className="col-sm-6">
-                                        <button style={{borderRadius : '25px'}} className='btn btn-primary mt-3' onClick={(e)=>confirmPayment(e)}>Pay <i className="fa fa-money" aria-hidden="true"></i></button>
+                                    <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center'}}>
+                                        <button style={{margin : '0px'}} className='buttoon pt-2 mt-3' onClick={(e)=>confirmPayment(e)}>Pay <i className="fa fa-money" aria-hidden="true"></i></button>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div className="row mt-4">
+                        <div className="col-sm-2"></div>
+                        <div className="col-sm-8 " >
+                            <div className="card bg-light mt-2" style={{borderRadius : '25px'}}>
+                                <div className="row">
+                                <div className="col-sm-4">
+                                    <img src={course.image} alt="" width={'200px'}/>
+                                </div>
+                                <div className="col-sm-8 pt-2 " >
+                                    <span>Title : {course.title}</span> <br />
+                                    <span>Subject : {course.subject}</span> <br />
+                                    {course.discount && new Date(course.discount.enddate) >= Date.now() && new Date(course.discount.startdate) <= Date.now() ?
+                                             <React.Fragment><del>Price : {course.price} USD</del> Price : {price} USD</React.Fragment> 
+                                    :
+                                    (<span>Price : {course.price} USD</span>)
+                                    }
+                                    <br />
+                                    <Rating name="rating" value={course.rate} readOnly/>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </React.Fragment>
             }
             {!ready && 

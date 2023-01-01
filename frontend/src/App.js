@@ -65,7 +65,8 @@ function App() {
         <Route path='/take-course/:id' element={<TakeCourse />} />
         <Route path='/quiz/:courseID/:id' element={<Quiz />} />
         <Route path='/payment/:id' element={<PayCourse />} />
-        <Route path='/certificate/:id' element={<Certificate />} />
+        <Route path='/certificate/:id' element={<Certificate type={'certificate'}/>} />
+        <Route path='/verify-certificate/:id' element={<Certificate type={'verify'}/>} />
         <Route path='/' exact element={<CourseContainer currency={currency} type="all"/>} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />

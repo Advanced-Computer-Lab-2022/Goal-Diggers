@@ -78,6 +78,18 @@ const Problems = ({status}) => {
                         <div className="row">
                             <div className="col-sm-5">
                                 <p>Problem : {request.question}. <br /> Type : {request.type}</p>
+                                {(request.status == 'unseen' || request.status == "pending") &&
+                                    <React.Fragment>
+                                        {request.followups.length > 0 && <h6>Follow ups : </h6>}
+                                        <ol  type='1'>
+                                        {request.followups.map((item,i) => {
+                                                return (
+                                                    <li>{item}.</li>
+                                                )
+                                        })}
+                                        </ol>
+                                    </React.Fragment>
+                                }
                             </div>
                             {request.status == 'unseen' && 
                             <div className="col-sm-7">

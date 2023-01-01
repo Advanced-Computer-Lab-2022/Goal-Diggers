@@ -133,11 +133,13 @@ module.exports.addCourse = async (req, res) => {
     course.ratedetails = [0,0,0,0,0,0];
     course.reviews = [];
     course.numberofrates = 0;
-    course.registers = 0;
-    course.viewers = 0;
     course.createdById = ObjectId(verified.user);
     course.createdByName = verified.username;
-    course.overviewvideo = {title : "Welcome video", url : course.overviewVideo, discription : course.summary};
+    course.overviewvideo = {title : "Welcome video", url : course.overviewvideo, description : course.summary};
+    let course_reg = new RegisterCourse(course);
+    course_reg.studentID = verified.user;
+    course_reg.studentName = verified.username;
+    course.reg.save();
     Course.create(course).then(
       result => {return res.status(200).json({result});}
     )
@@ -176,6 +178,17 @@ module.exports.addCourseRate = async (req, res) => {
       res.json(false);
   }
 };
+
+//GET
+//url : /api/verify-register-course/12 -> to verify the certificate
+module.exports.VerifyRegisterCourse = async (req,res) => {
+  const id = ObjectId(req.params.id);
+  RegisterCourse.findById(id).then(
+    course => {
+      return res.status(200).json({course});
+    }
+  )
+}
 
 //POST
 //url : /api/rate-instructor/12 -> rate to instructor
@@ -337,7 +350,7 @@ module.exports.forgotPassword = async (req, res) => {
                   },
                   (error, info) => {
                     if (error) {
-                      return res.status(500).json({ error });
+                      return res.status(200).json({ error });
                     } else {
                       return res.status(200).json({});
                     }
@@ -363,7 +376,7 @@ module.exports.forgotPassword = async (req, res) => {
                   },
                   (error, info) => {
                     if (error) {
-                      return res.status(500).json({ error });
+                      return res.status(200).json({ error });
                     } else {
                       return res.status(200).json({});
                     }
@@ -392,7 +405,7 @@ module.exports.forgotPassword = async (req, res) => {
                   },
                   (error, info) => {
                     if (error) {
-                      return res.status(500).json({ error });
+                      return res.status(200).json({ error });
                     } else {
                       return res.status(200).json({});
                     }
@@ -534,7 +547,7 @@ module.exports.loginUser = async (req, res) => {
             if(result.role === 'corporatetrainees ')
               return res.status(200).json({firstlogin : result.firstlogin});
             else  
-              return res.status(200).json({});
+              return res.status(200).json({type : "admin"});
 
           } else {
             res.status(201);
@@ -1088,7 +1101,6 @@ module.exports.getproblem = async (req,res)=>{
     const id = ObjectId(req.params.id); 
     Problem.find({courseID : id, writerId : verified.user}).then(
         problems => {
-            console.log(problems);
                   return res.status(200).json({problems});
         }
     );
@@ -1098,6 +1110,19 @@ module.exports.getproblem = async (req,res)=>{
   }
 }
 
+// add follow up on specific problem
+module.exports.addfollow = async (req,res)=>{
+    const followup = req.body.followup;
+    const problem_id = req.body.problem_id;
+    console.log("SSSSs");
+    Problem.findById(problem_id).then(
+        problem => {
+                  problem.followups.push(followup);
+                  problem.save();
+                  return res.status(200).json({});
+        }
+    );
+}
 // add problem
 module.exports.addproblem = async (req,res)=>{
   try {

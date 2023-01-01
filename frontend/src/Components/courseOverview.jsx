@@ -3,7 +3,7 @@ import {Rating} from "@mui/material";
 import courseService from '../courseContainer';
 import Sections from './section';
 import ReactPlayer from 'react-player/youtube';
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import AuthContext, { AuthContextProvider } from"../context/AuthContext";
 import ReactLoading from 'react-loading';
 
@@ -15,11 +15,15 @@ const CourseOverview = () => {
     const [ready, setReady] = useState(false);
     const [loading, setLoading] = useState(false);
     const [reload, setReload] = useState(false);
+    const navigate = useNavigate();
     const [requested, setRequested] = useState(false);
     useEffect(() => {
         const getCourse = async (id) => {
             const res = await courseService.getCourse(id);
             setCourse(res.course);
+            if(!res.course) {
+                navigate('/not-found');
+            }
             setres({reg : res.register, pen : res.pending, requested : res.requested});
             console.log(res);
             setReady(true);
@@ -60,16 +64,16 @@ const CourseOverview = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="mb-2    ">
+                    <div className="mb-2   fixed ">
                         <a href='#top' className="btn btn-light mx-2">Top page</a>
                         <a href='#video' className="btn btn-light ">Welcom Video</a>
-                        <a href='#sections' className="btn btn-light ">Sections</a>
-                        <a href='#reviews' className="btn btn-light "> Reviews</a>
+                        <a href='#sections' className="btn btn-light ">Course Details</a>
+                        <a href='#reviews' className="btn btn-light "> Reviews and Ratings</a>
                     </div>
-                    <div id='video' className='row bg-light p-4 m-2' style={{borderRadius : '25px', border : '1px solid black'}}>
+                    <div id='video' className='row bg-light p-4 m-2'>
                         <div className="col-sm-8 " >
                             <center>
-                                <h2>A Preview Video for the course:</h2>
+                                <h3>A Preview Video for the course:</h3>
                                 <ReactPlayer width={750} height={500} url={course.overviewvideo.url} />
                             </center>
 
@@ -81,14 +85,16 @@ const CourseOverview = () => {
                         </div>
 
                     </div>
-                    <div id="sections" className='bg-light p-4 m-2' style={{borderRadius : '25px', border : '1px solid black'}}>
+                    <div id="sections" className='bg-light p-4 m-2'>
+                        <h3>Course Details.</h3>
                         {course.subtitles.map((section, index) => {
                             return <Sections key={index} section={section} count={index + 1} />
                         })}
 
                     </div>
                     {/* /////////////////////////// */}
-                    <div className='row bg-light p-4 m-2' id="reviews" style={{borderRadius : '25px', border : '1px solid black'}}>
+                    <div className='row bg-light p-4 m-2' id="reviews">
+                        <h3>Reviews and Ratings.</h3>
                     <div className="col-sm-4 p-5">
                             <Rating precision={0.1} name="rating" value={(course.rate / course.numberofrates).toFixed(1)} readOnly />
                             <div>
@@ -102,7 +108,8 @@ const CourseOverview = () => {
                                     <div>5 star</div>
                                 </div>
                                 <div class="middle">
-                                    {course.ratedetails[5] > 0 ? <div class="bar-5" style={{width : (course.ratedetails[5]/course.numrate)*100+'%'}}></div>
+                                    {console.log(course.ratedetails[5])}
+                                    {course.ratedetails[5] > 0 ? <div class="bar-5" style={{width : (course.ratedetails[5]/course.numberofrates)*100+'%'}}></div>
                                     :
                                         <div class="bar-5" style={{width : '0%'}}></div>
                                     }
@@ -114,10 +121,10 @@ const CourseOverview = () => {
                                     <div>4 star</div>
                                 </div>
                                 <div class="middle">
-                                    {course.ratedetails[4] > 0 ? <div class="bar-4" style={{width : (course.ratedetails[4]/course.numrate)*100+'%'}}></div>
-                                    :
-                                        <div class="bar-4" style={{width : '0%'}}></div>
-                                    }
+                                    {course.ratedetails[4] > 0 ? <div class="bar-4" style={{width : (course.ratedetails[4]/course.numberofrates)*100+'%'}}></div>
+                                        :
+                                            <div class="bar-4" style={{width : '0%'}}></div>
+                                        }
                                 </div>
                                 <div class="side right">
                                     <div>{course.ratedetails[4]}</div>
@@ -126,7 +133,7 @@ const CourseOverview = () => {
                                     <div>3 star</div>
                                 </div>
                                 <div class="middle">
-                                    {course.ratedetails[3] > 0 ? <div class="bar-3" style={{width : (course.ratedetails[3]/course.numrate)*100+'%'}}></div>
+                                    {course.ratedetails[3] > 0 ? <div class="bar-3" style={{width : (course.ratedetails[3]/course.numberofrates)*100+'%'}}></div>
                                     :
                                         <div class="bar-3" style={{width : '0%'}}></div>
                                     }
@@ -138,7 +145,7 @@ const CourseOverview = () => {
                                     <div>2 star</div>
                                 </div>
                                 <div class="middle">
-                                    {course.ratedetails[2] > 0 ? <div class="bar-2" style={{width : (course.ratedetails[2]/course.numrate)*100+'%'}}></div>
+                                    {course.ratedetails[2] > 0 ? <div class="bar-2" style={{width : (course.ratedetails[2]/course.numberofrates)*100+'%'}}></div>
                                     :
                                         <div class="bar-2" style={{width : '0%'}}></div>
                                     }
@@ -150,7 +157,7 @@ const CourseOverview = () => {
                                     <div>1 star</div>
                                 </div>
                                 <div class="middle">
-                                    {course.ratedetails[1] > 0 ? <div class="bar-1" style={{width : (course.ratedetails[1]/course.numrate)*100+'%'}}></div>
+                                    {course.ratedetails[1] > 0 ? <div class="bar-1" style={{width : (course.ratedetails[1]/course.numberofrates)*100+'%'}}></div>
                                     :
                                         <div class="bar-1" style={{width : '0%'}}></div>
                                     }

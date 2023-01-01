@@ -4,7 +4,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import { useEffect } from 'react';
 import CourseService from '../courseContainer';
 // import quizExample from '../quiz';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Sidebar from './sidebar';
 import courseService from '../courseContainer';
 import ReactLoading from 'react-loading';
@@ -20,10 +20,14 @@ const Quiz = () => {
     const [color, setColor] = useState('lightcoral');
     const [percentage, setPercentage] = useState(0);
     const {id}=useParams();
+    const navigate = useNavigate();
     const {courseID}=useParams();
     useEffect(()=>{
         const getquiz = async ()=>{
             const res = await CourseService.getQuiz(id);
+            if(!res) {
+                navigate('/not-found');
+            }
             console.log(res);
             setQuiz(res);
             setReady(true);

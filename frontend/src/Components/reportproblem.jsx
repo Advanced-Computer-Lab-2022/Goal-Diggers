@@ -48,15 +48,8 @@ function Reportproblem({ courseID }) {
     console.log(newdata);
   }
   return (
-    //////////////////////////////
-
-
-
-    /////////////////////////////////////
-
-
     <React.Fragment>
-      <div className="card col-sm-8 mt-3">
+      <div className="card col-sm-8 mt-3" style={{  display: 'flex',justifyContent: 'center',alignItems: 'center'}}>
             <h3 className='text-center my-2'>Write Your Problem</h3>
           {done && <div className="alert alert-success">We have recieved your problem</div>}
           {texterror ? <div className="alert alert-danger">You must write the problem and select its type.</div> : ""}
@@ -72,7 +65,9 @@ function Reportproblem({ courseID }) {
           <option value="financial">Financial</option>
           <option value="other">Other</option>
         </select>
-        <button className="btn btn-primary" onClick={(e) => submit(e)} id="type">send the problem</button>
+        <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center'}}>
+        <button className="buttoon pt-2" style={{width : '450px', margin : '0px'}} onClick={(e) => submit(e)} id="type">Send the Problem</button>
+        </div>
       </div>
     </React.Fragment>
 

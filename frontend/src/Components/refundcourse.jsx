@@ -15,9 +15,9 @@ const Refundcourse = ({courseID}) => {
     return ( 
         <section className="page-section">
             <div className="container bg-light py-5" >
-               <h4 className='text-danger'>Important Notes ! :</h4>
+               <h4 className='text-danger'>Important ! :</h4>
             <hr />
-            <h6>notes  : </h6>
+            <h6>Policy  : </h6>
             <ol className='bg-dark' style={{fontWeight: 'bold', border : '1px solid lightcoral', borderRadius : '25px', color : 'white'}}>
                 <li className="my-2">If you refund the course it will be pended </li>
                 <li className="my-2">You can not access the course material until admin reply </li>

@@ -33,6 +33,7 @@
     "react-progress-bar": "^0.1.0",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
+    "reactjs-popup": "^2.0.5",
     "sass": "^1.56.1",
     "scss": "^0.2.4",
     "strip": "^3.0.0",

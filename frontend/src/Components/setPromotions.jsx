@@ -117,7 +117,9 @@ const SetPromotions = ({role}) => {
                             <label htmlFor="date">When will it expire ?</label>
                         </div>
                         <div className="form-floating col-sm-4 pt-2">
-                            <button onClick={()=>submit()} className='btn btn-primary' style={{borderRadius : '25px'}}>Add Promotion</button>
+                        <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center'}}>
+                            <button onClick={()=>submit()} className='buttoon pt-2' style={{margin : '2px'}}>Add Promotion</button>
+                        </div>
                         </div>
                     </div>
                 </div>

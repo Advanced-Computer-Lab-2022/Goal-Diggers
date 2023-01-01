@@ -18,9 +18,10 @@ export default function Reset() {
             }
             setloading(true);
             const res = await courseService.ForgtetPassword(forgetData);
+            console.log(res.error);
             setloading(false);
-            if(res.data.error){
-                seterror(res.data.error);
+            if(res.error){
+                seterror(res.error);
             }else {
                 setdone(true);
             }

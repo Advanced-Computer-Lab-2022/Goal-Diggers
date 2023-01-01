@@ -150,8 +150,11 @@ const TakeCourse = () => {
             const course = await courseService.getRegisteredCourse(id);
             console.log(course);
             setCourse(course);
+            if(!course) {
+                navigate('/not-found');
+            }
             setTitle(course.overviewvideo.title);
-            setDiscription(course.overviewvideo.descriprion);
+            setDiscription(course.overviewvideo.description);
             setUrl(course.overviewvideo.url);
             setReady(true);
             {
@@ -177,7 +180,7 @@ const TakeCourse = () => {
         <React.Fragment>
             {ready ?
                 <div className='row p-2'>
-                    <div className="col-sm-3" style={{ border: '1px solid lightcoral' }}>
+                    <div className="col-sm-3" style={{ border: '1px solid #a00407' }}>
                         <Sidebar refund={refund} completedVideos={course.completedVideos} attemptedQuizs={course.attemptedQuizs} subtitles={course.subtitles} overviewvideo={course.overviewvideo} choosevideo={chooseVideo} />
                     </div>
                     <div className="col-sm-1 bg-light">
@@ -225,7 +228,7 @@ const TakeCourse = () => {
                                                     : (
                                                         <React.Fragment>
                                                             <div className="container p-3 justify-content-center" >
-                                                                <ProgressBar width='73%' bgColor='#6a1b9a' completed={(((course.completedVideos.length + course.completedQuizs) / course.totalItems) * 100).toFixed(2)} />
+                                                                <ProgressBar width='73%' bgColor='#a00407' completed={(((course.completedVideos.length + course.completedQuizs) / course.totalItems) * 100).toFixed(2)} />
                                                             </div>
                                                             <h2>{title} : </h2>
                                                             <div className="row">
@@ -239,13 +242,13 @@ const TakeCourse = () => {
                                                                             <textarea onChange={(e) => handle(e)} value={note.note} name="summary" id="summaryy" className="form-control" placeholder="write your note here" style={{ height: '100px' }}></textarea>
                                                                             <label htmlFor="floatingTextarea2">Write your note here</label>
                                                                         </div>
-                                                                        <button className='btn btn-primary' style={{ borderRadius: '25px' }} onClick={() => { saveNote() }}>Save</button>
+                                                                        <button className='buttoon pt-2' style={{ width: '200px', margin:0 }} onClick={() => { saveNote() }}>Save</button>
                                                                     </div>
                                                                     }
                                                                 </div>
                                                             </div>
-                                                            <div className='mt-2 p-3 col-sm-9' style={{ border: '1px solid lightcoral', borderRadius: '25px' }}>
-                                                                <h4>Video Discription : </h4>
+                                                            <div className='mt-2 p-3 col-sm-9' style={{ border: '1px solid #a00407' }}>
+                                                                <h4>Video Description : </h4>
                                                                 <p>{discription}</p>
                                                             </div>
                                                         </React.Fragment>
