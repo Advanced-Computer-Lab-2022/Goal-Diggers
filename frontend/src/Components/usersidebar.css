@@ -11,7 +11,7 @@
 
 .wrapper .sidebar {
   background: rgb(5, 68, 104);
-  max-height: 35rem;
+  max-height: 36rem;
   padding: 20px 0;
   transition: all 0.5s ease;
 }
@@ -85,3 +85,4 @@
 .mm {
   margin-bottom: 900px;
 }
+

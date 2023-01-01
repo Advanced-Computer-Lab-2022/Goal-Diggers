@@ -55,20 +55,29 @@ import Logout from "./Auth/LogoutBtn";
 
 
 function Edituserprofile(handleCountry) {
+
   const [firstnamenerror, setfirstnameerror] = useState("");
   const [lastnamenerror, setlastnameerror] = useState("");
   const [descriptionenerror, setdescriptionerror] = useState("");
-  const [myCourses, setMyCourses] = useState({ myCourses: false });
-  const [editprofile, seteditprofile] = useState(true);
-  const [changepassword, setchangepassword] = useState({changepassword : false});
-  const [policy, setpolicy] = useState({policy : false});
-  const [help, sethelp] = useState({help:false});
+  const [oldpassworderror, setoldpassworderror] = useState("");
+  const [newpassworderror, setnewpassworderror] = useState("");
+  const [confirmnewpassworderror, setconfirmnewpassworderror] = useState("");
+  const [repeaterror, setrepeaterror] = useState("");
+  const [matcherror, setmatcherror] = useState("");
 
   const navigate = useNavigate();
   const [data, setdata] = useState({
     firstname: "",
     lastname: "",
     description: "",
+  });
+
+
+
+  const [data3, setdata3] = useState({
+    oldpassword: "",
+    newpassword: "",
+    confirmnewpassword: "",
   });
 
   async function submit() {
@@ -115,118 +124,284 @@ function Edituserprofile(handleCountry) {
     if (type === "description") setdescriptionerror(false);
     setdata(temp);
   };
-  const [value, setValue] = React.useState(0);
+  
 
   
-  const handlechange = (event, newValue) => {
-    setValue(newValue);
+
+  async function submit2() {
+    //e.preventdefault(e);
+    if (data.oldpassword.length === 0) {
+      setoldpassworderror(true);
+    } else {
+      setoldpassworderror(false);
+    }
+    if (data.newpassword.length === 0) {
+      setnewpassworderror(true);
+    } else {
+      setnewpassworderror(false);
+    }
+    if (data.confirmnewpassword.length === 0) {
+      setconfirmnewpassworderror(true);
+    } else {
+      setconfirmnewpassworderror(false);
+    }
+    if (
+      data.oldpassword.length !== 0 &&
+      data.newpassword.length !== 0 &&
+      data.confirmnewpassword.length !== 0
+    ) {
+      if (data.oldpassword === data.newpassword) {
+        setrepeaterror(true);
+      } else {
+        setrepeaterror(false);
+      }
+      if (data.newpassword !== data.confirmnewpassword) {
+        setmatcherror(true);
+      } else {
+        setmatcherror(false);
+      }
+      if (
+        data.newpassword === data.confirmnewpassword &&
+        data.oldpassword !== data.newpassword
+      ) {
+        swal({
+          title: "Do you want to update your password?",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        }).then((willDelete) => {
+          if (willDelete) {
+            swal("Your password has been updated", {
+              icon: "success",
+            });
+          }
+        });
+      }
+    }
+  }
+  const handleChange2 = (e, type) => {
+    let temp = { ...data };
+    temp[type] = e.target.value;
+    if (type === "oldpassowrd") setoldpassworderror(false);
+    if (type === "newpassowrd") setnewpassworderror(false);
+    if (type === "confirmnewpassword") setconfirmnewpassworderror(false);
+    setdata(temp);
   };
 
-  return (
-    <React.Fragment>
-      
+    const [value, setValue] = React.useState("eprofile");
 
+  return (
+    <div>
       <Box sx={{ width: "100%", bgcolor: "background.red" }}>
         <Divider></Divider>
-        <Tabs value={value} onChange={handlechange} centered>
+        <Tabs value={value} centered>
           <Tab
             label="Edit Profile"
-            onClick={() => navigate("/edituserprofile")}
+            value="eprofile"
+            onClick={() => setValue("eprofile")}
           />
           <Tab
             label="Change Password"
-            onClick={() => navigate("/changepassword")}
+            value="cpassword"
+            onClick={() => setValue("cpassword")}
           />
         </Tabs>
-
         <Divider></Divider>
       </Box>
-
-      <div className="wrapper">
+      <React.Fragment>
         
-            <div className="addUserContainer">
-              <div className="posi ip">
-                <input
-                  id="username"
-                  onChange={(e) => handleChange(e, "firstname")}
-                  value={data.username}
-                  className="gzz"
-                  type="text"
-                  required
-                ></input>
-                <span className="w8">First name</span>
-              </div>
-              <div className="form-floating mb-3" />
+              {value === "eprofile" && (
+                <React.Fragment>
+                  <div className="addUserContainer">
+                    <div className="posi ip">
+                      <input
+                        id="username"
+                        onChange={(e) => handleChange(e, "firstname")}
+                        value={data.username}
+                        className="gzz"
+                        type="text"
+                        required
+                      ></input>
+                      <span className="w8">First name</span>
+                    </div>
+                    <div className="form-floating mb-3" />
 
-              <div>
-                {firstnamenerror ? (
-                  <label className="l1">You must fill it</label>
-                ) : (
-                  ""
-                )}
-                <div className="form-floating mb-3" />
-              </div>
+                    <div>
+                      {firstnamenerror ? (
+                        <label className="l1">You must fill it</label>
+                      ) : (
+                        ""
+                      )}
+                      <div className="form-floating mb-3" />
+                    </div>
 
-              <div className="posi ip">
-                <input
-                  onChange={(e) => handleChange(e, "lastname")}
-                  value={data.password}
-                  id="password"
-                  className="gzz"
-                  type="text"
-                  required
-                ></input>
-                <span className="w8">Last name</span>
-              </div>
-              <div className="form-floating mb-3" />
-              <div>
-                {lastnamenerror ? (
-                  <label className="l1">You must fill it</label>
-                ) : (
-                  ""
-                )}
-                <div className="form-floating mb-3" />
-              </div>
+                    <div className="posi ip">
+                      <input
+                        onChange={(e) => handleChange(e, "lastname")}
+                        value={data.password}
+                        id="password"
+                        className="gzz"
+                        type="text"
+                        required
+                      ></input>
+                      <span className="w8">Last name</span>
+                    </div>
+                    <div className="form-floating mb-3" />
+                    <div>
+                      {lastnamenerror ? (
+                        <label className="l1">You must fill it</label>
+                      ) : (
+                        ""
+                      )}
+                      <div className="form-floating mb-3" />
+                    </div>
 
-              <div className="form-floating mb-3" />
+                    <div className="form-floating mb-3" />
 
-              <div className="posi ip">
-                <textarea
-                  onChange={(e) => handleChange(e, "description")}
-                  value={data.password}
-                  id="password"
-                  className="gzz"
-                  type="text"
-                  required
-                ></textarea>
-                <span className="w8">Description</span>
-              </div>
-              <div className="form-floating mb-3" />
-              <div>
-                {descriptionenerror ? (
-                  <label className="l1">You must fill it</label>
-                ) : (
-                  ""
-                )}
-                <div className="form-floating mb-3" />
-              </div>
-              <div className="form-floating mb-3" />
+                    <div className="posi ip">
+                      <textarea
+                        onChange={(e) => handleChange(e, "description")}
+                        value={data.password}
+                        id="password"
+                        className="gzz"
+                        type="text"
+                        required
+                      ></textarea>
+                      <span className="w8">Description</span>
+                    </div>
+                    <div className="form-floating mb-3" />
+                    <div>
+                      {descriptionenerror ? (
+                        <label className="l1">You must fill it</label>
+                      ) : (
+                        ""
+                      )}
+                      <div className="form-floating mb-3" />
+                    </div>
+                    <div className="form-floating mb-3" />
 
-              <div className="login-box posi">
-                <form>
-                  <a href="#" onClick={() => submit()}>
-                    Save Changes
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </a>
-                </form>
-              </div>
-              <div className="form-floating mb-3" />
-            </div>
+                    <div className="login-box posi">
+                      <form>
+                        <a href="#" onClick={() => submit()}>
+                          Save Changes
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                        </a>
+                      </form>
+                    </div>
+                    <div className="form-floating mb-3" />
+                  </div>
+                </React.Fragment>
+              )}
+
+              {value === "cpassword" && (
+                <React.Fragment>
+                  <div className="addUserContainer">
+                    <div className="posi ip">
+                      <input
+                        onChange={(e) => handleChange2(e, "oldpassword")}
+                        value={data3.password}
+                        id="password"
+                        className="gzz"
+                        type="password"
+                        required
+                      ></input>
+                      <span className="w8">Old Password</span>
+                    </div>
+                    <div className="form-floating mb-3" />
+                    <div>
+                      {oldpassworderror ? (
+                        <label className="l1">Password is not correct</label>
+                      ) : (
+                        ""
+                      )}
+                      <div className="form-floating mb-3" />
+                    </div>
+                    <div className="form-floating mb-3" />
+
+                    <div className="posi ip">
+                      <input
+                        onChange={(e) => handleChange2(e, "newpassword")}
+                        value={data3.password}
+                        id="password"
+                        className="gzz"
+                        type="password"
+                        required
+                      ></input>
+                      <span className="w8">New Password</span>
+                    </div>
+                    <div className="form-floating mb-3" />
+                    <div>
+                      {newpassworderror ? (
+                        <label className="l1">You must fill it</label>
+                      ) : (
+                        ""
+                      )}
+                      <div className="form-floating mb-3" />
+                    </div>
+                    <div className="form-floating mb-3" />
+                    <div>
+                      {repeaterror ? (
+                        <label className="l1">
+                          Please enter a different password
+                        </label>
+                      ) : (
+                        ""
+                      )}
+                      <div className="form-floating mb-3" />
+                    </div>
+                    <div className="form-floating mb-3" />
+
+                    <div className="posi ip">
+                      <input
+                        onChange={(e) => handleChange2(e, "confirmnewpassword")}
+                        value={data3.password}
+                        id="password"
+                        className="gzz"
+                        type="password"
+                        required
+                      ></input>
+                      <span className="w8">Confirm new Password</span>
+                    </div>
+                    <div className="form-floating mb-3" />
+                    <div>
+                      {confirmnewpassworderror ? (
+                        <label className="l1">You must fill it</label>
+                      ) : (
+                        ""
+                      )}
+                      <div className="form-floating mb-3" />
+                    </div>
+                    <div>
+                      {matcherror ? (
+                        <label className="l1">Two passwords do not match</label>
+                      ) : (
+                        ""
+                      )}
+                      <div className="form-floating mb-3" />
+                    </div>
+                    <div className="form-floating mb-3" />
+
+                    <div className="login-box posi">
+                      <form>
+                        <a href="#" onClick={() => submit2()}>
+                          Save Changes
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                        </a>
+                      </form>
+                    </div>
+                    <div className="form-floating mb-3" />
+                  </div>
+                </React.Fragment>
+              )}
+            
+      </React.Fragment>
       </div>
-    </React.Fragment>
   );
 }
 export default Edituserprofile;

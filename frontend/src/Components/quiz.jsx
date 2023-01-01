@@ -4,9 +4,10 @@ import 'react-circular-progressbar/dist/styles.css';
 import { useEffect } from 'react';
 import CourseService from '../courseContainer';
 // import quizExample from '../quiz';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Sidebar from './sidebar';
 import courseService from '../courseContainer';
+import ReactLoading from 'react-loading';
 
 const Quiz = () => {
     const [quiz, setQuiz] = useState({});
@@ -19,10 +20,14 @@ const Quiz = () => {
     const [color, setColor] = useState('lightcoral');
     const [percentage, setPercentage] = useState(0);
     const {id}=useParams();
+    const navigate = useNavigate();
     const {courseID}=useParams();
     useEffect(()=>{
         const getquiz = async ()=>{
             const res = await CourseService.getQuiz(id);
+            if(!res) {
+                navigate('/not-found');
+            }
             console.log(res);
             setQuiz(res);
             setReady(true);
@@ -58,8 +63,8 @@ const Quiz = () => {
         <React.Fragment>
                 {ready &&
                     <React.Fragment>
-                        <div className="card my-4" style= {{border: '1px solid lightsalmon'}} >
-                        {submitted && <Link className='btn btn-primary col-sm-3 mb-2' style={{borderRadius : '25px'}} to={`/take-course/${courseID}`}><i className="fa fa-arrow-left" aria-hidden="true"></i> Back to the course</Link>}
+                        <div className="card my-4" style= {{border: '1px solid #a00407'}} >
+                        {submitted && <Link className='buttoon pt-2 col-sm-3 mb-2' style={{width : '350px', margin:0}} to={`/take-course/${courseID}`}><i className="fa fa-arrow-left" aria-hidden="true"></i> Back to the course</Link>}
                         <div className="d-flex justify-content-around px-3">
                             {submitted && 
                                 <div style={{ width: 50, height: 50 }}><CircularProgressbar styles={buildStyles({pathColor: color})} value={percentage} text={`${percentage}%`} /></div>
@@ -176,8 +181,8 @@ const Quiz = () => {
                                 </React.Fragment>
                             }
                             <div className="d-flex justify-content-between">
-                                <button disabled={counter === 0} className="btn" onClick={()=>{setCounter(counter-1)}}><i className="fa fa-chevron-left fa-3x text-primary" aria-hidden="true"></i></button>
-                                <button disabled={counter === quiz.questions.length - 1} onClick={()=>{setCounter(counter+1)}} className="btn"><i className="fa fa-chevron-right fa-3x text-primary" aria-hidden="true"></i></button>
+                                <button disabled={counter === 0} className="btn my-3" onClick={()=>{setCounter(counter-1)}}><i style={{color : '#a00407'}} className="fa fa-chevron-left fa-3x" aria-hidden="true"></i></button>
+                                <button disabled={counter === quiz.questions.length - 1}  onClick={()=>{setCounter(counter+1)}} className="btn my-3"><i style={{color : '#a00407'}} className="fa fa-chevron-right fa-3x " aria-hidden="true"></i></button>
                             </div>
                         </div>
                         {!submitted && <div className="text-center mt-4">
@@ -185,29 +190,17 @@ const Quiz = () => {
                                 <input onClick={()=>setReadyTosubmit(!readyTosubmit)}  type="checkbox" className="custom-control-input" id="customCheck1"/>
                                 <label className="custom-control-label" htmlFor="customCheck1"> I am ready to submit</label>
                             </div>
-                            <button disabled={!readyTosubmit} className="btn btn-primary btn-lg mb-3" onClick={()=>{submit()}}>submit
-                            </button>
+                            <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center'}}>
+                                <button disabled={!readyTosubmit} style={{margin : "0", width : '350px'}} className="buttoon pt-2 mb-3" onClick={()=>{submit()}}>Submit
+                                </button>
+                            </div>
                         </div>}
                     </div>
                     </React.Fragment>
                 }
             {!ready && 
-                <div  className="container text-center" style={{marginBottom: '300px'}}>
-                    <div className="container">
-                        <div className="row">
-                            <div id="loader">
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="loading"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center', height : '500px'}}>
+                    <ReactLoading type={"bars"} color={'#a00407'} height={'5%'} width={'5%'} />
                 </div>
             }
         </React.Fragment>

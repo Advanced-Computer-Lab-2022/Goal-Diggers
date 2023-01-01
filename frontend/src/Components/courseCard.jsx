@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Rating } from "@mui/material";
 import { Link } from "react-router-dom";
+import OwlCarousel from "react-owl-carousel";
+
 import AuthContext, { AuthContextProvider } from "../context/AuthContext";
 
 const CourseCard = ({ course }) => {
@@ -8,7 +10,7 @@ const CourseCard = ({ course }) => {
     useContext(AuthContext);
   return (
     <div class="card mb-5">
-      <div class="course-thumb">
+      <div class="">
         <img src={course.image} class="piccss" alt="image" />
         {!(type === "role") && (
           <>

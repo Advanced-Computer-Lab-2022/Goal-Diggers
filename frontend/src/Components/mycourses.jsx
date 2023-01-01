@@ -66,8 +66,6 @@ function Mycourses() {
 
   const [value, setValue] = React.useState("all");
 
-
-
   useEffect(() => {
     const getCourses = async () => {
       const data = await courseService.getMyCourses(id);
@@ -99,7 +97,6 @@ function Mycourses() {
   }, [value]);
   return (
     <div>
-
       <Box sx={{ width: "100%", bgcolor: "background.red" }}>
         <Divider></Divider>
         <Tabs value={value} centered>
@@ -122,56 +119,57 @@ function Mycourses() {
         <Divider></Divider>
       </Box>
 
-      
-
       {ready && (
         <React.Fragment>
-          <div class="course-area  pt--120 pb--70 col-8">
-            <div class="container">
-              <div class="row">
-                {value === "all" && (
-                  <React.Fragment>
-                    {myCourses.map((course) => {
-                      return (
-                        <React.Fragment>
-                          <div class="col-lg-4 col-md-6">
-                            <CourseCard course={course}></CourseCard>
-                          </div>
-                        </React.Fragment>
-                      );
-                    })}
-                  </React.Fragment>
-                )}
+          <div
+            style={{
+              width: "100%",
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, 26rem)",
+              gap: "1rem",
+            }}
+          >
+            {value === "all" && (
+              <React.Fragment>
+                {myCourses.map((course) => {
+                  return (
+                    <React.Fragment>
+                      <div class="col-lg-4 col-md-6">
+                        <CourseCard course={course}></CourseCard>
+                      </div>
+                    </React.Fragment>
+                  );
+                })}
+              </React.Fragment>
+            )}
 
-                {value === "inProgress" && (
-                  <React.Fragment>
-                    {inprogress.map((course) => {
-                      return (
-                        <React.Fragment>
-                          <div class="col-lg-4 col-md-6">
-                            <CourseCard course={course}></CourseCard>
-                          </div>
-                        </React.Fragment>
-                      );
-                    })}
-                  </React.Fragment>
-                )}
+            {value === "inProgress" && (
+              <React.Fragment>
+                {inprogress.map((course) => {
+                  return (
+                    <React.Fragment>
+                      <div>
+                        <CourseCard course={course}></CourseCard>
+                      </div>
+                    </React.Fragment>
+                  );
+                })}
+              </React.Fragment>
+            )}
 
-                {value === "completed" && (
-                  <React.Fragment>
-                    {completed.map((course) => {
-                      return (
-                        <React.Fragment>
-                          <div class="col-lg-4 col-md-6">
-                            <CourseCard course={course}></CourseCard>
-                          </div>
-                        </React.Fragment>
-                      );
-                    })}
-                  </React.Fragment>
-                )}
-              </div>
-            </div>
+            {value === "completed" && (
+              <React.Fragment>
+                {completed.map((course) => {
+                  return (
+                    <React.Fragment>
+                      <div class="col-lg-4 col-md-6">
+                        <CourseCard course={course}></CourseCard>
+                      </div>
+                    </React.Fragment>
+                  );
+                })}
+              </React.Fragment>
+            )}
           </div>
         </React.Fragment>
       )}

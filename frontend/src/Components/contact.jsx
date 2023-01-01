@@ -117,25 +117,18 @@ function Contact(handleCountry) {
                           <a href="/contact">Contact</a>
                         </li>
                         <li>
-                          <a href="/edituserprofile">
+                          <a href="/userprofile">
                             <img className="avatar1" />
                           </a>
                           <ul className="submenu">
                             <li>
-                              <a href="/edituserprofile">View Profile</a>
+                              <a href="/userprofile">View Profile</a>
                               <h1
                                 className="fa fa-user dropdown"
                                 aria-hidden="true"
                               ></h1>
                             </li>
-                            <li>
-                              <a href="/mycourses">My Courses</a>
-                              <i className="fa fa-book dropdown"></i>
-                            </li>
-                            <li>
-                              <a href="/edituserprofile">Settings</a>
-                              <i className="fa fa-cog dropdown"></i>
-                            </li>
+      
                             <li>
                               <a href="/homepage2">
                                 <Logout></Logout>

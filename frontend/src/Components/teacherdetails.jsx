@@ -135,14 +135,7 @@ function Teacherdetails(handleCountry) {
                                 aria-hidden="true"
                               ></h1>
                             </li>
-                            <li>
-                              <a href="/mycourses">My Courses</a>
-                              <i class="fa fa-book dropdown"></i>
-                            </li>
-                            <li>
-                              <a href="/edituserprofile">Settings</a>
-                              <i class="fa fa-cog dropdown"></i>
-                            </li>
+                            
                             <li>
                               <a href="index3.html">Log Out</a>
                               <h1 class="fa fa-sign-out dropdown"></h1>

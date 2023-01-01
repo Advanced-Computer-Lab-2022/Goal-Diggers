@@ -43,7 +43,9 @@ const WelcomeQuiz = ({id ,grade, courseID}) => {
                     </ul>
                 </li>
             </ol>
-            <div className="text-center"><Link to={`/quiz/${courseID}/${id}`} style={{borderRadius: '25px'}} className="btn btn-primary btn-md mt-3">Start the Quiz <i className="fa fa-play" aria-hidden="true"></i></Link></div>
+            <div style={{  display: 'flex',justifyContent: 'center',alignItems: 'center'}}>
+            <Link to={`/quiz/${courseID}/${id}`} style={{width: '250px', margin:0}} className="buttoon pt-2">Start the Quiz <i className="fa fa-play" aria-hidden="true"></i></Link>
+            </div>
             </div>
         </section>
 

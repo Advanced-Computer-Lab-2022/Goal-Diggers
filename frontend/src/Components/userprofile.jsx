@@ -37,7 +37,6 @@ import "./templatemo-edu-meeting.css";
 import Logout from "./Auth/LogoutBtn";
 import Edituserprofile from './edituserprofile';
 import Mycourses from "./mycourses";
-import Changepassword from "./changepassword";
 import Policy from "./policy";
 import Help from "./help";
 
@@ -49,22 +48,13 @@ function Userprofile(handleCountry) {
 
   
   const [myCourses, setMyCourses] = useState({ myCourses: false });
-  const [editprofile, seteditprofile] = useState(true);
-  const [changePassword, setchangePassword] = useState({changepassword: false,});
+  const [editprofile, seteditprofile] = useState({edituserprofile : false});
   const [policy, setpolicy] = useState({ policy: false });
   const [help, sethelp] = useState({ help: false });
 
-  function changepassword (){
-    setchangePassword(true);
-    seteditprofile(false);
-    setMyCourses(false);
-    sethelp(false);
-    setpolicy(false);
-  };
 
 
   function edituserprofile () {
-    setchangePassword(false);
     seteditprofile(true);
     setMyCourses(false);
     sethelp(false);
@@ -72,7 +62,6 @@ function Userprofile(handleCountry) {
   };
 
   function showmycourses() {
-    setchangePassword(false);
     seteditprofile(false);
     setMyCourses(true);
     sethelp(false);
@@ -80,7 +69,6 @@ function Userprofile(handleCountry) {
   }
 
   function showpolicy() {
-    setchangePassword(false);
     seteditprofile(false);
     setMyCourses(false);
     sethelp(false);
@@ -88,7 +76,6 @@ function Userprofile(handleCountry) {
   }
 
   function showhelp() {
-    setchangePassword(false);
     seteditprofile(false);
     setMyCourses(false);
     sethelp(true);
@@ -275,7 +262,7 @@ function Userprofile(handleCountry) {
       <div className="wrapper">
         <div className="sidebar">
           <div className="profile2">
-            <img src="./r9.jpg" alt="profile_picture" />
+            <img className='avatar3' />
             <h3>Mahmoud Yassen</h3>
             <p>Software Developer</p>
             <p>Your wallet is 0$</p>

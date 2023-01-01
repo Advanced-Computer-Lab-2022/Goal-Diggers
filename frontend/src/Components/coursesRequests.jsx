@@ -3,29 +3,20 @@ import { useState } from 'react';
 import courseService from '../courseContainer';
 import swal from 'sweetalert';
 
-const CoursesRequests = ({status}) => {
+const CoursesRequests = () => {
     const [ready, setReady] = useState(false);
     const [requests, setRequests] = useState();
     const [reload, setReload] = useState(false);
     useEffect(()=>{
         const getRequests = async () =>{
             setReady(false);
-            if (status === 'pending') {
-                const res = await courseService.getCoursesRequestsP();
-                setRequests(res);
-                setReady(true);
-            } else if (status === 'approved') {
-                const res = await courseService.getCoursesRequestsA();
-                setRequests(res);
-                setReady(true);
-            } else {
-                const res = await courseService.getCoursesRequestsR();
-                setRequests(res);
-                setReady(true);
-            }
+            const res = await courseService.getCoursesRequestsP();
+            setRequests(res);
+            setReady(true);
+            
         }
         getRequests();
-    },[reload, status]);
+    },[reload]);
     const accept = (e) =>{
         swal({
             title: `Do you really want to grant access` ,
@@ -68,7 +59,7 @@ const CoursesRequests = ({status}) => {
                 <span>Total {requests.length} Requests</span>
                 <div className="container mt-3">
                 {requests.length === 0 ? <React.Fragment>
-                    <img src="./empty-box.png" alt="" className='mt-5' width={'300px'}/>
+                    <img src="./no-results.png" alt="" className='mt-5' style={{width:'300px'}}/>
                 </React.Fragment>
                 :(requests.map(request => {
                     return <div key={request._id} className="card bg-light m-2">
@@ -82,7 +73,7 @@ const CoursesRequests = ({status}) => {
                             {request.status == 'pending' && 
                             <div className="col-sm-3">
                                 <button onClick={(e)=>{accept(e)}} id={request._id} style={{borderRadius:'25px'}} className='btn btn-success mx-1'>Approve</button>
-                                <button onClick={(e)=>{reject(e)}} id={request._id} style={{borderRadius:'25px'}}className='btn btn-danger'>Reject</button>
+                                <button onClick={(e)=>{reject(e)}} id={request._id} style={{borderRadius:'25px'}}className='btn btn-danger mx-1'>Reject</button>
                             </div>
                             }
                             {request.status == 'approved' && 

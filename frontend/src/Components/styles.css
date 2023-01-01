@@ -57,14 +57,12 @@ h2 a,
 h3 a,
 h4 a,
 h5 a,
-
 h1 {
   font-size: 40px;
   line-height: 70px;
   letter-spacing: 1px;
   margin-bottom: 0px;
 }
-
 
 h2 {
   font-size: 42px;
@@ -353,7 +351,7 @@ a:focus,
 
 /*submenu*/
 
-.main-menu nav  .submenu{
+.main-menu nav .submenu {
   left: 0;
   top: 100%;
   margin-left: -52px;
@@ -568,7 +566,7 @@ a:focus,
   }
 }
 
-.setprice{
+.setprice {
   margin-left: 250px;
   margin-bottom: 50px;
 }
@@ -1481,7 +1479,21 @@ span.post-date i {
 
 /*hero area*/
 
-.ra:hover{
+.avatar2 {
+  width: 85px;
+  height: 85px;
+  border-radius: 60px;
+  background-image: url("user3.png");
+}
+
+.avatar3 {
+  width: 85px;
+  height: 85px;
+  border-radius: 60px;
+  background-image: url("user3.png");
+}
+
+.ra:hover {
   color: #a30506;
 }
 

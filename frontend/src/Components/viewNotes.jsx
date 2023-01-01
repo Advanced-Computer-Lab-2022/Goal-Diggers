@@ -28,7 +28,7 @@ const ViewNotes = ({title,notes}) => {
                             {view.done && <img className='mx-4' src="../correct.png" alt="" width={'30px'}/>}
                         </h2>
                     </div>
-                    <div className="col-sm-1">
+                    <div className="col-sm-1 ">
                         <ReactLoading type={"bars"} color={'lightgreen'} height={'100%'} width={'100%'} />
                     </div>
                 </div>

@@ -4,13 +4,20 @@ import "react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css";
 import Adduser from "./adduser";
 import CoursesRequests from "./coursesRequests";
 import Problems from "./problems";
+import RefundRequests from "./refundRequests";
 // import RefundRequests from './refundRequests';
 import SetPromotions from "./setPromotions";
+import AuthContext, { AuthContextProvider } from "../context/AuthContext";
+
 const AdminView = () => {
   const [status, setStatus] = useState("");
   const [view, setView] = useState({ adduser: true });
   const [aUser, setAUser] = useState({ aUser: false });
+  const [problemsP, setProblemP] = useState(false);
+  const [problemsR, setProblemR] = useState(false);
+  const [problemsU, setProblemU] = useState(false);
   const [courseRequest, setCourseRequest] = useState({ courseRequest: false });
+  const [refund, setRefund] = useState(false);
   const [addPromotions, setAddPromotions] = useState({ addPromotions: false });
   const chooseItem = (item) => {
     if (["pending", "approved", "rejected"].includes(item)) {
@@ -26,58 +33,108 @@ const AdminView = () => {
   };
   function showAddUser() {
     setAUser(true);
+    setProblemP(false);
+    setProblemU(false);
+    setProblemR(false);
     setCourseRequest(false);
     setAddPromotions(false);
+    setRefund(false);
+  }
+  function problemP() {
+    setProblemP(true);
+    setProblemU(false);
+    setProblemR(false);
+    setAUser(false);
+    setCourseRequest(false);
+    setAddPromotions(false);
+    setRefund(false);
+  }
+  function problemR() {
+    setProblemP(false);
+    setProblemU(false);
+    setProblemR(true);
+    setAUser(false);
+    setCourseRequest(false);
+    setAddPromotions(false);
+    setRefund(false);
+  }
+  function problemU() {
+    setProblemP(false);
+    setProblemU(true);
+    setProblemR(false);
+    setAUser(false);
+    setCourseRequest(false);
+    setAddPromotions(false);
+    setRefund(false);
   }
   function handelCourseRequest() {
+    setProblemP(false);
+    setProblemU(false);
+    setProblemR(false);
+    console.log("SDds");
     setCourseRequest(true);
     setAUser(false);
     setAddPromotions(false);
+    setRefund(false);
   }
   function handlePromotions() {
+    setProblemP(false);
+    setProblemU(false);
+    setProblemR(false);
     setAddPromotions(true);
+    setAUser(false);
+    setCourseRequest(false);
+    setRefund(false);
+  }
+  function refundReq() {
+    setProblemP(false);
+    setProblemU(false);
+    setProblemR(false);
+    setAddPromotions(false);
+    setRefund(true);
     setAUser(false);
     setCourseRequest(false);
   }
   return (
     <React.Fragment>
       <header id="header">
-        <div class="header-top">
-          <div class="container">
-            <div class="row d-flex flex-center">
-              <div class="col-sm-8">
-                <div class="ht-address">
+        <div className="header-top">
+          <div className="container">
+            <div className="row d-flex flex-center">
+              <div className="col-sm-8">
+                <div className="ht-address">
                   <ul>
                     <li>
-                      <i class="fa fa-phone"></i>Phone: +201001004070
+                      <i className="fa fa-phone"></i>Phone: +201001004070
                     </li>
                     <li>
-                      <i class="fa fa-envelope"></i>Email: info@cancham.org.eg
+                      <i className="fa fa-envelope"></i>Email:
+                      info@cancham.org.eg
                     </li>
                   </ul>
                 </div>
               </div>
-              <div class="col-sm-4">
-                <div class="ht-social">
+              <div className="col-sm-4">
+                <div className="ht-social">
                   <ul>
                     <li>
                       <a href="https://youtu.be/z4tOlwuHEZI">
-                        <i class="fa fa-facebook"></i>
+                        <i className="fa fa-facebook"></i>
                       </a>
                     </li>
                     <li>
                       <a href="https://youtu.be/kXhBKjDKF84">
-                        <i class="fa fa-twitter"></i>
+                        <i className="fa fa-twitter"></i>
                       </a>
                     </li>
                     <li>
                       <a href="https://youtu.be/BG9HSntowA8">
-                        <i class="fa fa-dribbble"></i>
+                        <i className="fa fa-dribbble"></i>
                       </a>
                     </li>
                     <li>
                       <a href="https://youtu.be/aiRY36TPVo8">
-                        <i class="fa fa-instagram"></i>
+                        <i className="fa fa-instagram"></i>
                       </a>
                     </li>
                   </ul>
@@ -87,64 +144,33 @@ const AdminView = () => {
           </div>
         </div>
 
-        <div class="header-bottom">
-          <div class="container">
-            <div class="header-bottom-inner">
-              <div class="row align-items-center">
-                <div class="col-lg-3 col-sm-9">
-                  <div class="logo">
+        <div className="header-bottom">
+          <div className="container">
+            <div className="header-bottom-inner">
+              <div className="row align-items-center">
+                <div className="col-lg-3 col-sm-9">
+                  <div className="logo">
                     <img src="/assets2/images/icon/logo.png" alt="logo" />
                   </div>
                 </div>
-                <div class="col-xl-8 col-lg-7 d-none d-lg-block">
-                  <div class="main-menu">
+                <div className="col-xl-8 col-lg-7 d-none d-lg-block">
+                  <div className="main-menu">
                     <nav>
                       <ul id="m_menu_active">
-                        <li class="active">
-                          <a href="/homepage2">Home</a>
+                        <li className="active">
+                          <a href="#">Home</a>
                         </li>
                         <li>
-                          <a href="/newcourses">Courses</a>
-                        </li>
-                        <li>
-                          <a href="/membership">MemberShip</a>
-                        </li>
-                        <li>
-                          <a href="/blog">Blogs</a>
-                        </li>
-                        <li>
-                          <a href="/event">Events</a>
-                        </li>
-                        <li>
-                          <a href="/contact">Contact</a>
-                        </li>
-                        <li>
-                          <a href="/userprofile" class="avatar1">
-                            <img id="sidebar" src="/r9.jpg" />
+                          <a href="#">
+                            <img className="avatar1" />
                           </a>
-                          <ul class="submenu mr-12">
+                          <ul className="submenu">
                             <li>
-                              <a href="/userprofile">View Profile</a>
+                              <a href="/changepasswordadmin" className="active">Change Password</a>
                               <h1
-                                class="fa fa-user dropdown"
+                                class="fa fa-unlock-alt dropdown"
                                 aria-hidden="true"
                               ></h1>
-                            </li>
-                            <li>
-                              <a href="/mycourses">My Courses</a>
-                              <i class="fa fa-book dropdown"></i>
-                            </li>
-                            <li>
-                              <a href="/settings">Settings</a>
-                              <i class="fa fa-cog dropdown"></i>
-                            </li>
-                            <li>
-                              <a href="/help">Help</a>
-                              <h1 class="fa fa-question-circle dropdown"></h1>
-                            </li>
-                            <li>
-                              <a href="/index3.html">Log Out</a>
-                              <h1 class="fa fa-sign-out dropdown"></h1>
                             </li>
                           </ul>
                         </li>
@@ -152,7 +178,7 @@ const AdminView = () => {
                     </nav>
                   </div>
                 </div>
-                <div class="col-12 d-block d-lg-none">
+                <div className="col-12 d-block d-lg-none">
                   <div id="mobile_menu"></div>
                 </div>
               </div>
@@ -160,6 +186,9 @@ const AdminView = () => {
           </div>
         </div>
       </header>
+
+      <div class="body_overlay"></div>
+
       <div class="crumbs-area">
         <div class="container">
           <div class="crumb-content">
@@ -172,9 +201,8 @@ const AdminView = () => {
       <div className="wrapper">
         <div className="sidebar">
           <div className="profile2">
-            <img src="./r9.jpg" alt="profile_picture" />
-            <h3>Mahmoud Yassen</h3>
-            <p>Software Developer</p>
+            <img className="avatar3" />
+            <h3>Admin</h3>
           </div>
           <ul>
             <li>
@@ -202,7 +230,11 @@ const AdminView = () => {
               </a>
             </li>
             <li>
-              <a href="#">
+              <a
+                onClick={() => {
+                  refundReq();
+                }}
+              >
                 <span className="icon">
                   <i class="fa fa-usd" aria-hidden="true"></i>
                 </span>
@@ -210,11 +242,27 @@ const AdminView = () => {
               </a>
             </li>
             <li>
-              <a href="/problems">
+              <a onClick={problemP}>
                 <span className="icon">
                   <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                 </span>
-                <span className="item">Problems</span>
+                <span className="item">Problems Pending</span>
+              </a>
+            </li>
+            <li>
+              <a onClick={problemU}>
+                <span className="icon">
+                  <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                </span>
+                <span className="item">Problems Unseen</span>
+              </a>
+            </li>
+            <li>
+              <a onClick={problemR}>
+                <span className="icon">
+                  <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                </span>
+                <span className="item">Problems Resolved</span>
               </a>
             </li>
           </ul>
@@ -237,6 +285,34 @@ const AdminView = () => {
           <>
             <div className="po">
               <CoursesRequests />
+            </div>
+          </>
+        )}
+        {problemsP == true && (
+          <>
+            <div className="po">
+              <Problems status={"pending"} />
+            </div>
+          </>
+        )}
+        {problemsR == true && (
+          <>
+            <div className="po">
+              <Problems status={"resolved"} />
+            </div>
+          </>
+        )}
+        {refund == true && (
+          <>
+            <div className="po">
+              <RefundRequests />
+            </div>
+          </>
+        )}
+        {problemsU == true && (
+          <>
+            <div className="po">
+              <Problems status={"unseen"} />
             </div>
           </>
         )}

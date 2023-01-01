@@ -84,8 +84,6 @@ function About(handleCountry) {
                             <li><a href="/userprofile" class="avatar1"><img id='sidebar' src="r9.jpg" /></a>
                                 <ul class="submenu mr-12">
                                     <li><a href="/userprofile" >View Profile</a><h1 class="fa fa-user dropdown" aria-hidden="true"></h1></li>
-                                    <li><a href="/mycourses">My Courses</a><i class="fa fa-book dropdown"></i></li>
-                                    <li><a href="/edituserprofile">Settings</a><i class="fa fa-cog dropdown"></i></li>
                                     <li><a href="index3.html">Log Out</a><h1 class="fa fa-sign-out dropdown"></h1></li>
                                 </ul>
                             </li>

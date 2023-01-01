@@ -135,14 +135,14 @@ const SetPromotions = () => {
                     </div>
                 </div>
                 <div className="my-2">
-                    <input onChange={()=>{handleSelectAll()}} checked={coursesDisplayed.length == Checked.length} class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="..."/> choose all courses.
+                    <input onChange={()=>{handleSelectAll()}} checked={coursesDisplayed.length == Checked.length}  type="checkbox" id="blankCheckbox" value="option1" aria-label="..."/> choose all courses.
                 </div>
                 {coursesDisplayed.map(course => {
                     return <div key={course._id} className="card bg-light m-2">
                         <div className="row">
                             <div className="col-sm-1">
                             <div className="form-check">
-                                <input onChange={(e)=>{handleSelect(e)}} checked={Checked.includes(course._id)} className="form-check-input position-static" type="checkbox" id={course._id} value="option1" aria-label="..."/>
+                                <input onChange={(e)=>{handleSelect(e)}} checked={Checked.includes(course._id)} className="position-static" type="checkbox" id={course._id} value="option1" aria-label="..."/>
                             </div>
                             </div>
                             <div className="col-sm-1">
