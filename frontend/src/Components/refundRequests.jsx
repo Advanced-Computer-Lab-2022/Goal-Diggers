@@ -34,6 +34,23 @@ const RefundRequests = () => {
             }
           });
     };
+    const reject = (course) =>{
+        swal({
+            title: `Do you really Reject to Refund This Course` ,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then(async (willDelete) => {
+            if (willDelete) {
+              swal("The Refund Request has been rejected.", {
+                icon: "success",
+              });
+              const res = await courseService.AdminRejectRefund(course);
+              setReload(!reload);
+            }
+          });
+    };
 
     return ( 
         <React.Fragment>
@@ -55,6 +72,7 @@ const RefundRequests = () => {
                             </div>
                             <div className="col-sm-3">
                                 <button onClick={()=>{accept(request)}} id={request._id} style={{borderRadius:'25px'}} className='btn btn-success mx-1'>Refund</button>
+                                <button onClick={()=>{reject(request)}} id={request._id} style={{borderRadius:'25px'}} className='btn btn-danger mx-1'>Reject</button>
                             </div>
                         </div>
                     </div>

@@ -47,16 +47,13 @@ const CourseOverview = () => {
                                 <div className='hero-text'>
                                     <h2>{course.createdByName}</h2>
                                     <p>{course.title}</p>
-                                    {type != 'instructor' && 
                                         <React.Fragment>
-                                            {console.log(response )}
                                             {response.reg && <Link to={`/take-course/${course._id}`} className="btn btn-light" style={{borderRadius : '25px', color :'#a00407'}}>GO TO Course</Link>}
                                             {response.pen && <button disabled={true}  className="btn btn-light" style={{borderRadius : '25px', color :'#a00407'}} >Your Request to fund is being processed</button>}
                                             {response.requested && <button disabled={true}  className="btn btn-light" style={{borderRadius : '25px', color :'#a00407'}}>Your Request is being processed</button>}
                                             {response.reg == false && type == "student" && <Link to={`/payment/${course._id}`} className=" btn btn-light" style={{borderRadius : '25px', color :'#a00407'}}>Enroll Now</Link>}
                                             {response.reg == false && type != "student" &&<button onClick={()=>{requestCourse()}} className="btn btn-light" style={{borderRadius : '25px', color :'#a00407'}}>Request to Enroll</button>}     
                                         </React.Fragment>
-                                    }
                                 </div>
                             </div>
                             <div className="col-sm-4 p-5 mr-5">

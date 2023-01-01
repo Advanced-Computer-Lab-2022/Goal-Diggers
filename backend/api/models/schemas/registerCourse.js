@@ -17,7 +17,7 @@ const registerCourseSchema = new Schema({
         studentUsername : String,
         completedVideos : [Object],
         attemptedQuizs : [Object],
-        completedQuizs : Number,
+        completedQuizs : {type : Number, default : 0},
         totalItems : Number,
         totalHours : Number,
         price : Number,

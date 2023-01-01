@@ -64,6 +64,7 @@ router.post('/add-followup', controller.addfollow);
 router.get('/get-problems/:id', controller.getproblem);
 router.post('/refund-course/:id', controller.refundcourse);
 router.post('/refund', controller.AdminRefundCourse);
+router.post('/reject-refund', controller.RejectRefund);
 router.get('/refund-requests', controller.getRefundRequests);
 router.post('/forget-password', controller.forgotPassword);
 router.post('/verify-link', controller.Linkverify);

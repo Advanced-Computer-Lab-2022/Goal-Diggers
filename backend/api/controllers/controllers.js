@@ -133,15 +133,18 @@ module.exports.addCourse = async (req, res) => {
     course.ratedetails = [0,0,0,0,0,0];
     course.reviews = [];
     course.numberofrates = 0;
-    course.createdById = ObjectId(verified.user);
+    course.createdById = verified.user;
     course.createdByName = verified.username;
     course.overviewvideo = {title : "Welcome video", url : course.overviewvideo, description : course.summary};
     let course_reg = new RegisterCourse(course);
     course_reg.studentID = verified.user;
     course_reg.studentName = verified.username;
-    course.reg.save();
     Course.create(course).then(
-      result => {return res.status(200).json({result});}
+      result => { 
+        course_reg.courseID = String(result._id);
+        course_reg.save();
+        return res.status(200).json({result});
+      }
     )
   } catch (error) {
       console.log(error.message); 
@@ -497,13 +500,12 @@ module.exports.loginUser = async (req, res) => {
       .then(async (result) => {
         console.log(result);
           if (await bcrypt.compare(user.password, result.password)) {
-            const token=jwt.sign({user:result._id, username : result.username },process.env.JWT_SECRET);
+            const token=jwt.sign({user:result._id, username : result.username, name : result.firstname + " " + result.lastname},process.env.JWT_SECRET);
             res.cookie("token",token,{
                 httpOnly:true,
             }).send();
                     return;
             } else {
-              console.log("fdsfsdfsd");
               res.status(201);
               res.json({ error: "incorrect password" });
               return;
@@ -518,7 +520,7 @@ module.exports.loginUser = async (req, res) => {
       Instructor.findOne({ username: user.username })
       .then(async (result) => {
           if (await bcrypt.compare(user.password, result.password)) {
-            const token=jwt.sign({user:result._id, username : result.username},process.env.JWT_SECRET);
+            const token=jwt.sign({user:result._id, username : result.username, name : result.firstname + " " + result.lastname},process.env.JWT_SECRET);
             res.cookie("token",token,{
                 httpOnly:true,
             });
@@ -540,7 +542,7 @@ module.exports.loginUser = async (req, res) => {
       Role.findOne({ username: user.username })
       .then(async (result) => {
           if (await bcrypt.compare(user.password, result.password)) {
-            const token=jwt.sign({user:result._id, username : result.username },process.env.JWT_SECRET);
+            const token=jwt.sign({user:result._id, username : result.username, name : result.firstname + " " + result.lastname, corporate : result.corporate },process.env.JWT_SECRET);
             res.cookie("token",token,{
                 httpOnly:true,
             });
@@ -1163,6 +1165,14 @@ module.exports.refundcourse = async (req, res) => {
   );
 };
 
+//POST
+//url : /api/reject-refund
+module.exports.RejectRefund = async(req,res) => {
+  let course = req.body.course;
+  await RegisterCourse.findByIdAndUpdate(course._id, {pending : false}).then(
+    result => {return res.status(200).json({});}
+  )
+}
 
 //-------------------------------------------------------------------------------------//
 //POST
@@ -1321,6 +1331,7 @@ module.exports.RequestCourse = async (req,res) => {
     console.log(req.body);
     request.studentID = verified.user;
     request.studentName = verified.username;
+    request.corporate = verified.corporate;
     request.status = "pending";
     let couresReq = new CourseRequest(request);
     couresReq.save();

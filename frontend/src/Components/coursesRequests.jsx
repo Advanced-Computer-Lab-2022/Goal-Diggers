@@ -78,7 +78,8 @@ const CoursesRequests = ({status}) => {
                                 <img src="./video.png" alt="" width={'60px'}/>
                             </div>
                             <div className="col-sm-8">
-                                <p>{request.studentName} requested to take {request.title} Course</p>
+                                <p>{request.studentName} requested to take {request.title} Course. 
+                                <br /> Corporate : {request.corporate}</p> 
                             </div>
                             {request.status == 'pending' && 
                             <div className="col-sm-3">

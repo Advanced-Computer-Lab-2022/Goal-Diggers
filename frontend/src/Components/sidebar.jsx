@@ -51,7 +51,7 @@ function Sidebar({refund ,subtitles, overviewvideo, completedVideos, attemptedQu
         let issues = {title : "Course Issues", itemId:["fds"], subNav:[]};
         issues.subNav.push({title: 'Report a Problem' ,itemId:["report","report",""]});
         issues.subNav.push({title: 'Previous Problems' ,itemId:["previousproblems","previousproblems",""]});
-        if(refund && type != 'corporatetrainees '){
+        if(refund && type === 'student'){
             issues.subNav.push({title: 'Refund the Course' ,itemId:["refund","refund",""]}) ;
         }
         itemTemp.push(issues);

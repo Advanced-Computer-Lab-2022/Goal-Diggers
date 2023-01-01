@@ -249,6 +249,10 @@ courseService.AdminRefundCourse = async(course) => {
     const {data} = await http.post(apiUrl + 'refund', {course});
     return data;
 };
+courseService.AdminRejectRefund = async(course) => {
+    const {data} = await http.post(apiUrl + 'reject-refund', {course});
+    return data;
+};
 
 courseService.getRefundRequests = async() => {
     const {data} = await http.get(apiUrl + 'refund-requests');
