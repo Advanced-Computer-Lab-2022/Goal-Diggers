@@ -306,7 +306,7 @@ module.exports.getReviewsAndRatings = async (req, res) => {
 module.exports.addQuiz = async (req, res) => {
     const quiz = req.body.quiz;
     Exam.create(quiz).then(
-        result => {return res.status(200).json(result._id)}
+        result => {return res.status(200).json({_id : result._id})}
     );
 };
 
@@ -840,7 +840,7 @@ module.exports.getAllCourses = async (req, res) => {
 }
 // GET url : /api/all-courses
 module.exports.getAllCoursesPopular = async (req, res) => {
-    await Course.find({}).sort({registers : -1}).limit(5).then(
+    await Course.find({}).sort({registers : -1}).limit(2).then(
         courses => {
           return res.status(200).json({courses});
         }
@@ -848,7 +848,7 @@ module.exports.getAllCoursesPopular = async (req, res) => {
 }
 // GET url : /api/all-courses
 module.exports.getAllCoursesViews = async (req, res) => {
-    await Course.find({}).sort({views : -1}).limit(5).then(
+    await Course.find({}).sort({views : -1}).limit(2).then(
         courses => {
           return res.status(200).json({courses});
         }
@@ -972,6 +972,7 @@ module.exports.saveQuiz = async (req, res) => {
             }
         }
         if(!exist){
+          course.completedQuizs ++;
           course.attemptedQuizs.push({id:quizID, grade : grade});
         }
         let id = course._id

@@ -109,13 +109,23 @@ const CourseContainer = ({type, keyword, currency}) => {
             if( rate)
             setCoursesDisplayed(
                 coursesOriginal.filter(course => {
-                    return course.subject.includes(value) && Math.round((course.price * priceRate) * 100) / 100 <= price && Math.round(course.rate) === rate;
+                    if((course.discount && new Date(course.discount.startdate) <= Date.now() && new Date(course.discount.enddate) >= Date.now())) {
+                        return course.subject.includes(value) && Math.round(((course.price * priceRate) - (course.price * priceRate * course.discount.promotion / 100))*100) / 100 <= price && Math.round(course.rate / course.numberofrates) === rate;
+                    }
+                    else {
+                        return course.subject.includes(value) && Math.round((course.price * priceRate) * 100) / 100 <= price && Math.round(course.rate / course.numberofrates) === rate;   
+                    }
                 })
             )
             else 
                 setCoursesDisplayed(
                     coursesOriginal.filter(course => {
-                        return course.subject.includes(value) && Math.round((course.price * priceRate) * 100) / 100 <= price;
+                        if((course.discount && new Date(course.discount.startdate) <= Date.now() && new Date(course.discount.enddate) >= Date.now())) {
+                            return course.subject.includes(value) && Math.round(((course.price * priceRate) - (course.price * priceRate * course.discount.promotion / 100))*100) / 100 <= price;
+                        }
+                        else {
+                            return course.subject.includes(value) && Math.round((course.price * priceRate) * 100) / 100 <= price;   
+                        }
                     })
             )
             setSubject(value);
@@ -123,16 +133,38 @@ const CourseContainer = ({type, keyword, currency}) => {
         else if(filter === "price") {
             if(!value)
                 value = Infinity;
-            if(rate)
+            // if(rate)
+            // setCoursesDisplayed(
+            //     coursesOriginal.filter(course => {
+            //         return course.subject.includes(subject) && Math.round((course.price * priceRate) * 100) / 100 <= value && Math.round(course.rate / course.numberofrates) === rate;
+            //     })
+            // )
+            // else 
+            //     setCoursesDisplayed(
+            //         coursesOriginal.filter(course => {
+            //             return course.subject.includes(subject) && Math.round((course.price * priceRate) * 100) / 100 <= value;
+            //         })
+            // )
+            if( rate)
             setCoursesDisplayed(
                 coursesOriginal.filter(course => {
-                    return course.subject.includes(subject) && Math.round((course.price * priceRate) * 100) / 100 <= value && Math.round(course.rate) === rate;
+                    if((course.discount && new Date(course.discount.startdate) <= Date.now() && new Date(course.discount.enddate) >= Date.now())) {
+                        return course.subject.includes(subject) && Math.round(((course.price * priceRate) - (course.price * priceRate * course.discount.promotion / 100))*100) / 100 <= value && Math.round(course.rate / course.numberofrates) === rate;
+                    }
+                    else {
+                        return course.subject.includes(subject) && Math.round((course.price * priceRate) * 100) / 100 <= value && Math.round(course.rate / course.numberofrates) === rate;   
+                    }
                 })
             )
             else 
                 setCoursesDisplayed(
                     coursesOriginal.filter(course => {
-                        return course.subject.includes(subject) && Math.round((course.price * priceRate) * 100) / 100 <= value;
+                        if((course.discount && new Date(course.discount.startdate) <= Date.now() && new Date(course.discount.enddate) >= Date.now())) {
+                            return course.subject.includes(subject) && Math.round(((course.price * priceRate) - (course.price * priceRate * course.discount.promotion / 100))*100) / 100 <= value;
+                        }
+                        else {
+                            return course.subject.includes(subject) && Math.round((course.price * priceRate) * 100) / 100 <= value ;   
+                        }
                     })
             )
             setPrice(value);
@@ -141,14 +173,24 @@ const CourseContainer = ({type, keyword, currency}) => {
             if(value) {
                 setCoursesDisplayed(
                     coursesOriginal.filter(course => {
-                        return course.subject.includes(subject) && Math.round((course.price * priceRate) * 100) / 100 <= price && Math.round(course.rate) === value;
+                        if((course.discount && new Date(course.discount.startdate) <= Date.now() && new Date(course.discount.enddate) >= Date.now())) {
+                            return course.subject.includes(subject) && Math.round(((course.price * priceRate) - (course.price * priceRate * course.discount.promotion / 100))*100) / 100 <= price && Math.round(course.rate / course.numberofrates) === value;
+                        }
+                        else {
+                            return course.subject.includes(subject) && Math.round((course.price * priceRate) * 100) / 100 <= price && Math.round(course.rate / course.numberofrates) === value;   
+                        }
                     })
                 )
             }
             else {
                 setCoursesDisplayed(
                     coursesOriginal.filter(course => {
-                        return course.subject.includes(subject) && Math.round((course.price * priceRate) * 100) / 100 <= price;
+                        if((course.discount && new Date(course.discount.startdate) <= Date.now() && new Date(course.discount.enddate) >= Date.now())) {
+                            return course.subject.includes(subject) && Math.round(((course.price * priceRate) - (course.price * priceRate * course.discount.promotion / 100))*100) / 100 <= price;
+                        }
+                        else {
+                            return course.subject.includes(subject) && Math.round((course.price * priceRate) * 100) / 100 <= price;   
+                        };
                     })
                 )
             }

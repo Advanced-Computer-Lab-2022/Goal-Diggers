@@ -17,7 +17,7 @@ const CourseCard = ({course, priceRate, currency, page}) => {
                     }
                     <h6 className="text-center">{course.title}</h6>
                     <p>Total hours : {course.totalHours}</p>
-                    <Rating name="read-only"   value={course.rate} precision={0.1} readOnly /> <br />
+                    <Rating name="read-only"   value={Number(course.rate / course.numberofrates).toFixed(1)} precision={0.1} readOnly /> <br />
                     {/* To be conditionally rendered */} 
                     {type != "corporatetrainees " &&
                     <>

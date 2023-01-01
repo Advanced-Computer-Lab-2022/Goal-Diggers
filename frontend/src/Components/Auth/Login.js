@@ -46,7 +46,8 @@ export default function Login() {
             console.log(error.message);
         }
     } 
-    const save= async ()=>{
+    const save= async (e)=>{
+        e.preventDefault();
         if(!email || !password || !firstname || !lastname || !gender) {
             console.log("DASdasd");
             seterror("You must enter all your data");
@@ -79,7 +80,9 @@ export default function Login() {
             placeholder=" "
             type="text"
             value={username}
-            onChange={(e)=>setUserName(e.target.value)}>
+            onChange={(e)=>{
+              seterror("");
+              setUserName(e.target.value)}}>
             </input>
             <label className="loginlabell">Username</label>
         </div>
@@ -89,7 +92,9 @@ export default function Login() {
             className='logininputt'
             placeholder=" "
             value={password}
-            onChange={(e)=>setPassword(e.target.value)}
+            onChange={(e)=>{
+                seterror("");
+                setPassword(e.target.value)}}
             >
             </input>
             <label className="loginlabell">Password</label>

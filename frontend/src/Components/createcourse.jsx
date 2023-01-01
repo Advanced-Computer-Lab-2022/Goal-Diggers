@@ -116,7 +116,7 @@ function Createcourse(props) {
         if (data.totalHours.length === 0 || data.subject.length === 0 || 
             data.title.length === 0 || data.price.length === 0 || 
             data.summary.length === 0 || data.image.length === 0 || 
-            data.overviewVideo.length==0) settexterror(true)
+            data.overviewvideo.length==0) settexterror(true)
 
         else {
             settexterror(false);
@@ -194,7 +194,7 @@ function Createcourse(props) {
         let temp = {...data};
         temp.totalItems = temp.totalItems + 1;
         setdata(temp);
-        // setquizID(res._id);
+        setquizID(res._id);
         console.log(res);
         setquizdata({
             title: "",
@@ -281,7 +281,7 @@ function Createcourse(props) {
                                         <div className="form-floating mb-3" />
                                     </div>
                                     <div className="form-floating mb-3">
-                                        <input onChange={(e) => handle(e) } id="overviewVideo" value={data.overviewVideo} type="text" className="form-control" placeholder="image" />
+                                        <input onChange={(e) => handle(e) } id="overviewvideo" value={data.overviewvideo} type="text" className="form-control" placeholder="image" />
                                         <label htmlFor="img">overviewVideo Link</label>
                                     </div>
                                     <div>
@@ -359,7 +359,7 @@ function Createcourse(props) {
                             <React.Fragment>
                                 <div className='p-5 bg-light' >
                                     <h1 style={{color:'green'}} className='mb-4'>Course added successfully</h1>
-                                    <Link style={{borderRadius:'25px'}}  to={'/instructor-courses'} className='btn btn-primary'>Go to My Courses</Link>
+                                    <Link style={{width:'300px'}}  to={'/instructor-courses'} className='buttoon pt-2' >Go to My Courses</Link>
                                 </div>
                             </React.Fragment>
                         )
