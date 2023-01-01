@@ -67,7 +67,7 @@ export default function Reset() {
                         <input 
                         className="inputt"
                         placeholder=" "
-                        type="text"
+                        type="password"
                         value={newpassword}
                         onChange={(e)=>{seterror("")
                         setNewPassword(e.target.value)}}>
