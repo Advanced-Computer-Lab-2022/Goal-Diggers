@@ -41,4 +41,19 @@ router.post('/login', controller.loginUser);
 router.get('/logout', controller.Logout);
 router.get('/loggedin', controller.LoggedIn);
 
+// ss
+
+router.get("/courses-requests-pending", controller.getCoursesRequestsPending);
+router.get("/courses-problems-pending", controller.getCoursesProblemsPending);
+router.get("/courses-problems-resolved", controller.getCoursesProblemsResolved);
+router.get("/courses-problems-unseen", controller.getCoursesProblemsUnseen);
+router.post("/mark-pending/:id", controller.MarkAsPending);
+router.post("/mark-resolved/:id", controller.MarkAsResolved);
+router.post("/admin-grant-access", controller.AdminGrantAccess);
+router.post("/admin-revoke-access", controller.AdminRevokeAccess);
+
+router.post("/refund", controller.AdminRefundCourse);
+router.post("/reject-refund", controller.RejectRefund);
+router.get("/refund-requests", controller.getRefundRequests);
+
 module.exports = router;

@@ -222,4 +222,49 @@ courseService.getmostviewedcourses = async() => {
     return data;
 }
 
+// ss
+
+courseService.getCoursesProblemsP = async () => {
+  const { data } = await http.get(apiUrl + "courses-problems-pending");
+  return data.problems;
+};
+courseService.getCoursesProblemsR = async () => {
+  const { data } = await http.get(apiUrl + "courses-problems-resolved");
+  return data.problems;
+};
+courseService.getCoursesProblemsU = async () => {
+  const { data } = await http.get(apiUrl + "courses-problems-unseen");
+  return data.problems;
+};
+courseService.MarkAsPending = async (id) => {
+  const { data } = await http.post(apiUrl + "mark-pending/" + id);
+  return data;
+};
+courseService.GrantAccess = async (id) => {
+  const { data } = await http.post(apiUrl + "admin-grant-access", { id });
+  return data;
+};
+courseService.RevokeAccess = async (id) => {
+  const { data } = await http.post(apiUrl + "admin-revoke-access", { id });
+  return data;
+};
+courseService.MarkAsResolved = async (id) => {
+  const { data } = await http.post(apiUrl + "mark-resolved/" + id);
+  return data;
+};
+
+courseService.AdminRefundCourse = async (course) => {
+  const { data } = await http.post(apiUrl + "refund", { course });
+  return data;
+};
+courseService.AdminRejectRefund = async (course) => {
+  const { data } = await http.post(apiUrl + "reject-refund", { course });
+  return data;
+};
+
+courseService.getRefundRequests = async () => {
+  const { data } = await http.get(apiUrl + "refund-requests");
+  return data.courses;
+};
+
 export default courseService;
