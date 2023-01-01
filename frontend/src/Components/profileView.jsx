@@ -8,6 +8,8 @@ import AuthContext, { AuthContextProvider } from"../context/AuthContext";
 import StudentWallet from './studentWallet';
 import courseService from '../courseContainer';
 import { useNavigate } from 'react-router-dom';
+import StudentRefundRequests from './studentRefundReq';
+import StudentCourseRequests from './studentCourseReq';
 
 const ProfileView = () => {
     const [view, setView] = useState({profile : true});
@@ -23,8 +25,10 @@ const ProfileView = () => {
             setView({wallet:true});
         else if(item === 'password') 
             setView({changepassword : true,});
-        else if(item === 'information') 
-            setView({changeinfo : true});
+        else if(item === 'coursereq') 
+            setView({coursereq : true});
+        else if(item === 'refund') 
+            setView({refundREQ : true});
     };
     useEffect (()=>{
         const auth = async() =>{ 
@@ -39,17 +43,20 @@ const ProfileView = () => {
                     itemTemp.push({title : "My Wallet",
                     itemId : "wallet"
                     });
+                    itemTemp.push({
+                        title : "Refund Requests",
+                        itemId : "refund",
+                    })
                 }
-                itemTemp.push({title : "Settings",
-                subNav : [
-                    {title : "Change my Password",
-                    itemId : "password",
-                    },
-                    {title : "Change my Information",
-                    itemId : "information",
-                    },
-                ]
-                });
+                else {
+                    itemTemp.push({
+                        title : "Course Requests",
+                        itemId : "coursereq",
+                    })
+                }
+                itemTemp.push({title : "Change my Password",
+                            itemId : "password",
+                            },);
                 setItems(itemTemp);
                 setReady(true);
             }
@@ -78,6 +85,8 @@ const ProfileView = () => {
                     {view.changepassword && <Changepassword />}
                     {view.profile && <StudentProfile />}
                     {view.wallet && <StudentWallet wallet={wallet}/>}
+                    {view.refundREQ && <StudentRefundRequests />}
+                    {view.coursereq && <StudentCourseRequests />}
                 </div>
                 <div className="col-sm-1"></div>
             </div>}

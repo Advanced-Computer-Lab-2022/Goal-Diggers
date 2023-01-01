@@ -71,5 +71,8 @@ router.post('/verify-link', controller.Linkverify);
 router.post('/reset-password', controller.ResetPassword);
 router.post('/send-certificate', controller.sendMail);
 router.get('/verify-register-course/:id', controller.VerifyRegisterCourse);
+router.get('/student-refund-requests', controller.StudentRefundRequests);
+router.get('/student-course-requests', controller.StudentCourseRequests);
+
 
 module.exports = router;

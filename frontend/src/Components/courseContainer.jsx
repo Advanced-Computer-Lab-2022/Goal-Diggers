@@ -188,7 +188,7 @@ const CourseContainer = ({type, keyword, currency}) => {
             (
                 coursesDisplayed.length ? 
                 <div className="row p-3 justify-content-center"> 
-                {coursesDisplayed.map((course) => <CourseCard currency={currency} priceRate={priceRate} key={course._id} course={course} />)}
+                {coursesDisplayed.map((course) => <CourseCard currency={currency} priceRate={priceRate} key={course._id} page={type} course={course} />)}
                 </div>
                 : (  
                 <div className='text-center m-5'>

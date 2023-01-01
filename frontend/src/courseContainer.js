@@ -291,5 +291,13 @@ courseService.verifyRegisteredCourse = async(id) => {
     const {data} = await http.get(apiUrl + 'verify-register-course/'+ id);
     return data.course;
 }
+courseService.StudentRefundRequests = async() => {
+    const {data} = await http.get(apiUrl + 'student-refund-requests');
+    return data.requests;
+}
+courseService.StudentCourseRequests = async() => {
+    const {data} = await http.get(apiUrl + 'student-course-requests');
+    return data.requests;
+}
 
 export default courseService;

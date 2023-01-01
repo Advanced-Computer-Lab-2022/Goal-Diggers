@@ -6,6 +6,7 @@ const CourseRequestSchema = new Schema({
         courseID : Object,
         studentID : Object,
         studentName : String,
+        studentUsername : String,
         corporate : String,
         title : String,
         status : String

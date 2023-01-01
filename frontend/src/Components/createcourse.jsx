@@ -23,6 +23,8 @@ function Createcourse(props) {
     const [videoerror, setvideoerror] = useState("");
     const [quizID, setquizID] = useState(null);
     const [ready, setReady] = useState(true);
+    const [boolsection, setboolsection] = useState(false);
+
 
     const [data, setdata] = useState({
         subject: "",
@@ -149,6 +151,8 @@ function Createcourse(props) {
             sethours("");
             setvideo("");
             setVideos([]);
+            setboolquiz(true);
+            setboolsection(false);
         }
         console.log(subtitles);
     }
@@ -171,13 +175,20 @@ function Createcourse(props) {
 
      function addquiz (){
         setboolquiz(false);
+        setboolsection(false);
      }
+     function addsuptitle(){
+        setboolsection(true);
+
+        setboolquiz(false);
+     }
+     
      async function submitquiz(){
         addquestion(); 
         if(!(quizdata.answer1.length === 0 || quizdata.answer2.length === 0 || 
             quizdata.answer3.length === 0 || quizdata.answer4.length === 0 
             || quizdata.explaination.length === 0 || quizdata.correctanswer.length==0 || quizdata.title.length==0)){
-        setboolquiz(true);
+        setboolsection(true);
         const result = {questions : quiz};
         const res = await courseService.addQuiz(result);
         let temp = {...data};
@@ -219,7 +230,7 @@ function Createcourse(props) {
                             </div>
                             <div className="col-sm-10">
                                 <div className='text-center p-2 my-2 bg-light' style={{ border: '1px solid black', borderRadius: '15px' }}>
-                                <h4 style={{fontFamily : 'cursive'}}>Add Course</h4>
+                                <h4 style={{fontFamily : 'cursive'  }}>Add Course</h4>
                                     <div className="form-floating mb-3">
                                         <input onChange={(e) => handle(e)} id="subject" value={data.subject} type="text" className="form-control" placeholder="Subject" />
                                         <label htmlFor="floatingInput">Subject</label>
@@ -277,7 +288,7 @@ function Createcourse(props) {
                                         {texterror ? <label className="l1">You must fill it</label> : ""}
                                         <div className="form-floating mb-3" />
                                     </div>
-                                    <div className="p-3 m-3" style={{borderRadius : '25px', border :'1px solid black'}}>
+                                    {/* <div className="p-3 m-3" style={{borderRadius : '25px', border :'1px solid black'}}>
                                         Subtitle {subtitles.length + 1}
                                     <div className="form-floating mb-3" />
                                     <div className="form-floating mb-3">
@@ -334,9 +345,13 @@ function Createcourse(props) {
                                     <button className='btn btn-primary' onClick={() => addvideo()}>Add Video</button>
                                     </div>
                                     <button className='btn btn-primary' onClick={() => addtitle()}>Add Subtitle</button>
-                                    </div>
+                                    </div> */}
+                                    <button className="buttoon pt-2 mt-4" style={{margin : "0", width : '350px'}} onClick={() => addsuptitle()}>Add Subtitle</button>
+                 
+                                    <br></br>
+                                    <br></br>
             
-                                    <button className='btn btn-primary' onClick={(e) => submit()}>Create Course</button>
+                                    <button className="buttoon pt-2 mt-4" style={{margin : "0", width : '350px'}} onClick={(e) => submit()}>Create Course</button>
                                 </div>
                             </div>
                         </div>
@@ -351,7 +366,69 @@ function Createcourse(props) {
                         }
                     </React.Fragment>
                 )
-                }else{
+                }else if (boolsection){
+                    return(
+                    <div className="p-3 m-3" style={{borderRadius : '25px', border :'1px solid black'}}>
+                        Subtitle {subtitles.length + 1}
+                    <div className="form-floating mb-3" />
+                    <div className="form-floating mb-3">
+                        <input onChange={(e) => { settitle(e.target.value) }} id="titleofsubtitle" value={titleofsubtitle} type="text" className="form-control" placeholder="Subtitle" />
+                        <label htmlFor="floatingInput">Title</label>
+                    </div>
+                    <div>
+                        {titlerror ? <label className="l1">You must fill it</label> : ""}
+                        <div className="form-floating mb-3" />
+                    </div>
+                    <div className="form-floating mb-3">
+                        <input onChange={(e) => { sethours(e.target.value) }} type="number" id="totalhours" value={totalhours} className="form-control" min={0} placeholder="Totalhours" />
+                        <label htmlFor="price">Totalhours</label>
+                    </div>
+                    <div>
+                        {titlerror ? <label className="l1">You must fill it</label> : ""}
+                        <div className="form-floating mb-3" />
+                    </div>
+                    <div className="form-floating mb-3">
+                        <textarea onChange={(e) => { setsummary(e.target.value) }} id="summaryofsubtitle" value={summaryofsubtitle} className="form-control" placeholder="Leave a comment here" style={{ height: '100px' }}></textarea>
+                        <label htmlFor="floatingTextarea2">Summry of Subtitle</label>
+                    </div>
+                    <div>
+                        {titlerror ? <label className="l1">You must fill it</label> : ""}
+                        <div className="form-floating mb-3" />
+                    </div>
+                    <button className="buttoon pt-2 mt-4" style={{margin : "0", width : '350px'}} onClick={(e) => addquiz()}>Add Quiz</button>
+                    <div className="bg-light p-3 m-3" style={{borderRadius : '25px', border:'1px solid black'}}>
+                    <h6>Video {videos.length + 1} for Subtitle {subtitles.length + 1}</h6>
+                    <div className="form-floating mb-3">
+                        <input onChange={(e) => { setvideotitle(e.target.value) }} id="videotitle" value={videotitle} type="text" className="form-control" placeholder="Video Title" />
+                        <label htmlFor="floatingInput">Video Title {videos.length + 1} for section {subtitles.length + 1}</label>
+                    </div>
+                    <div>
+                        {videoerror ? <label className="l1">You must fill it</label> : ""}
+                        <div className="form-floating mb-3" />
+                    </div>
+                    <div className="form-floating mb-3">
+                        <input onChange={(e) => { setvideo(e.target.value) }} id="video" value={video} type="text" className="form-control" placeholder="Video" />
+                        <label htmlFor="floatingInput">Video Link</label>
+                    </div>
+                    <div>
+                        {videoerror ? <label className="l1">You must fill it</label> : ""}
+                        <div className="form-floating mb-3" />
+                    </div>
+                    <div className="form-floating mb-3">
+                        <input onChange={(e) => { setviddiscription(e.target.value) }} id="video" value={viddiscription} type="text" className="form-control" placeholder="Video" />
+                        <label htmlFor="floatingInput">Video Discription</label>
+                    </div>
+                    <div>
+                        {videoerror ? <label className="l1">You must fill it</label> : ""}
+                        <div className="form-floating mb-3" />
+                    </div>
+                    <button className="buttoon pt-2 mt-4" style={{margin : "0", width : '350px'}} onClick={() => addvideo()}>Add Video</button>
+                    </div>
+                    <button className="buttoon pt-2 mt-4" style={{margin : "0", width : '350px'}} onClick={() => addtitle()}>Submit Subtitle</button>
+                    </div>
+                    )
+                }
+                else{
                     return(
                     <div className="container">
                         <div className="container" style={{ width: '800px' }}>
@@ -405,10 +482,12 @@ function Createcourse(props) {
                                 <textarea onChange={(e) => handle1(e)} id="explaination" value={quizdata.explaination} className="form-control" aria-label="Text input with radio button"
                                     cols="30" rows="2"></textarea>
                             </div>
-                            <div className="text-center"><button className="btn btn-primary" onClick={() => addquestion()} type="submit" style={{ borderRadius: '25px' }}>Go To next Question <i
+                            <br></br>
+                            <div className="text-center"><button className="buttoon pt-2 mt-4" style={{margin : "0", width : '350px'}} onClick={() => addquestion()} type="submit" >Add Another Question <i
                                 className="fa fa-step-htmlForward" aria-hidden="true"></i></button></div>
+                                <br></br>
                             <div className="text-center" ><button
-                                className="btn btn-primary" style={{ borderRadius: '25px' }} onClick={() => submitquiz()}>Save the Quiz <i className="fa fa-floppy-o"
+                               className="buttoon pt-2 mt-4" style={{margin : "0", width : '350px'}} onClick={() => submitquiz()}>Save the Quiz <i className="fa fa-floppy-o"
                                     aria-hidden="true"></i></button></div>
                         </div>
                     </div>

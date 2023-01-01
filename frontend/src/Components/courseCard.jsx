@@ -3,7 +3,7 @@ import {Rating} from '@mui/material';
 import { Link } from "react-router-dom";
 import AuthContext, { AuthContextProvider } from"../context/AuthContext";
 
-const CourseCard = ({course, priceRate, currency}) => {
+const CourseCard = ({course, priceRate, currency, page}) => {
     const {loggedIn,id,type}=useContext(AuthContext);
     console.log(type); 
     return ( 
@@ -41,7 +41,12 @@ const CourseCard = ({course, priceRate, currency}) => {
                     
                     </>
                     }
-                    <a href={`course/${course._id}`} style={{borderRadius : '25px', width : '150px'}} className="viewbuttoon">view <i class="fa fa-eye" aria-hidden="true"></i></a>
+                    {
+                        page === 'student' ?
+                            <Link to={`/take-course/${course.courseID}`} style={{borderRadius : '25px', width : '150px'}} className="viewbuttoon">View<i class="fa fa-eye" aria-hidden="true"></i></Link>
+                        : (      
+                        <Link to={`/course/${course._id}`} style={{borderRadius : '25px', width : '150px'}} className="viewbuttoon">View <i class="fa fa-eye" aria-hidden="true"></i></Link>
+                    )}
                 </div>
             </div>
     );

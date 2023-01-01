@@ -51,6 +51,8 @@ module.exports.buyCourse =  async (req, res) => {
     course.completedQuizs = 0;
     course.completedVideos = [];
     course.notes = [];
+    course.studentName = verified.name;
+    course.studentUsername = verified.username;
     course.courseID = course._id;
     course.studentID = verified.user;
     course = _.omit(course, '_id');
@@ -151,6 +153,46 @@ module.exports.addCourse = async (req, res) => {
       res.json(false);
   }
 }
+
+//GET
+//url : api/student-refund-requests student show his on going refund requests
+module.exports.StudentRefundRequests = async (req,res) =>{
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
+    }
+    const verified=jwt.verify(token,process.env.JWT_SECRET);   
+    RegisterCourse.find({studentID : verified.user, pending : true}).then(
+        requests => {
+          return res.status(200).json({requests});
+        }
+      )
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
+}; 
+//GET
+//url : api/student-course-requests student show his on course requests and its status
+module.exports.StudentCourseRequests = async (req,res) =>{
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
+    }
+    const verified=jwt.verify(token,process.env.JWT_SECRET);   
+    CourseRequest.find({studentID : verified.user}).sort({ createdAt : -1}).then(
+        requests => {
+          return res.status(200).json({requests});
+        }
+      )
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
+}; 
+
 
 //POST
 //url : /api/rate-course/12 -> rate to course
@@ -798,7 +840,7 @@ module.exports.getAllCourses = async (req, res) => {
 }
 // GET url : /api/all-courses
 module.exports.getAllCoursesPopular = async (req, res) => {
-    await Course.find({$sort : {registers : -1}}).limit(5).then(
+    await Course.find({}).sort({registers : -1}).limit(5).then(
         courses => {
           return res.status(200).json({courses});
         }
@@ -806,7 +848,7 @@ module.exports.getAllCoursesPopular = async (req, res) => {
 }
 // GET url : /api/all-courses
 module.exports.getAllCoursesViews = async (req, res) => {
-    await Course.find({$sort : {views : -1}}).limit(5).then(
+    await Course.find({}).sort({views : -1}).limit(5).then(
         courses => {
           return res.status(200).json({courses});
         }
@@ -1080,9 +1122,8 @@ module.exports.AdminGrantAccess = async (req, res) =>{
               RegCourse.completedQuizs = 0;
               RegCourse.studentID = student_id;
               RegCourse.courseID = request.courseID;
-              console.log(course.overviewvideo);
-              console.log(course.overviewVideo);
-              console.log(RegCourse.overviewvideo);
+              RegCourse.studentUsername = request.studentUsername;
+              RegCourse.studentName = request.studentName;
               RegisterCourse.create(RegCourse).then(
                 result=>{
                   console.log(result.overviewvideo);
@@ -1330,7 +1371,8 @@ module.exports.RequestCourse = async (req,res) => {
     const request = req.body.course;
     console.log(req.body);
     request.studentID = verified.user;
-    request.studentName = verified.username;
+    request.studentName = verified.name;
+    request.studentUserame = verified.username;
     request.corporate = verified.corporate;
     request.status = "pending";
     let couresReq = new CourseRequest(request);
