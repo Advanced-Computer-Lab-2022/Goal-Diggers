@@ -19,7 +19,7 @@ The project is currently full functionalv, tested and ready to be used by everyo
 The project contains Material Ui and Bootstrap styles and other standard css styles
 
 # Screenshots
-this is a link for sceenshots for 
+
 homepage
 ![homepage](https://user-images.githubusercontent.com/89010416/210190019-eee65b00-6481-4334-aabc-33de7015b66a.jpeg)
 coursepage
