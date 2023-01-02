@@ -241,7 +241,11 @@ module.exports.getAllCourses = async (req, res) => {
 ?
 
 # Tests
-?
+ test the project by logging in as instructor and create several courses and log in again as student and try to enroll in the course created and then 
+ view the course and see several viseos to show the progress of the course and finish the course to show the certificate and create another course
+ and test the refund . then make several problem in a course and check if it apear in the admin profile and log in as admin and solve the problem 
+ and log in as student again and show the solutions the admin give. and then test payment and the user profile and the user courses and achivements.
+ and test the wallet of student and instructour ,the test the filters and the currency
 
 # How to Use?
 after installing the project as mentioned in the installation the project will automaticlly run in your browser for you to use it.
@@ -258,5 +262,4 @@ If you have a suggestion that would make this better, please fork the repo and c
 # Credits
 Creadits goes to our TA's Hadwa Pasha, Nada-abdelfattah and Noha for supervising us along the project.
 
-# Liscence
-?
+
