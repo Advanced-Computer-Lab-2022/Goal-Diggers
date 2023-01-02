@@ -267,7 +267,68 @@ module.exports.getAllCourses = async (req, res) => {
 5-npm start
 
 # API reference
-?
+### api for admin
+router.get('/refund-requests', controller.getRefundRequests);
+router.post('/refund', controller.AdminRefundCourse);
+router.post('/reject-refund', controller.RejectRefund);
+router.post('/mark-pending/:id',controller.MarkAsPending);
+router.post('/mark-resolved/:id',controller.MarkAsResolved);
+router.post('/admin-add-promotion', controller.AdminAddPromotions);
+router.post('/admin-grant-access', controller.AdminGrantAccess);
+router.post('/admin-revoke-access', controller.AdminRevokeAccess);
+router.get('/courses-problems-pending', controller.getCoursesProblemsPending);
+router.get('/courses-problems-resolved', controller.getCoursesProblemsResolved);
+router.get('/courses-problems-unseen', controller.getCoursesProblemsUnseen);
+router.post('/add-user', controller.addUser);
+router.get('/courses-requests-pending', controller.getCoursesRequestsPending);
+router.get('/courses-requests-approved', controller.getCoursesRequestsApproved);
+router.get('/courses-requests-rejected', controller.getCoursesRequestsRejected);
+
+### api for instructor
+router.post('/add-quiz', controller.addQuiz);
+router.post('/add-course', controller.addCourse);
+router.get('/wallet', controller.getWallet);
+router.get('/accept-terms', controller.AcceptTerms);
+router.get('/instructor-courses', controller.getInstructorCourses);
+router.post('/request', controller.RequestCourse);
+router.post('/request', controller.RequestCourse);
+router.post('/add-problem', controller.addproblem);
+router.post('/add-followup', controller.addfollow);
+router.get('/get-problems/:id', controller.getproblem);
+router.post('/refund-course/:id', controller.refundcourse);
+router.post('/send-certificate', controller.sendMail);
+router.get('/verify-register-course/:id', controller.VerifyRegisterCourse);
+router.get('/student-refund-requests', controller.StudentRefundRequests);
+router.get('/student-course-requests', controller.StudentCourseRequests);
+router.post('/change-email-biography', controller.changeEmailorBiography);
+router.get('/reviews-ratings', controller.getReviewsAndRatings);
+router.get('/completed-courses', controller.getCompletedCourses);
+router.get('/inprogress-courses', controller.getInProgressCourses);
+router.get('/student-courses', controller.getStudentCourses);
+router.post('/create-pdf', controller.createPDF);
+router.get('/fetch-pdf', controller.fetchPDF);
+router.post('/create-certificate', controller.createCertificate);
+router.get('/fetch-certificate', controller.fetchCertificate);
+router.post('/save-data', controller.SaveData);
+router.post('/payment/create', controller.createPayment);
+router.post('/buy-course', controller.buyCourse);
+
+### api for student and corporate trainee
+router.get('/all-courses', controller.getAllCourses);
+router.get('/all-courses-views', controller.getAllCoursesViews);
+router.get('/all-courses-popular', controller.getAllCoursesPopular);
+router.get('/search/:keyword', controller.getSearchCourses); 
+router.get('/course/:id', controller.getCourse);
+router.post('/forget-password', controller.forgotPassword);
+router.post('/verify-link', controller.Linkverify);
+
+
+### use stripe api for payment 
+const stripe = require("stripe")(
+  "sk_test_51MEsfyD8LuqksnQUfvq6KNmUnIpERtruMHXIKHHnc7EOy51ZdpuYFZ4VlfaIbztSjh7kRZM3OSR0gVIifQjmmhZ1008I0rGA9q"
+);
+link for the documentation  https://dashboard.stripe.com/test/payments
+
 
 # Tests
  test the project by logging in as instructor and create several courses and log in again as student and try to enroll in the course created and then 
@@ -275,6 +336,54 @@ module.exports.getAllCourses = async (req, res) => {
  and test the refund . then make several problem in a course and check if it apear in the admin profile and log in as admin and solve the problem 
  and log in as student again and show the solutions the admin give. and then test payment and the user profile and the user courses and achivements.
  and test the wallet of student and instructour ,the test the filters and the currency
+ for example code for test the type of user which is logging in 
+ module.exports.LoggedIn=async(req,res)=>{
+  try {
+    //we need to parse cookies into javascrip objects
+    //using the cookie-parser
+    //this is an express middleware that reads any incoming cookies and parse it into req.cookies object
+    const token=req.cookies.token;
+    let user = {};
+    console.log(token);
+    if(!token){
+        return res.json(false);
+    }
+    //verifiy the tooken to check if it has our secret and not a random tooken
+    //if not verified it will go to the catch and
+    //if verified it will decode it and put the tooken value an an object
+    //it have the user id
+    const verified= jwt.verify(token,process.env.JWT_SECRET);
+    if(await User.findById(ObjectId(verified.user))){
+      await User.findById(ObjectId(verified.user)).then(
+        value => {
+          user = value;
+          type="student";
+        }
+      )
+    }else if(await Role.findById(verified.user)){
+      await Role.findById(verified.user).then(
+            value => {
+                user = value;
+                type = value.role;
+            }
+      )
+    }else if(await Instructor.findById(verified.user)){
+      await Instructor.findById(verified.user).then(
+        value => {
+          user = value;
+          type="instructor";
+        }
+      )
+    }
+   res.send({id:verified.user,verified:true,type:type, firstname : user.firstname, lastname : user.lastname,
+     wallet : user.wallet, email : user.email, gender : user.gender, 
+     username : user.username, minibiography : user.minibiography, accepted : user.accepted});
+    
+} catch (error) {
+    console.log(error.message); 
+    res.json(false);
+}
+}
 
 # How to Use?
 after installing the project as mentioned in the installation the project will automaticlly run in your browser for you to use it.
