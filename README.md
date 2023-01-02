@@ -19,11 +19,35 @@ The project is currently full functionalv, tested and ready to be used by everyo
 The project contains Material Ui and Bootstrap styles and other standard css styles
 
 # Screenshots
-this is a link for sceenshots for homepage, coursepage , takecoursepage , profilepage ,addpromotion, resolveproblem,login ,logout , register ,
-forgetpassword ,adminrefund, sections and certificate
+this is a link for sceenshots for 
+homepage
+![homepage](https://user-images.githubusercontent.com/89010416/210190019-eee65b00-6481-4334-aabc-33de7015b66a.jpeg)
+coursepage
+![courseoverview](https://user-images.githubusercontent.com/89010416/210190017-08a46321-f109-43b6-ba92-e84ebfcde639.jpeg)
+takecoursepage
+![takecourse](https://user-images.githubusercontent.com/89010416/210190031-8d238912-573b-4a8f-a382-c29252e479f9.jpeg)
+addpromotion
 ![addpromotion](https://user-images.githubusercontent.com/89010416/210190009-80477101-6ea7-4324-85bb-2931ad60d534.jpeg)
+certificate
+![certificate](https://user-images.githubusercontent.com/89010416/210190015-f6dfa0d7-c9e9-4d87-9ef7-7116ffd8011b.jpeg)
+adminrefund
+![adminrefund](https://user-images.githubusercontent.com/89010416/210190012-24317de2-ed34-4925-a16d-a2ce41f4df73.jpeg)
+register
+![register](https://user-images.githubusercontent.com/89010416/210190025-73c72136-cad9-4842-9a79-dd33f3c5dbc8.jpeg)
+login
+![login](https://user-images.githubusercontent.com/89010416/210190021-0f0242d6-9de7-4bc4-9a0d-fa5e6b3b2da1.jpeg)
+forgetpassword
+![forgetpassword](https://user-images.githubusercontent.com/89010416/210190018-3389bea1-0110-42cf-b934-86c1917a0958.jpeg)
+profiledata
+![profiledata](https://user-images.githubusercontent.com/89010416/210190023-171598f5-c50b-4aa6-8696-02f689cf041e.jpeg)
+resolveproblem
+![resolveproblem](https://user-images.githubusercontent.com/89010416/210190027-c8330bbb-5f61-4459-a5ea-9519f3f2babb.jpeg)
+reviews
+![reviews](https://user-images.githubusercontent.com/89010416/210190028-173eb31f-c675-4a3b-b3db-114cdbba5f21.jpeg)
+sections
+![sections](https://user-images.githubusercontent.com/89010416/210190029-ae40d094-3776-4119-ac1b-7ddc2d7559af.jpeg)
 
-https://github.com/Advanced-Computer-Lab-2022/Goal-Diggers/issues/1#issue-1515934666
+
 
 
 # Tech/Framework used
