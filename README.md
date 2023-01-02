@@ -19,8 +19,10 @@ The project is currently full functionalv, tested and ready to be used by everyo
 The project contains Material Ui and Bootstrap styles and other standard css styles
 
 # Screenshots
-https://github.com/Advanced-Computer-Lab-2022/Goal-Diggers/issues/1#issue-1515934666
-we will add a vide descriping the project or screenshoots
+there are screenshots for 
+
+https://github.com/Advanced-Computer-Lab-2022/Goal-Diggers/issues/1#issue-homepage
+
 
 # Tech/Framework used
 
