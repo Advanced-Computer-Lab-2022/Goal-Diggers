@@ -329,6 +329,11 @@ const stripe = require("stripe")(
 );
 link for the documentation  https://dashboard.stripe.com/test/payments
 
+### use apilayer api for currency 
+it is the api used to change the currency with the most apdated currency difference
+link for the documentation  https://apilayer.com/
+
+
 
 # Tests
  test the project by logging in as instructor and create several courses and log in again as student and try to enroll in the course created and then 
