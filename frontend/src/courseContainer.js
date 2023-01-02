@@ -101,11 +101,6 @@ courseService.saveProgress = async(course) => {
     return data.course;
 }
 
-courseService.getRegisteredCourse = async(id) => {
-    const {data} = await http.get(apiUrl + 'get-register-course/' + id);
-    return data.course;
-}
-
 courseService.saveQuiz = async(id, courseID,grade) => {
     console.log(grade);
     const {data} = await http.post(apiUrl + 'save-quiz/'+courseID + '/' + id,{ grade : grade});
@@ -265,6 +260,23 @@ courseService.AdminRejectRefund = async (course) => {
 courseService.getRefundRequests = async () => {
   const { data } = await http.get(apiUrl + "refund-requests");
   return data.courses;
+};
+
+// buy the course 
+courseService.buyCourse= async( course, price) => {
+    const data = await http.post(apiUrl + "buy-course", {course, price});
+    return data.data.clientSecret;
+}
+
+// fetch the client secret to pay 
+courseService.getClientSecret= async(price) => {
+    const data = await http.post(apiUrl + "payment/create", {price});
+    return data.data.clientSecret;
+}
+
+courseService.getRegisteredCourse = async (id) => {
+  const { data } = await http.get(apiUrl + "get-register-course/" + id);
+  return data.course;
 };
 
 export default courseService;

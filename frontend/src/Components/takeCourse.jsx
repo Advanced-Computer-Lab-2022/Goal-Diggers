@@ -150,9 +150,7 @@ const TakeCourse = () => {
             const course = await courseService.getRegisteredCourse(id);
             console.log(course);
             setCourse(course);
-            if(!course) {
-                navigate('/not-found');
-            }
+            
             setTitle(course.overviewvideo.title);
             setDiscription(course.overviewvideo.description);
             setUrl(course.overviewvideo.url);

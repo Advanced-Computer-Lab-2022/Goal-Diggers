@@ -397,7 +397,6 @@ function Newcourses() {
         </section>
       </div>
 
-
       <script src="assets2/js/vendor/jquery-2.2.4.min.js"></script>
 
       <script src="assets2/js/bootstrap.min.js"></script>

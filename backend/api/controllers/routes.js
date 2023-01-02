@@ -12,7 +12,6 @@ router.get('/all-courses', controller.getAllCourses);
 router.get('/search/:keyword', controller.getSearchCourses); 
 router.get('/course/:id', controller.getCourse);
 router.get('/instructor-courses', controller.getInstructorCourses);
-router.get('/get-register-course/:id', controller.getRegisterCourse);
 router.get('/get-quiz/:id', controller.getQuiz);
 router.post('/save-quiz/:courseID/:id', controller.saveQuiz);
 router.post('/save-progress', controller.saveProgress);
@@ -55,5 +54,10 @@ router.post("/admin-revoke-access", controller.AdminRevokeAccess);
 router.post("/refund", controller.AdminRefundCourse);
 router.post("/reject-refund", controller.RejectRefund);
 router.get("/refund-requests", controller.getRefundRequests);
+
+router.post("/payment/create", controller.createPayment);
+router.post("/buy-course", controller.buyCourse);
+
+router.get("/get-register-course/:id", controller.getRegisterCourse);
 
 module.exports = router;

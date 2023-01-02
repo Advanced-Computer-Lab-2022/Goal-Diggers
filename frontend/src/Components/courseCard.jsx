@@ -76,11 +76,13 @@ const CourseCard = ({ course }) => {
             </h4>{" "}
             <ul class="course-meta-stats">
               <li>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-half"></i>
+                <Rating
+                  name="read-only"
+                  value={Number(course.rate / course.numberofrates).toFixed(1)}
+                  precision={0.1}
+                  readOnly
+                />{" "}
+                
               </li>
               <li>
                 {course.reviews?.length} <i class="fa fa-comment"></i>

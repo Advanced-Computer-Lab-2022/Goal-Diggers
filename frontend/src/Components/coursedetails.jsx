@@ -2,6 +2,7 @@ import React, { useState, useEffect,useContext } from 'react';
 import { Rating } from "@mui/material";
 import courseService from '../courseContainer';
 import Sections from './section';
+import Sidebar from './sidebar2';
 import ReactPlayer from 'react-player/youtube';
 import { useParams, Link } from "react-router-dom";
 import ReactLoading from 'react-loading';
@@ -57,7 +58,9 @@ function Coursedetails() {
             const res = await courseService.getCourse(id);
             setCourse(res);
             setTimeout(async () => {
+              console.log("res.createdById");
                 console.log(res.createdById);
+                console.log("res.createdById");
                 const res2 = await courseService.getInstructor(res.createdById);
                 setinstructor(res2);
                 console.log(res2);
@@ -159,25 +162,32 @@ function Coursedetails() {
                           <li>
                             <a href="/blog">Blogs</a>
                           </li>
-                          <li >
+                          <li>
                             <a href="/event">Events</a>
                           </li>
                           <li>
                             <a href="/contact">Contact</a>
                           </li>
                           <li>
-                            <a href="/userprofile">
+                            <a href="/edituserprofile">
                               <img className="avatar1" />
                             </a>
                             <ul className="submenu">
                               <li>
-                                <a href="/userprofile">View Profile</a>
+                                <a href="/edituserprofile">View Profile</a>
                                 <h1
                                   className="fa fa-user dropdown"
                                   aria-hidden="true"
                                 ></h1>
                               </li>
-                              
+                              <li>
+                                <a href="/mycourses">My Courses</a>
+                                <i className="fa fa-book dropdown"></i>
+                              </li>
+                              <li>
+                                <a href="/edituserprofile">Settings</a>
+                                <i className="fa fa-cog dropdown"></i>
+                              </li>
                               <li>
                                 <a href="/homepage2">
                                   <Logout></Logout>
@@ -256,7 +266,6 @@ function Coursedetails() {
                   </div>
                 </>
               )}
-              
             </div>
           </div>
         </div>
@@ -358,11 +367,14 @@ function Coursedetails() {
                           </div>
                           <ul class="course-meta-stats">
                             <li>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
+                              <Rating
+                                name="read-only"
+                                value={Number(
+                                  course.rate / course.numberofrates
+                                ).toFixed(1)}
+                                precision={0.1}
+                                readOnly
+                              />{" "}
                             </li>
                             <li>
                               {course.reviews.length}{" "}
@@ -372,28 +384,16 @@ function Coursedetails() {
                           </ul>
                         </div>
                       </div>
-                      {/* <div className="login-box">
-                                            <form>
-                                                <a href="pruchercourse">
-                                                    Buy Course
-                                                    <span></span>
-                                                    <span></span>
-                                                    <span></span>
-                                                    <span></span>
-
-                                                </a>
-                                            </form>
-                                        </div> */}
-                      <div id="sections">
-                        {course.subtitles.map((section, index) => {
-                          return (
-                            <Sections
-                              key={index}
-                              section={section}
-                              count={index + 1}
-                            />
-                          );
-                        })}
+                      <div className="login-box">
+                        <form>
+                          <a href={`/takecourse/${course._id}`}>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            Go to the Course
+                          </a>
+                        </form>
                       </div>
                       <div className="form-floating mb-3" />
                       <div class="cs-content">
@@ -402,6 +402,10 @@ function Coursedetails() {
                         <p>{course.summary}</p>
                         <div className="form-floating mb-3" />
                       </div>
+                    </div>
+                    <div id="sections">
+                      <h5 className="my-3">Course Subtitles.</h5>
+                      <Sidebar subtitles={course.subtitles} />
                     </div>
 
                     <div class="comment-area">
@@ -423,7 +427,6 @@ function Coursedetails() {
                                   <div class="comment-content">
                                     <h4>{review.username}</h4>
                                     <p>{review.text} </p>
-                                    
                                   </div>
                                 </article>
                               </li>
@@ -448,8 +451,11 @@ function Coursedetails() {
                                 alt="image"
                               />
                             </div>
-                            <h5 >
-                              <a className='ra'href={`teacherdetails/${course.createdById}`}>
+                            <h5>
+                              <a
+                                className="ra"
+                                href={`teacherdetails/${course.createdById}`}
+                              >
                                 {instructor.username}
                               </a>
                             </h5>
@@ -489,7 +495,10 @@ function Coursedetails() {
                                   <img src={"/" + course.image} alt="image" />
                                   <div class="fix">
                                     <h4>
-                                      <a className='ra' href={`/coursedetails/${course._id}`}>
+                                      <a
+                                        className="ra"
+                                        href={`/coursedetails/${course._id}`}
+                                      >
                                         {course.title}
                                       </a>
                                     </h4>{" "}

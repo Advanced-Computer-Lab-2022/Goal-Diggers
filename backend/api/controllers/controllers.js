@@ -665,21 +665,6 @@ module.exports.saveQuiz = async (req, res) => {
     )
 };
 
-//GET url : api/get-registercourses/12 get specific course // need auth
-module.exports.getRegisterCourse = async (req, res) =>{
-   // get student id from jwt
-   const courseID = ObjectId(req.params.id);
-   RegisterCourse.findOne({_id : courseID}).then(
-    course => {
-      if(course){
-        res.status(200).json({course});
-      }
-      else {
-        res.status(404).json({error : "YOU DID NOT REGISTER IN THIS COURSE"});
-      }
-    }
-   )
-}
 
 
 module.exports.getNumberOFTrainees = async (req, res) =>{
@@ -898,4 +883,102 @@ module.exports.RejectRefund = async(req,res) => {
     result => {return res.status(200).json({});}
   )
 }
+
+//POST 
+// url : api/payment/create" Create client secret  
+module.exports.createPayment =  async (req, res) => {
+  const total = req.body.price;
+  console.log("Payment Request recieved for this ruppess", total);
+  const payment = await stripe.paymentIntents.create({
+    amount: total * 100 ,
+    currency: "usd",
+  });
+  res.status(200).json({
+    clientSecret: payment.client_secret,
+  });
+};
+
+//POST 
+// url : api/buy-course/ user buy the course need to student id
+module.exports.buyCourse =  async (req, res) => {
+  try {
+    const token=req.cookies.token;
+    if(!token){
+        return res.json(false);
+    }
+    const verified=jwt.verify(token,process.env.JWT_SECRET);
+    let course = req.body.course;
+    const price = req.body.price;
+    course.registers ++;
+    Course.updateOne({_id : course._id}, course).then();
+    course.price = price;
+    course.attemptedQuizs = [];
+    course.completedQuizs = 0;
+    course.completedVideos = [];
+    course.notes = [];
+    course.studentName = verified.name;
+    course.studentUsername = verified.username;
+    course.courseID = course._id;
+    course.studentID = verified.user;
+    course = _.omit(course, '_id');
+    RegisterCourse.create(course).then(
+      result => {
+        Wallet.findOne({instructorID : ObjectId(course.createdById)}).then(
+          wallet =>{
+            console.log(wallet);
+            if(wallet) {
+              wallet.total += course.price*0.7;
+              let exist = false;
+              wallet.details.forEach((month, index) => {
+                  if(new Date(month.month).getMonth() === new Date().getMonth() && new Date(month.month).getFullYear() === new Date().getFullYear()) {
+                    wallet.details[index].total += course.price*0.7;
+                    exist = true;
+                    console.log("EXIST");
+                  }
+              });
+              if(!exist)
+                  wallet.details.push({month: `${new Date().getMonth() + 1}-1-${new Date().getFullYear()}`, total : course.price*0.7});
+              Wallet.updateOne({_id : wallet._id}, wallet).then();
+            }
+            else {
+              let wallet = {instructorID : ObjectId(course.createdById), total : course.price*0.7, details : [{month: `${new Date().getMonth() + 1}-1-${new Date().getFullYear()}`, total : course.price*0.7}]};
+              Wallet.create(wallet).then()
+            }
+          }
+        )
+        return res.status(200).json({});
+      }
+    )    
+  } catch (error) {
+      console.log(error.message); 
+      res.json(false);
+  }
+};
+
+module.exports.getRegisterCourse = async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) {
+      return res.json(false);
+    }
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const courseID = req.params.id;
+    console.log(ObjectId(verified.user));
+    console.log(ObjectId(courseID));
+    RegisterCourse.findOne({
+      courseID: courseID,
+      studentID: verified.user,
+    }).then((course) => {
+      console.log(course);
+      if (course) {
+        res.status(200).json({ course });
+      } else {
+        res.status(404).json({ error: "YOU DID NOT REGISTER IN THIS COURSE" });
+      }
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.json(false);
+  }
+};
 

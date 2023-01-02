@@ -52,6 +52,7 @@ import TermsAndConditions from './Components/termsandconditions';
 import ResetPassword from './Components/ResetPassword';
 import ForgetPassword from './Components/ForgetPassword';
 import Policy from './Components/policy';
+import PayCourse from './Components/payCourse';
 axios.defaults.withCredentials=true;
 function App() {
   const [currency, setCurrency] = useState('');
@@ -73,6 +74,8 @@ function App() {
             path="/homepage2"
             element={<Homepage2 handleCountry={handleCountry} />}
           />
+          <Route path="/takecourse/:id" element={<TakeCourse />} />
+          <Route path="/payment/:id" element={<PayCourse />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/coursedetails/:id" element={<Coursedetails />} />
@@ -92,7 +95,6 @@ function App() {
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/viewNotes" element={<ViewNotes />} />
           <Route path="/adminview" element={<AdminView />} />
-          <Route path="/takeCourse" element={<TakeCourse />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/adduser" element={<Adduser />} />
@@ -101,9 +103,11 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/termsandconditions" element={<TermsAndConditions />} />
           <Route path="/edituserprofile" element={<Edituserprofile />} />
-          <Route path="/editinstructorprofile" element={<Editinstructorprofile />}/>
-          <Route path="/policy" element={<Policy/>}/>
-
+          <Route
+            path="/editinstructorprofile"
+            element={<Editinstructorprofile />}
+          />
+          <Route path="/policy" element={<Policy />} />
         </Routes>
         <RegisterFooter></RegisterFooter>
         <Footer></Footer>
