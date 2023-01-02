@@ -22,6 +22,8 @@ The project contains Material Ui and Bootstrap styles and other standard css sty
 this is a link for sceenshots for homepage, coursepage , takecoursepage , profilepage ,addpromotion, resolveproblem,login ,logout , register ,
 forgetpassword ,adminrefund, sections and certificate
 
+https://github.com/Advanced-Computer-Lab-2022/Goal-Diggers/issues/new
+
 https://github.com/Advanced-Computer-Lab-2022/Goal-Diggers/issues/1#issue-1515934666
 
 
