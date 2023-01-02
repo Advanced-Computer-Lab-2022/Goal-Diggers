@@ -19,9 +19,10 @@ The project is currently full functionalv, tested and ready to be used by everyo
 The project contains Material Ui and Bootstrap styles and other standard css styles
 
 # Screenshots
-there are screenshots for 
+this is a link for sceenshots for homepage, coursepage , takecoursepage , profilepage ,addpromotion, resolveproblem,login ,logout , register ,
+forgetpassword ,adminrefund, sections and certificate
 
-https://github.com/Advanced-Computer-Lab-2022/Goal-Diggers/issues/1#issue-homepage
+https://github.com/Advanced-Computer-Lab-2022/Goal-Diggers/issues/1#issue-1515934666
 
 
 # Tech/Framework used
