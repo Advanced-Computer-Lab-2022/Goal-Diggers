@@ -63,51 +63,11 @@ function App() {
     <React.Fragment>
       <AuthContextProvider>
         <Routes>
-          <Route path="/search" element={<SearchResult />} />
-          <Route path="/instructorprofile" element={<Instructorprofile />} />
-          <Route path="/mycourses" element={<Mycourses />} />
-          <Route path="/homepage2" element={<Homepage2 />} />
           <Route path="/about" element={<About />} />
-          <Route path="/blogdetails" element={<Blogdetails />} />
-          <Route path="/comingsoon" element={<Comingsoon />} />
-          <Route
-            path="/homepage2"
-            element={<Homepage2 handleCountry={handleCountry} />}
-          />
-          <Route path="/takecourse/:id" element={<TakeCourse />} />
-          <Route path="/payment/:id" element={<PayCourse />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/coursedetails/:id" element={<Coursedetails />} />
-          <Route path="/newcourses" element={<Newcourses />} />
-          <Route path="/teacherdetails/:id" element={<Teacherdetails />} />
-          <Route path="/meetingdetails" element={<Meetingdetails />} />
-          <Route path="/meetings" element={<Meetings />} />
-          <Route path="/createcourse" element={<Createcourse />} />
-          <Route path="/changepassword" element={<Changepassword />} />
-          <Route path="/pruchercourse" element={<Pruchercourse />} />
-          <Route path="/userprofile" element={<Userprofile />} />
-          <Route path="/help" element={<Help />} />
-          <Route path="/event" element={<Event />} />
           <Route path="/eventdetails" element={<Eventdetails />} />
-          <Route path="/membership" element={<Membership />} />
-          <Route path="/certifacte" element={<Certificate />} />
-          <Route path="/wallet" element={<Wallet />} />
-          <Route path="/viewNotes" element={<ViewNotes />} />
-          <Route path="/adminview" element={<AdminView />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/adduser" element={<Adduser />} />
-          <Route path="/forget-password" element={<ForgetPassword />} />
-          <Route path="/setPromotions" element={<SetPromotions />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/termsandconditions" element={<TermsAndConditions />} />
-          <Route path="/edituserprofile" element={<Edituserprofile />} />
-          <Route
-            path="/editinstructorprofile"
-            element={<Editinstructorprofile />}
-          />
-          <Route path="/policy" element={<Policy />} />
+          <Route path="/event" element={<Event />} />
+          <Route path="/homepage2" element={<Homepage2 />} />
+          <Route path="/createcourse" element={<Createcourse />} />
         </Routes>
         <RegisterFooter></RegisterFooter>
         <Footer></Footer>

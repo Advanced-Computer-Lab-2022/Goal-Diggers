@@ -105,13 +105,13 @@ function Changepassword(handleCountry) {
         data.oldpassword !== data.newpassword
       ) {
         swal({
-          title: "Do you want to update your password?",
+          title: "Are you sure that you want to submit?",
           icon: "warning",
           buttons: true,
           dangerMode: true,
         }).then((willDelete) => {
           if (willDelete) {
-            swal("Your password has been updated", {
+            swal("Submitted sucessfully", {
               icon: "success",
             });
           }
